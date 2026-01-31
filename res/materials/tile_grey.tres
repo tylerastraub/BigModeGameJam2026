@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bv2myspycsh1d"]
+
+[ext_resource type="Texture2D" uid="uid://23mnpyax3tpf" path="res://res/textures/tile_grey.png" id="1_jxa7l"]
+
+[resource]
+albedo_texture = ExtResource("1_jxa7l")
+uv1_triplanar = true
+texture_filter = 0

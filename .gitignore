@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+todo.txt
+*.import
+.gitattributes
+.editorconfig
+*.temp
+*.uid
+settings.json
