@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://byhqtsul7crrn"]
+
+[ext_resource type="Shader" uid="uid://dpky74mafk118" path="res://src/Shaders/electric_field.gdshader" id="1_2teyo"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_2teyo")
+shader_parameter/light_color = Color(0.32, 0.5, 0.82, 0.5)
+shader_parameter/arc_color = Color(0.8479647, 0.90965474, 0.99999994, 1)
+shader_parameter/seed = Vector2(0, 0)
+shader_parameter/speed = 2.0000000298024
+shader_parameter/random_scale = 4.6
+shader_parameter/electro_scale = 15.0000002086168

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c2fs18yyp1uef"]
+
+[ext_resource type="Script" uid="uid://cblnvgpkfvnma" path="res://src/Level/ring.gd" id="1_grhco"]
+[ext_resource type="PackedScene" uid="uid://4wwd1tbbpgg6" path="res://res/models/ring.glb" id="1_xb3lt"]
+[ext_resource type="Material" uid="uid://byhqtsul7crrn" path="res://res/materials/ring_energy_field.tres" id="2_5jtqu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xb3lt"]
+height = 0.01
+radius = 0.7
+
+[node name="Ring" type="Area3D" unique_id=1798653930]
+collision_layer = 16
+collision_mask = 32
+script = ExtResource("1_grhco")
+
+[node name="AreaCollision" type="CollisionShape3D" parent="." unique_id=1082301584]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_xb3lt")
+
+[node name="ring" parent="." unique_id=2104367552 instance=ExtResource("1_xb3lt")]
+
+[node name="EnergyField" parent="ring" index="1" unique_id=1429754032]
+material_override = ExtResource("2_5jtqu")
+
+[editable path="ring"]

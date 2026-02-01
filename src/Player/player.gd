@@ -127,6 +127,7 @@ func _handle_states() -> void:
             if _boost_on_land:
                 _boost_on_land = false
                 _boost_timer = 0.0
+                _boost_time = 0.25
                 _rb.apply_central_impulse(_visuals.basis.z * _boost_power * -1.0)
     elif _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING:
         set_state(Global.PlayerState.AERIAL)
@@ -237,6 +238,10 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         set_state(Global.PlayerState.HALF_PIPE)
     elif mask[mask.length() - 4] == "1":
         _start_grind(area as GrindRail)
+    elif mask[mask.length() - 5] == "1":
+        _boost_timer = 0.0
+        _boost_time = 0.5
+        _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)
