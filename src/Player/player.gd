@@ -6,6 +6,7 @@ const CAMERA_MOVE_LERP : float = 20.0
 const CAMERA_ROTATE_LERP : float = 0.5
 
 const AERIAL_180_LEEWAY : float = 45.0
+const COYOTE_TIME : int = 4
 
 @onready var _rb : RigidBody3D = $RigidBody3D
 @onready var _visuals : Node3D = $PlayerVisuals
@@ -37,12 +38,18 @@ var _aerial_rotate_accel : float = 1.0
 var _aerial_rotate_velocity : float = 0.0
 var _turned_180 : bool = true
 
+# Tricks/Boost
+var _boost_on_land : bool = false
+var _boost_factor : float = 2.0 # multiplicative factor for top speed when boosting
+var _boost_power : float = 15.0 # initial boost
+var _boost_timer : float = 1.0
+var _boost_time : float = 0.25
+
 # Misc
 var _input_dir : Vector3 = Vector3.ZERO
 var _ticks_since_touching_ground : int = 0
 
 # Debug
-var debug : bool = false
 var forward_dir : Vector3 = Vector3.ZERO
 var up_dir : Vector3 = Vector3.ZERO
 
@@ -53,7 +60,7 @@ func _ready() -> void:
     $RigidBody3D/BodyArea.area_exited.connect(_on_area_3d_area_exited)
     _rb._max_velocity = _max_velocity
     _rb._min_velocity = _min_velocity
-    if debug:
+    if Global.debug:
         $Debug.draw.add_vector(self, "forward_dir", 1, 4, Color.RED, $PlayerVisuals)
         $Debug.draw.add_vector(self, "up_dir", 1, 4, Color.BLUE, $PlayerVisuals)
 
@@ -65,6 +72,7 @@ func _physics_process(delta: float) -> void:
     _grind(delta)
     _aerial(delta)
     _move(delta)
+    _boost()
     if Input.is_action_just_pressed("jump"): _jump()
     var relative_velocity : float = 1.0
     if _state != Global.PlayerState.GRINDING:
@@ -83,6 +91,7 @@ func _physics_process(delta: float) -> void:
     _ticks_since_touching_ground += 1
     if _rb.get_contact_count() > 0 or _state == Global.PlayerState.GRINDING:
         _ticks_since_touching_ground = 0
+    _boost_timer += delta
 
 ## ========== PUBLIC METHODS ==========
 
@@ -112,9 +121,13 @@ func _move(delta: float) -> void:
     _rb.apply_central_force(_input_dir * delta * accel)
 
 func _handle_states() -> void:
-    if _ticks_since_touching_ground < 4: # 4 frames of buffer time
+    if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
             set_state(Global.PlayerState.GROUNDED)
+            if _boost_on_land:
+                _boost_on_land = false
+                _boost_timer = 0.0
+                _rb.apply_central_impulse(_visuals.basis.z * _boost_power * -1.0)
     elif _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING:
         set_state(Global.PlayerState.AERIAL)
 
@@ -171,9 +184,11 @@ func _start_grind(rail: GrindRail) -> void:
 
 func _stop_grind() -> void:
     set_state(Global.PlayerState.AERIAL)
+    _ticks_since_touching_ground = COYOTE_TIME
     _grind_rail = null
     var exit_vel : Vector3 = Vector3((Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) * 0.4, 0.2, -1.0)
     _rb.apply_central_impulse(exit_vel.normalized() * _max_velocity)
+    _boost_on_land = true
 
 func _aerial(delta: float) -> void:
     if _state != Global.PlayerState.AERIAL:
@@ -195,6 +210,12 @@ func _jump() -> void:
     elif _state == Global.PlayerState.GRINDING:
         _stop_grind()
 
+func _boost() -> void:
+    if _boost_timer < _boost_time:
+        _rb._max_velocity = _max_velocity * _boost_factor
+    else:
+        _rb._max_velocity = _max_velocity
+    
 func _align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
     xform.basis.y = new_y
     xform.basis.x = -xform.basis.z.cross(new_y)
@@ -220,5 +241,5 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)
     if mask[mask.length() - 3] == "1":
-        _rb.apply_central_impulse(Vector3(0.2 * _rb._half_pipe_direction, _rb.linear_velocity.y, _rb.linear_velocity.z * 0.5))
+        _rb.apply_central_impulse(Vector3(0.2 * _rb._half_pipe_direction, _rb.linear_velocity.y, _rb.linear_velocity.z))
     

@@ -7,3 +7,5 @@ enum PlayerState {
     HALF_PIPE,
     GRINDING,
 }
+
+var debug : bool = false
