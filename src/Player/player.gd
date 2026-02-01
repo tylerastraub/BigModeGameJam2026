@@ -1,9 +1,11 @@
 extends Node3D
 
 const ROTATION_SPEED : float = 4.0
-const XFORM_SPEED : float = 10.0
+const XFORM_SPEED : float = 20.0
 const CAMERA_MOVE_LERP : float = 20.0
 const CAMERA_ROTATE_LERP : float = 0.5
+
+const AERIAL_180_LEEWAY : float = 45.0
 
 @onready var _rb : RigidBody3D = $RigidBody3D
 @onready var _visuals : Node3D = $PlayerVisuals
@@ -16,6 +18,7 @@ var _accel : float = 700.0
 var _air_accel : float = 50.0
 var _max_velocity : float = 10.0
 var _min_velocity : float = 3.0
+var _jump_power : float = 4.0
 
 # States
 var _state : Global.PlayerState = Global.PlayerState.NOVAL
@@ -29,15 +32,21 @@ var _min_grind_speed : float = 7.0
 # Aerial
 var _starting_aerial_angle : float = 0.0
 var _total_aerial_rotation : float = 0.0
-var _aerial_rotate_speed : float = 7.0
+var _aerial_rotate_max_speed : float = 7.0
+var _aerial_rotate_accel : float = 1.0
+var _aerial_rotate_velocity : float = 0.0
+var _turned_180 : bool = true
 
 # Misc
 var _input_dir : Vector3 = Vector3.ZERO
+var _ticks_since_touching_ground : int = 0
 
 # Debug
 var debug : bool = false
 var forward_dir : Vector3 = Vector3.ZERO
 var up_dir : Vector3 = Vector3.ZERO
+
+## ========== GODOT METHODS ==========
 
 func _ready() -> void:
     $RigidBody3D/BodyArea.area_entered.connect(_on_area_3d_area_entered)
@@ -56,13 +65,40 @@ func _physics_process(delta: float) -> void:
     _grind(delta)
     _aerial(delta)
     _move(delta)
+    if Input.is_action_just_pressed("jump"): _jump()
     var relative_velocity : float = 1.0
     if _state != Global.PlayerState.GRINDING:
         relative_velocity = _rb.linear_velocity.length() / _rb._max_velocity
     _spring_arm._update(delta, is_player_actionable(), relative_velocity)
     
+    if _state != Global.PlayerState.AERIAL:
+        if _turned_180:
+            $PlayerVisuals/Mesh.rotation.y = lerp_angle($PlayerVisuals/Mesh.rotation.y, deg_to_rad(180.0), delta * 10.0)
+        else:
+            $PlayerVisuals/Mesh.rotation.y = lerp_angle($PlayerVisuals/Mesh.rotation.y, 0.0, delta * 10.0)
+    
     _pivot.global_position = _pivot.global_position.move_toward(_rb.global_position + Vector3(0.0, 0.8, 0.0), delta * CAMERA_MOVE_LERP)
     _visuals.global_position = _rb.global_position
+    
+    _ticks_since_touching_ground += 1
+    if _rb.get_contact_count() > 0 or _state == Global.PlayerState.GRINDING:
+        _ticks_since_touching_ground = 0
+
+## ========== PUBLIC METHODS ==========
+
+func set_state(state: Global.PlayerState) -> void:
+    if _state == state: return
+    _last_state = _state
+    _state = state
+    _rb._player_state = _state
+    
+    if state == Global.PlayerState.AERIAL:
+        _starting_aerial_angle = _visuals.rotation.y
+        _total_aerial_rotation = 0.0
+    elif _last_state == Global.PlayerState.AERIAL:
+        _check_for_180()
+
+## ========== PRIVATE METHODS ==========
 
 func _move(delta: float) -> void:
     _input_dir = Vector3.ZERO
@@ -76,7 +112,7 @@ func _move(delta: float) -> void:
     _rb.apply_central_force(_input_dir * delta * accel)
 
 func _handle_states() -> void:
-    if _check_raycasts().size() > 0:
+    if _ticks_since_touching_ground < 4: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
             set_state(Global.PlayerState.GROUNDED)
     elif _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING:
@@ -97,14 +133,13 @@ func _handle_orientation(delta: float) -> void:
         for res in raycast_result:
             avg_normal += res.get_collision_normal()
         avg_normal /= raycast_result.size()
-        var xform := align_with_y(_visuals.global_transform, avg_normal)
+        var xform := _align_with_y(_visuals.global_transform, avg_normal)
         _visuals.global_transform = _visuals.global_transform.interpolate_with(xform, delta * XFORM_SPEED)
     elif _rb.linear_velocity != Vector3.ZERO:
         var target_offset : Vector3 = Vector3.ZERO
         if abs(Vector3.UP.dot(_rb.linear_velocity.normalized())) > 0.98:
             target_offset.z = -0.01
         _visuals.look_at(_visuals.global_position + _rb.linear_velocity.normalized() + target_offset, _visuals.basis.y)
-        if _state == Global.PlayerState.AERIAL: _visuals.rotate_object_local(Vector3.UP, _total_aerial_rotation)
     forward_dir = _rb.linear_velocity.normalized()
     up_dir = _visuals.basis.y
 
@@ -142,25 +177,33 @@ func _stop_grind() -> void:
 
 func _aerial(delta: float) -> void:
     if _state != Global.PlayerState.AERIAL:
+        _aerial_rotate_velocity = 0
         return
-    var val : float = (Input.get_action_strength("move_left") - Input.get_action_strength("move_right")) * delta * _aerial_rotate_speed
-    _total_aerial_rotation += val
+    var input_val : float = Input.get_action_strength("move_left") - Input.get_action_strength("move_right")
+    if input_val == 0.0:
+        _aerial_rotate_velocity = move_toward(_aerial_rotate_velocity, 0.0, _aerial_rotate_accel)
+    else:
+        _aerial_rotate_velocity += _aerial_rotate_accel * (Input.get_action_strength("move_left") - Input.get_action_strength("move_right"))
+    _aerial_rotate_velocity = clampf(_aerial_rotate_velocity, _aerial_rotate_max_speed * -1.0, _aerial_rotate_max_speed)
+    _total_aerial_rotation += _aerial_rotate_velocity * delta
+    $PlayerVisuals/Mesh.rotate_y(_aerial_rotate_velocity * delta)
 
-func align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
+func _jump() -> void:
+    if _state == Global.PlayerState.GROUNDED:
+        set_state(Global.PlayerState.AERIAL)
+        _rb.apply_central_impulse(_visuals.basis.y.normalized() * _jump_power)
+    elif _state == Global.PlayerState.GRINDING:
+        _stop_grind()
+
+func _align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
     xform.basis.y = new_y
     xform.basis.x = -xform.basis.z.cross(new_y)
     xform.basis = xform.basis.orthonormalized()
     return xform
 
-func set_state(state: Global.PlayerState) -> void:
-    if _state == state: return
-    _last_state = _state
-    _state = state
-    _rb._player_state = _state
-    
-    if state == Global.PlayerState.AERIAL:
-        _starting_aerial_angle = _visuals.rotation.y
-        _total_aerial_rotation = 0.0
+func _check_for_180() -> void:
+    if abs(abs(rad_to_deg(_total_aerial_rotation)) - 180) < AERIAL_180_LEEWAY:
+        _turned_180 = !_turned_180
 
 func is_player_actionable() -> bool:
     return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL
