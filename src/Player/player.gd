@@ -35,9 +35,9 @@ var _aerial_rotate_speed : float = 7.0
 var _input_dir : Vector3 = Vector3.ZERO
 
 # Debug
+var debug : bool = false
 var forward_dir : Vector3 = Vector3.ZERO
 var up_dir : Vector3 = Vector3.ZERO
-var debug : bool = true
 
 func _ready() -> void:
     $RigidBody3D/BodyArea.area_entered.connect(_on_area_3d_area_entered)
@@ -49,8 +49,6 @@ func _ready() -> void:
         $Debug.draw.add_vector(self, "up_dir", 1, 4, Color.BLUE, $PlayerVisuals)
 
 func _physics_process(delta: float) -> void:
-    _pivot.global_position = _pivot.global_position.move_toward(_rb.global_position + Vector3(0.0, 0.8, 0.0), delta * CAMERA_MOVE_LERP)
-    _visuals.global_position = _rb.global_position
     _raycasts.global_position = _rb.global_position
     
     _handle_orientation(delta)
@@ -62,7 +60,9 @@ func _physics_process(delta: float) -> void:
     if _state != Global.PlayerState.GRINDING:
         relative_velocity = _rb.linear_velocity.length() / _rb._max_velocity
     _spring_arm._update(delta, is_player_actionable(), relative_velocity)
-    print(_visuals.rotation.y)
+    
+    _pivot.global_position = _pivot.global_position.move_toward(_rb.global_position + Vector3(0.0, 0.8, 0.0), delta * CAMERA_MOVE_LERP)
+    _visuals.global_position = _rb.global_position
 
 func _move(delta: float) -> void:
     _input_dir = Vector3.ZERO
@@ -103,8 +103,8 @@ func _handle_orientation(delta: float) -> void:
         var target_offset : Vector3 = Vector3.ZERO
         if abs(Vector3.UP.dot(_rb.linear_velocity.normalized())) > 0.98:
             target_offset.z = -0.01
-        # idk
-        _visuals.look_at((_visuals.global_position + _rb.linear_velocity.normalized() + target_offset).rotated(_visuals.basis.y, _total_aerial_rotation))
+        _visuals.look_at(_visuals.global_position + _rb.linear_velocity.normalized() + target_offset, _visuals.basis.y)
+        if _state == Global.PlayerState.AERIAL: _visuals.rotate_object_local(Vector3.UP, _total_aerial_rotation)
     forward_dir = _rb.linear_velocity.normalized()
     up_dir = _visuals.basis.y
 
