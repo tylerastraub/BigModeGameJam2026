@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://btyh50ea7jknn"]
 
-[ext_resource type="PackedScene" uid="uid://cwsfpg1tin24n" path="res://src/player.tscn" id="1_eewff"]
-[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/level.gd" id="2_3cfgd"]
+[ext_resource type="PackedScene" uid="uid://cwsfpg1tin24n" path="res://src/Player/player.tscn" id="1_eewff"]
+[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/level.gd" id="2_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://cx366wnw7o54b" path="res://res/resources/floor_base_300m.res" id="3_5q4o7"]
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="4_3cfgd"]
+[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="5_fyndt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eewff"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -38,3 +39,6 @@ script = ExtResource("2_3cfgd")
 
 [node name="ramp_2x2" parent="Level" unique_id=1293330896 instance=ExtResource("4_3cfgd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -12)
+
+[node name="GrindRail" parent="Level" unique_id=226234324 instance=ExtResource("5_fyndt")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -0.9999999, 0, -24)

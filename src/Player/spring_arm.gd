@@ -11,10 +11,11 @@ var _fov_default : float = 54
 var _fov_speed_mod : float = 20
 var _fov_accel_mod : float = 16
 
-func _update(delta: float, vel_scale: float) -> void:
+func _update(delta: float, player_actionable: bool, vel_scale: float) -> void:
     var no_rotate_input : Vector3 = Vector3.ZERO
-    no_rotate_input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-    no_rotate_input.z = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
+    if player_actionable:
+        no_rotate_input.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+        no_rotate_input.z = Input.get_action_strength("move_backward") - Input.get_action_strength("move_forward")
     rotation.x = move_toward(rotation.x, deg_to_rad(_default_camera_tilt) + deg_to_rad(_max_camera_tilt) * no_rotate_input.z, delta * CAMERA_TILT_SPEED)
     rotation.z = move_toward(rotation.z, deg_to_rad(_max_camera_tilt) * no_rotate_input.x * -1, delta * CAMERA_TILT_SPEED)
     

@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://cwsfpg1tin24n"]
 
-[ext_resource type="Script" uid="uid://din7emjtvhvby" path="res://src/player.gd" id="1_lowyb"]
-[ext_resource type="Script" uid="uid://047o5ynnb0k1" path="res://src/player_rb.gd" id="2_ehvfd"]
-[ext_resource type="Script" uid="uid://cmoeyg7pg4025" path="res://addons/smoothing/smoothing.gd" id="2_gmfve"]
-[ext_resource type="Script" uid="uid://ce4gp1g1oqq72" path="res://src/spring_arm.gd" id="4_bktlc"]
+[ext_resource type="Script" uid="uid://din7emjtvhvby" path="res://src/Player/player.gd" id="1_lowyb"]
+[ext_resource type="Script" uid="uid://047o5ynnb0k1" path="res://src/Player/player_rb.gd" id="2_ehvfd"]
+[ext_resource type="Script" uid="uid://ce4gp1g1oqq72" path="res://src/Player/spring_arm.gd" id="4_bktlc"]
+[ext_resource type="Script" uid="uid://dx0qdfwbo0vo3" path="res://src/Debug/DebugOverlay.gd" id="4_v7f4r"]
+[ext_resource type="Script" uid="uid://c8fkmffy62yiv" path="res://src/Debug/DebugDraw3D.gd" id="5_vgmdf"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lowyb"]
 
@@ -16,11 +17,11 @@ radius = 0.2
 [sub_resource type="SphereShape3D" id="SphereShape3D_ehvfd"]
 radius = 0.1
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lowyb"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_chuli"]
 albedo_color = Color(0, 1, 1, 1)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_lowyb"]
-material = SubResource("StandardMaterial3D_lowyb")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_chuli"]
+material = SubResource("StandardMaterial3D_chuli")
 radius = 0.2
 height = 1.2
 
@@ -39,7 +40,7 @@ shape = SubResource("SphereShape3D_rc2ur")
 
 [node name="BodyArea" type="Area3D" parent="RigidBody3D" unique_id=1616327092]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 12
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/BodyArea" unique_id=238960311]
 shape = SubResource("SphereShape3D_bktlc")
@@ -49,7 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 top_level = true
 
 [node name="FloorRaycast" type="RayCast3D" parent="RigidBody3D/Raycasts" unique_id=1074092581]
-target_position = Vector3(0, -0.25, 0)
+target_position = Vector3(0, -0.3, 0)
 hit_from_inside = true
 
 [node name="RightWallRaycast" type="RayCast3D" parent="RigidBody3D/Raycasts" unique_id=542538125]
@@ -60,36 +61,28 @@ hit_from_inside = true
 target_position = Vector3(-0.25, 0, 0)
 hit_from_inside = true
 
-[node name="LeftDiagonalRaycast" type="RayCast3D" parent="RigidBody3D/Raycasts" unique_id=91533455]
-enabled = false
-target_position = Vector3(-0.177, -0.177, 0)
-hit_from_inside = true
-
-[node name="RightDiagonalRaycast" type="RayCast3D" parent="RigidBody3D/Raycasts" unique_id=1455045932]
-enabled = false
-target_position = Vector3(0.177, -0.177, 0)
-hit_from_inside = true
-
-[node name="Smoothing" type="Node3D" parent="." unique_id=1822273040]
-script = ExtResource("2_gmfve")
-metadata/_custom_type_script = "uid://cmoeyg7pg4025"
-
-[node name="CameraPivot" type="Node3D" parent="Smoothing" unique_id=2047960378]
+[node name="CameraPivot" type="Node3D" parent="." unique_id=2047960378]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="SpringArm" type="SpringArm3D" parent="Smoothing/CameraPivot" unique_id=810132887]
+[node name="SpringArm" type="SpringArm3D" parent="CameraPivot" unique_id=810132887]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0)
 shape = SubResource("SphereShape3D_ehvfd")
 spring_length = 3.0
 script = ExtResource("4_bktlc")
 
-[node name="Camera" type="Camera3D" parent="Smoothing/CameraPivot/SpringArm" unique_id=791493926]
+[node name="Camera" type="Camera3D" parent="CameraPivot/SpringArm" unique_id=791493926]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 fov = 54.0
 
-[node name="PlayerVisuals" type="Node3D" parent="Smoothing" unique_id=1873270741]
+[node name="PlayerVisuals" type="Node3D" parent="." unique_id=1873270741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 
-[node name="Mesh" type="MeshInstance3D" parent="Smoothing/PlayerVisuals" unique_id=1694334769]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_lowyb")
+[node name="Mesh" type="MeshInstance3D" parent="PlayerVisuals" unique_id=1694334769]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_chuli")
+
+[node name="Debug" type="CanvasLayer" parent="." unique_id=846066283]
+script = ExtResource("4_v7f4r")
+
+[node name="DebugDraw3D" type="Node2D" parent="Debug" unique_id=1231321320]
+script = ExtResource("5_vgmdf")
