@@ -13,6 +13,7 @@ enum Type {
 var trick_name : String
 var trick_value : int
 var trick_type : Type
+var trick_level : int = 0
 
 func _init(_name: String, _value: int, _type: Type) -> void:
     trick_name = _name

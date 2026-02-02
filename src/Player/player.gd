@@ -5,7 +5,7 @@ const XFORM_SPEED : float = 20.0
 const CAMERA_MOVE_LERP : float = 20.0
 const CAMERA_ROTATE_LERP : float = 0.5
 
-const AERIAL_180_LEEWAY : float = 45.0
+const AERIAL_180_LEEWAY : float = 50.0
 const COYOTE_TIME : int = 4
 
 @onready var _rb : RigidBody3D = $RigidBody3D
@@ -117,8 +117,12 @@ func set_state(state: Global.PlayerState) -> void:
         Global.trickScored.emit(_current_trick)
     
     if state == Global.PlayerState.GRINDING:
-        _current_trick = Trick.new("GRIND", 0, Trick.Type.GRIND)
-        Global.trickStarted.emit(_current_trick)
+        if _current_trick == null:
+            _current_trick = Trick.new("GRIND", 0, Trick.Type.GRIND)
+            Global.trickStarted.emit(_current_trick)
+        else:
+            _current_trick.trick_level += 1
+            _current_trick.trick_name = str(_current_trick.trick_level + 1) + "x GRIND"
     elif state == Global.PlayerState.HALF_PIPE:
         _current_trick = Trick.new("HALF PIPE", 0, Trick.Type.HALF_PIPE)
         Global.trickStarted.emit(_current_trick)
@@ -126,7 +130,9 @@ func set_state(state: Global.PlayerState) -> void:
         _starting_aerial_angle = _visuals.rotation.y
         _total_aerial_rotation = 0.0
     elif state == Global.PlayerState.GROUNDED:
-        _current_trick = null
+        if _current_trick:
+            Global.trickScored.emit(_current_trick)
+            _current_trick = null
 
 ## ========== PRIVATE METHODS ==========
 
@@ -189,7 +195,7 @@ func _check_raycasts() -> Array[RayCast3D]:
 func _trick() -> void:
     if _current_trick:
         if _state == Global.PlayerState.GRINDING:
-            _current_trick.trick_value += GRIND_TRICK_RATE
+            _current_trick.trick_value += GRIND_TRICK_RATE + (_current_trick.trick_level * 2)
             Global.currentTrickUpdated.emit(_current_trick)
         elif _state == Global.PlayerState.HALF_PIPE:
             _current_trick.trick_value += HALF_PIPE_TRICK_RATE
@@ -214,11 +220,10 @@ func _start_grind(rail: GrindRail) -> void:
     _rb.global_position = _grind_rail.get_grind_pos()
 
 func _stop_grind() -> void:
-    Global.trickScored.emit(_current_trick)
     set_state(Global.PlayerState.AERIAL)
     _ticks_since_touching_ground = COYOTE_TIME
     _grind_rail = null
-    var exit_vel : Vector3 = Vector3((Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) * 0.4, 0.2, -1.0)
+    var exit_vel : Vector3 = Vector3((Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) * 0.3, 0.2, -1.0)
     _rb.apply_central_impulse(exit_vel.normalized() * _max_velocity)
     _boost_on_land = true
 

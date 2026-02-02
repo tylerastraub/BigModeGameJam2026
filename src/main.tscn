@@ -39,17 +39,23 @@ script = ExtResource("2_3cfgd")
 
 [node name="floor_base_300m" parent="Level" unique_id=419825713 instance=ExtResource("3_5q4o7")]
 
-[node name="ramp_2x2" parent="Level" unique_id=1293330896 instance=ExtResource("4_3cfgd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -12)
+[node name="ramp_2x4" parent="Level" unique_id=733351690 instance=ExtResource("4_3cfgd")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 1.0000002, 0, -19)
 
 [node name="ramp_2x3" parent="Level" unique_id=1675079881 instance=ExtResource("4_3cfgd")]
-transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -4.7683716e-07, 0, -47)
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, -4.7683707e-07, 0, -115)
 
 [node name="GrindRail" parent="Level" unique_id=226234324 instance=ExtResource("5_fyndt")]
-transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -0.9999999, 0, -24)
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -0.9999998, 0, -48)
+
+[node name="GrindRail3" parent="Level" unique_id=1959691033 instance=ExtResource("5_fyndt")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0, -64)
+
+[node name="GrindRail2" parent="Level" unique_id=1069411627 instance=ExtResource("5_fyndt")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0, -32)
 
 [node name="Ring" parent="Level" unique_id=1798653930 instance=ExtResource("6_kmhfv")]
-transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, -0.08752763, 1.9999992, -51.00214)
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -0.08752761, 1.9999988, -119.00214)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1247532592]
 

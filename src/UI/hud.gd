@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
             _score += rem
             if _last_score.local_value <= 0:
                 _last_score = null
-            
+    
     for info in _score_infos:
         if info.timer > _score_add_delay:
             var step : int = int(_score_add_speed * delta)
@@ -60,15 +60,22 @@ func _physics_process(delta: float) -> void:
             info.timer += delta
     update_score_infos()
     if Input.is_action_just_pressed("test_button"):
-        add_score(Trick.new("test", randi_range(500, 2000), Trick.Type.NOVAL))
+        add_score(Trick.new("test", randi_range(500, 2000), Trick.Type.NOVAL), true)
     $Score.text = "%06d" % _score
 
-func add_score(trick: Trick, timer_enabled: bool = true) -> void:
+func add_score(trick: Trick, timer_enabled: bool) -> void:
     var score : Score = Score.new(trick)
     score.timer_enabled = timer_enabled
-    if _last_score != null:
+    if _last_score == null:
+        _last_score = score
+    elif _last_score.trick == trick:
+        _last_score.timer_enabled = timer_enabled
+    elif _last_score.timer_enabled:
         _score_infos.push_front(_last_score)
-    _last_score = score
+        _last_score = score
+    else:
+        _score_infos.push_front(score)
+    
     update_score_infos()
 
 func update_score_infos() -> void:
@@ -92,15 +99,9 @@ func _on_trick_started(trick: Trick) -> void:
     add_score(trick, false)
 
 func _on_trick_scored(trick: Trick) -> void:
-    if _last_score == null:
-        add_score(trick)
-    else:
-        if _last_score.trick == trick:
-            _last_score.timer_enabled = true
-        else:
-            add_score(trick)
+    add_score(trick, true)
 
 func _on_current_trick_updated(trick: Trick) -> void:
     if _last_score:
-        _last_score.trick = trick
-        _last_score.local_value = trick.trick_value
+        if _last_score.trick == trick:
+            _last_score.local_value = trick.trick_value
