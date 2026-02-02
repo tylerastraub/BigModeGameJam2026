@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://d3k2rcsj8omf3"]
+
+[ext_resource type="Script" uid="uid://bwl4melrjpcwi" path="res://src/UI/hud.gd" id="1_2xwxy"]
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_5hfrm"]
+
+[node name="HUD" type="Control" unique_id=1997232785]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5hfrm")
+script = ExtResource("1_2xwxy")
+
+[node name="Score" type="RichTextLabel" parent="." unique_id=172799761]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 5.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme = ExtResource("1_5hfrm")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "000000"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="ScoreInfoHistory" type="VBoxContainer" parent="." unique_id=2036830638]
+layout_mode = 0
+offset_left = 576.0
+offset_right = 1148.0
+offset_bottom = 285.0
+alignment = 2
+
+[node name="LastScore" type="RichTextLabel" parent="." unique_id=1083313959]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 576.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_separation = 8
+theme_override_constants/shadow_outline_size = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/normal_font_size = 24
+text = "test
+1234"
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 1

@@ -38,14 +38,22 @@ var _aerial_rotate_accel : float = 1.0
 var _aerial_rotate_velocity : float = 0.0
 var _turned_180 : bool = true
 
-# Tricks/Boost
+# Boost
 var _boost_on_land : bool = false
 var _boost_factor : float = 2.0 # multiplicative factor for top speed when boosting
 var _boost_power : float = 15.0 # initial boost
 var _boost_timer : float = 1.0
 var _boost_time : float = 0.25
 
+# Tricks
+var _current_trick : Trick = null
+const HALF_PIPE_TRICK_RATE : int = 3
+const GRIND_TRICK_RATE : int = 6
+const BOOST_RING_TRICK_VALUE : int = 400
+const SPIN_TRICK_RATE : int = 180
+
 # Misc
+var _score : int = 0
 var _input_dir : Vector3 = Vector3.ZERO
 var _ticks_since_touching_ground : int = 0
 
@@ -58,6 +66,7 @@ var up_dir : Vector3 = Vector3.ZERO
 func _ready() -> void:
     $RigidBody3D/BodyArea.area_entered.connect(_on_area_3d_area_entered)
     $RigidBody3D/BodyArea.area_exited.connect(_on_area_3d_area_exited)
+    Global.trickScored.connect(_on_trick_scored)
     _rb._max_velocity = _max_velocity
     _rb._min_velocity = _min_velocity
     if Global.debug:
@@ -69,6 +78,7 @@ func _physics_process(delta: float) -> void:
     
     _handle_orientation(delta)
     _handle_states()
+    _trick()
     _grind(delta)
     _aerial(delta)
     _move(delta)
@@ -101,11 +111,22 @@ func set_state(state: Global.PlayerState) -> void:
     _state = state
     _rb._player_state = _state
     
-    if state == Global.PlayerState.AERIAL:
+    if _last_state == Global.PlayerState.AERIAL:
+        _check_for_180()
+    elif _last_state == Global.PlayerState.HALF_PIPE:
+        Global.trickScored.emit(_current_trick)
+    
+    if state == Global.PlayerState.GRINDING:
+        _current_trick = Trick.new("GRIND", 0, Trick.Type.GRIND)
+        Global.trickStarted.emit(_current_trick)
+    elif state == Global.PlayerState.HALF_PIPE:
+        _current_trick = Trick.new("HALF PIPE", 0, Trick.Type.HALF_PIPE)
+        Global.trickStarted.emit(_current_trick)
+    elif state == Global.PlayerState.AERIAL:
         _starting_aerial_angle = _visuals.rotation.y
         _total_aerial_rotation = 0.0
-    elif _last_state == Global.PlayerState.AERIAL:
-        _check_for_180()
+    elif state == Global.PlayerState.GROUNDED:
+        _current_trick = null
 
 ## ========== PRIVATE METHODS ==========
 
@@ -165,6 +186,15 @@ func _check_raycasts() -> Array[RayCast3D]:
             result.push_back(raycast)
     return result
 
+func _trick() -> void:
+    if _current_trick:
+        if _state == Global.PlayerState.GRINDING:
+            _current_trick.trick_value += GRIND_TRICK_RATE
+            Global.currentTrickUpdated.emit(_current_trick)
+        elif _state == Global.PlayerState.HALF_PIPE:
+            _current_trick.trick_value += HALF_PIPE_TRICK_RATE
+            Global.currentTrickUpdated.emit(_current_trick)
+
 func _grind(delta: float) -> void:
     if _state != Global.PlayerState.GRINDING:
         return
@@ -184,6 +214,7 @@ func _start_grind(rail: GrindRail) -> void:
     _rb.global_position = _grind_rail.get_grind_pos()
 
 func _stop_grind() -> void:
+    Global.trickScored.emit(_current_trick)
     set_state(Global.PlayerState.AERIAL)
     _ticks_since_touching_ground = COYOTE_TIME
     _grind_rail = null
@@ -216,7 +247,7 @@ func _boost() -> void:
         _rb._max_velocity = _max_velocity * _boost_factor
     else:
         _rb._max_velocity = _max_velocity
-    
+
 func _align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
     xform.basis.y = new_y
     xform.basis.x = -xform.basis.z.cross(new_y)
@@ -224,8 +255,13 @@ func _align_with_y(xform: Transform3D, new_y: Vector3) -> Transform3D:
     return xform
 
 func _check_for_180() -> void:
-    if abs(abs(rad_to_deg(_total_aerial_rotation)) - 180) < AERIAL_180_LEEWAY:
-        _turned_180 = !_turned_180
+    var rot_deg : int = abs(int(rad_to_deg(_total_aerial_rotation)))
+    var spins : int = roundi(rot_deg / 180.0)
+    var spin_error : int = min(abs(rot_deg % 180), abs(rot_deg % 180 - 180))
+    if spin_error < AERIAL_180_LEEWAY and spins > 0:
+        if roundi(rot_deg / 180.0) % 2 == 1:
+            _turned_180 = !_turned_180
+        Global.trickScored.emit(Trick.new(str(spins * 180) + "° SPIN", spins * SPIN_TRICK_RATE, Trick.Type.SPIN))
 
 func is_player_actionable() -> bool:
     return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL
@@ -242,9 +278,12 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _boost_timer = 0.0
         _boost_time = 0.5
         _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
+        Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)
     if mask[mask.length() - 3] == "1":
         _rb.apply_central_impulse(Vector3(0.2 * _rb._half_pipe_direction, _rb.linear_velocity.y, _rb.linear_velocity.z))
-    
+
+func _on_trick_scored(trick: Trick) -> void:
+    _score += trick.trick_value

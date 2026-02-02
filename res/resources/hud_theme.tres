@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://cqhr5fh3a87eo"]
+
+[ext_resource type="FontFile" uid="uid://bs4bjs5emdx3w" path="res://res/fonts/digitalix.ttf" id="1_6h4jt"]
+
+[resource]
+default_font = ExtResource("1_6h4jt")

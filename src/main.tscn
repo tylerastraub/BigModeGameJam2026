@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="4_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="5_fyndt"]
 [ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/ring.tscn" id="6_kmhfv"]
+[ext_resource type="PackedScene" uid="uid://d3k2rcsj8omf3" path="res://src/UI/HUD.tscn" id="7_rlaii"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eewff"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -49,3 +50,9 @@ transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -0.9999999,
 
 [node name="Ring" parent="Level" unique_id=1798653930 instance=ExtResource("6_kmhfv")]
 transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, -0.08752763, 1.9999992, -51.00214)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1247532592]
+
+[node name="HUD" parent="CanvasLayer" unique_id=1997232785 instance=ExtResource("7_rlaii")]
+
+[editable path="CanvasLayer/HUD"]

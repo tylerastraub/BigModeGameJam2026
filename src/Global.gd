@@ -8,4 +8,11 @@ enum PlayerState {
     GRINDING,
 }
 
+@warning_ignore("unused_signal")
+signal trickStarted(trick: Trick)
+@warning_ignore("unused_signal")
+signal trickScored(trick: Trick)
+@warning_ignore("unused_signal")
+signal currentTrickUpdated(trick: Trick)
+
 var debug : bool = false

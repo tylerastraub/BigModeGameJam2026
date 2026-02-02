@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ijyg3b6t7tfv"]
+
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_awjpj"]
+[ext_resource type="Script" uid="uid://cbkcy7hgo7xrp" path="res://src/UI/score_info.gd" id="2_u5pf6"]
+
+[node name="ScoreInfo" type="VBoxContainer" unique_id=1726303400]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 46.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_awjpj")
+script = ExtResource("2_u5pf6")
+
+[node name="Name" type="RichTextLabel" parent="." unique_id=1498427084]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "swag"
+scroll_active = false
+horizontal_alignment = 2
+
+[node name="Value" type="RichTextLabel" parent="." unique_id=779245929]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 16
+text = "9762"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
