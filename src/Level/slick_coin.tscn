@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cfeqmqism6el3"]
+
+[ext_resource type="PackedScene" uid="uid://q6h87ednijnb" path="res://res/models/slick_coin.glb" id="1_224ra"]
+[ext_resource type="Script" uid="uid://dfdf4t2cy5dqk" path="res://src/Level/slick_coin.gd" id="2_nq0dr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_224ra"]
+size = Vector3(0.7, 1, 0.5)
+
+[node name="SlickCoin" type="Area3D" unique_id=1649155444]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("2_nq0dr")
+
+[node name="slick_coin" parent="." unique_id=1323570098 instance=ExtResource("1_224ra")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1821932667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("BoxShape3D_224ra")
+
+[editable path="slick_coin"]

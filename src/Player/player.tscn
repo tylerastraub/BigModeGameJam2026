@@ -12,11 +12,12 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_rc2ur"]
 radius = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_bktlc"]
-radius = 0.2
-
 [sub_resource type="SphereShape3D" id="SphereShape3D_ehvfd"]
 radius = 0.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vgmdf"]
+radius = 0.2
+height = 1.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vgmdf"]
 animation = &"Sliding"
@@ -35,6 +36,7 @@ script = ExtResource("1_lowyb")
 [node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1545582075]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 collision_layer = 2
+collision_mask = 129
 physics_material_override = SubResource("PhysicsMaterial_lowyb")
 continuous_cd = true
 contact_monitor = true
@@ -43,13 +45,6 @@ script = ExtResource("2_ehvfd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=28878106]
 shape = SubResource("SphereShape3D_rc2ur")
-
-[node name="BodyArea" type="Area3D" parent="RigidBody3D" unique_id=1616327092]
-collision_layer = 32
-collision_mask = 28
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D/BodyArea" unique_id=238960311]
-shape = SubResource("SphereShape3D_bktlc")
 
 [node name="Raycasts" type="Node3D" parent="RigidBody3D" unique_id=2102572576]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -86,7 +81,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -
 
 [node name="Skeleton3D" parent="PlayerVisuals/Mesh/Armature" parent_id_path=PackedInt32Array(866323256, 1231428684) index="0" unique_id=142313175]
 bones/0/position = Vector3(9.600156e-16, 0.26817226, 0.033070475)
-bones/0/rotation = Quaternion(0.69442946, 4.7934897e-08, 4.692965e-08, 0.71956074)
+bones/0/rotation = Quaternion(0.69471526, 4.791156e-08, 4.714299e-08, 0.71928483)
 bones/1/rotation = Quaternion(-0.0715038, -6.2311267e-15, -9.530034e-09, 0.99744034)
 bones/2/rotation = Quaternion(-0.14564797, -3.64449e-08, -1.40466305e-08, 0.98933655)
 bones/3/rotation = Quaternion(-0.52416337, 0.003181425, 0.010062401, 0.85155237)
@@ -98,12 +93,12 @@ bones/9/rotation = Quaternion(-0.00035005435, -0.057390228, 0.9968425, 0.0548765
 bones/10/rotation = Quaternion(0.048991833, -0.00092568283, 0.048233125, 0.9976335)
 bones/12/rotation = Quaternion(-5.858801e-09, -3.9026335e-07, -0.0022189878, 0.99999756)
 bones/13/rotation = Quaternion(-1.647343e-08, -1.389243e-08, 0.0016327798, 0.9999987)
-bones/14/rotation = Quaternion(0.0054255873, 0.0476301, 0.99873865, -0.014935171)
-bones/15/rotation = Quaternion(-0.05346554, -4.232122e-05, -0.00422562, 0.99856085)
-bones/16/rotation = Quaternion(0.01082513, 0.9966718, 0.08062645, -0.0052595916)
-bones/17/rotation = Quaternion(-0.00542547, 0.04762977, 0.99873865, 0.014935175)
-bones/18/rotation = Quaternion(-0.053465437, 4.229318e-05, 0.0042255814, 0.9985608)
-bones/19/rotation = Quaternion(-0.010824778, 0.99667174, 0.080626555, 0.005259326)
+bones/14/rotation = Quaternion(0.0054305843, 0.04804715, 0.9987187, -0.014931066)
+bones/15/rotation = Quaternion(-0.053504597, -4.2321153e-05, -0.0042287065, 0.9985587)
+bones/16/rotation = Quaternion(0.010824143, 0.99666786, 0.080674075, -0.005260944)
+bones/17/rotation = Quaternion(-0.005430465, 0.04804701, 0.9987187, 0.014931088)
+bones/18/rotation = Quaternion(-0.053504497, 4.2293144e-05, 0.0042286683, 0.9985587)
+bones/19/rotation = Quaternion(-0.010823807, 0.9966679, 0.08067417, 0.005260676)
 bones/20/position = Vector3(0.3023343, 0.12137323, -2.2793703)
 bones/20/rotation = Quaternion(0.5350065, 0, 0, 0.8448479)
 bones/21/position = Vector3(0.2829793, -0.46939838, -1.1461134)
@@ -112,6 +107,15 @@ bones/22/position = Vector3(-0.3023343, 0.12137323, -2.2793703)
 bones/22/rotation = Quaternion(0.53500664, 0, 0, 0.8448479)
 bones/23/position = Vector3(-0.2829793, -0.46939838, -1.1461134)
 bones/23/rotation = Quaternion(0, -0.01114279, 0.99993795, 0)
+
+[node name="BodyArea" type="Area3D" parent="PlayerVisuals/Mesh" unique_id=1616327092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+collision_layer = 32
+collision_mask = 92
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerVisuals/Mesh/BodyArea" unique_id=238960311]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_vgmdf")
 
 [node name="Debug" type="CanvasLayer" parent="." unique_id=846066283]
 script = ExtResource("4_v7f4r")

@@ -5,6 +5,6 @@ todo.txt
 *.import
 .gitattributes
 .editorconfig
-*.temp
+*.tmp
 *.uid
 settings.json

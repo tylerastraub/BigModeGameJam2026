@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bwl4melrjpcwi" path="res://src/UI/hud.gd" id="1_2xwxy"]
 [ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_5hfrm"]
+[ext_resource type="PackedScene" uid="uid://c621ccjjo8ogp" path="res://src/UI/slick_coin_progress.tscn" id="3_nwqgn"]
 
 [node name="HUD" type="Control" unique_id=1997232785]
 layout_mode = 3
@@ -46,6 +47,7 @@ offset_left = 576.0
 offset_right = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/line_separation = 8
 theme_override_constants/shadow_outline_size = 2
@@ -56,3 +58,17 @@ text = "test
 scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="SlickCoinProgress" parent="." unique_id=57451740 instance=ExtResource("3_nwqgn")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -72.0
+offset_right = 176.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0

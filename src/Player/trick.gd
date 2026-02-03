@@ -8,6 +8,8 @@ enum Type {
     GRIND,
     HALF_PIPE,
     BOOST_RING,
+    SLICK_COIN_SINGLE,
+    SLICK_COIN_ALL,
 }
 
 var trick_name : String

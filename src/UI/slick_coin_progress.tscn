@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://c621ccjjo8ogp"]
+
+[ext_resource type="Script" uid="uid://cl1rno6pcmmhl" path="res://src/UI/slick_coin_progress.gd" id="1_5avn6"]
+[ext_resource type="Texture2D" uid="uid://c8my7yiqd7307" path="res://res/textures/coin_s_tex.png" id="1_31rhg"]
+[ext_resource type="Texture2D" uid="uid://1p8o1jhsveom" path="res://res/textures/coin_l_tex.png" id="2_6h3gg"]
+[ext_resource type="Texture2D" uid="uid://yhmr8yv4uetc" path="res://res/textures/coin_i_tex.png" id="3_lq8s7"]
+[ext_resource type="Texture2D" uid="uid://mj40l7h8w630" path="res://res/textures/coin_c_tex.png" id="4_pheib"]
+[ext_resource type="Texture2D" uid="uid://v3o8ypbidwnf" path="res://res/textures/coin_k_tex.png" id="5_ir3hy"]
+
+[node name="SlickCoinProgress" type="Control" unique_id=57451740]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 352.0
+offset_bottom = 72.0
+script = ExtResource("1_5avn6")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1772780410]
+color = Color(0.9079417, 0.9079417, 0.9079416, 1)
+
+[node name="S" type="Polygon2D" parent="CanvasModulate" unique_id=1276299891]
+clip_children = 1
+polygon = PackedVector2Array(60, 0, 60, 4, 64, 4, 64, 60, 60, 60, 60, 64, 4, 64, 4, 60, 0, 60, 0, 4, 4, 4, 4, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasModulate/S" unique_id=452708285]
+texture_filter = 1
+texture_repeat = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_31rhg")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="L" type="Polygon2D" parent="CanvasModulate" unique_id=642362175]
+clip_children = 1
+position = Vector2(72, 0)
+polygon = PackedVector2Array(60, 0, 60, 4, 64, 4, 64, 60, 60, 60, 60, 64, 4, 64, 4, 60, 0, 60, 0, 4, 4, 4, 4, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasModulate/L" unique_id=200359272]
+texture_filter = 1
+texture_repeat = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("2_6h3gg")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="I" type="Polygon2D" parent="CanvasModulate" unique_id=2013471722]
+clip_children = 1
+position = Vector2(144, 0)
+polygon = PackedVector2Array(60, 0, 60, 4, 64, 4, 64, 60, 60, 60, 60, 64, 4, 64, 4, 60, 0, 60, 0, 4, 4, 4, 4, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasModulate/I" unique_id=1046083593]
+texture_filter = 1
+texture_repeat = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("3_lq8s7")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="C" type="Polygon2D" parent="CanvasModulate" unique_id=823605604]
+clip_children = 1
+position = Vector2(216, 0)
+polygon = PackedVector2Array(60, 0, 60, 4, 64, 4, 64, 60, 60, 60, 60, 64, 4, 64, 4, 60, 0, 60, 0, 4, 4, 4, 4, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasModulate/C" unique_id=1219508283]
+texture_filter = 1
+texture_repeat = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("4_pheib")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="K" type="Polygon2D" parent="CanvasModulate" unique_id=616552840]
+clip_children = 1
+position = Vector2(288, 0)
+polygon = PackedVector2Array(60, 0, 60, 4, 64, 4, 64, 60, 60, 60, 60, 64, 4, 64, 4, 60, 0, 60, 0, 4, 4, 4, 4, 0)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasModulate/K" unique_id=536587816]
+texture_filter = 1
+texture_repeat = 1
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("5_ir3hy")
+expand_mode = 2

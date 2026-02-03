@@ -9,19 +9,11 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lrwgh"]
-transparency = 1
-albedo_color = Color(1, 0, 0, 0.81960785)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_78evc"]
-material = SubResource("StandardMaterial3D_lrwgh")
-size = Vector2(2, 0.1)
-
 [sub_resource type="BoxMesh" id="BoxMesh_7wex1"]
 size = Vector3(0.1, 0.5, 10)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lrwgh"]
-data = PackedVector3Array(-0.049999997, 0.19999999, 5, 0.049999997, 0.19999999, 5, -0.049999997, -0.19999999, 5, 0.049999997, 0.19999999, 5, 0.049999997, -0.19999999, 5, -0.049999997, -0.19999999, 5, 0.049999997, 0.19999999, -5, -0.049999997, 0.19999999, -5, 0.049999997, -0.19999999, -5, -0.049999997, 0.19999999, -5, -0.049999997, -0.19999999, -5, 0.049999997, -0.19999999, -5, 0.049999997, 0.19999999, 5, 0.049999997, 0.19999999, -5, 0.049999997, -0.19999999, 5, 0.049999997, 0.19999999, -5, 0.049999997, -0.19999999, -5, 0.049999997, -0.19999999, 5, -0.049999997, 0.19999999, -5, -0.049999997, 0.19999999, 5, -0.049999997, -0.19999999, -5, -0.049999997, 0.19999999, 5, -0.049999997, -0.19999999, 5, -0.049999997, -0.19999999, -5, 0.049999997, 0.19999999, 5, -0.049999997, 0.19999999, 5, 0.049999997, 0.19999999, -5, -0.049999997, 0.19999999, 5, -0.049999997, 0.19999999, -5, 0.049999997, 0.19999999, -5, -0.049999997, -0.19999999, 5, 0.049999997, -0.19999999, 5, -0.049999997, -0.19999999, -5, 0.049999997, -0.19999999, 5, 0.049999997, -0.19999999, -5, -0.049999997, -0.19999999, -5)
+data = PackedVector3Array(-0.049999997, 0.25, 5, 0.049999997, 0.25, 5, -0.049999997, -0.25, 5, 0.049999997, 0.25, 5, 0.049999997, -0.25, 5, -0.049999997, -0.25, 5, 0.049999997, 0.25, -5, -0.049999997, 0.25, -5, 0.049999997, -0.25, -5, -0.049999997, 0.25, -5, -0.049999997, -0.25, -5, 0.049999997, -0.25, -5, 0.049999997, 0.25, 5, 0.049999997, 0.25, -5, 0.049999997, -0.25, 5, 0.049999997, 0.25, -5, 0.049999997, -0.25, -5, 0.049999997, -0.25, 5, -0.049999997, 0.25, -5, -0.049999997, 0.25, 5, -0.049999997, -0.25, -5, -0.049999997, 0.25, 5, -0.049999997, -0.25, 5, -0.049999997, -0.25, -5, 0.049999997, 0.25, 5, -0.049999997, 0.25, 5, 0.049999997, 0.25, -5, -0.049999997, 0.25, 5, -0.049999997, 0.25, -5, 0.049999997, 0.25, -5, -0.049999997, -0.25, 5, 0.049999997, -0.25, 5, -0.049999997, -0.25, -5, 0.049999997, -0.25, 5, 0.049999997, -0.25, -5, -0.049999997, -0.25, -5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vy1r"]
 size = Vector3(0.4, 0.2, 10)
@@ -37,21 +29,19 @@ curve = SubResource("Curve3D_8vy1r")
 debug_custom_color = Color(1, 0, 0, 1)
 
 [node name="GrindRailPathFollow" type="PathFollow3D" parent="GrindRailPath" unique_id=1937811886]
-transform = Transform3D(0.99999374, 0, 0, 0, 0.99999374, 0, 0, 0, 1, 0, 0.2, 0)
-v_offset = 0.2
+transform = Transform3D(0.99999374, 0, 0, 0, 0.99999374, 0, 0, 0, 1, 0, 0.3, 0)
+v_offset = 0.3
 loop = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GrindRailPath/GrindRailPathFollow" unique_id=2127980173]
-visible = false
-mesh = SubResource("PlaneMesh_78evc")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1167586119]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("BoxMesh_7wex1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1511446788]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=374495724]
+collision_layer = 128
+collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1840576776]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1825431777]
 shape = SubResource("ConcavePolygonShape3D_lrwgh")
 
 [node name="GrindRailAreaCollision" type="CollisionShape3D" parent="." unique_id=433892262]

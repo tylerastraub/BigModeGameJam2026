@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="4_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="5_fyndt"]
 [ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/ring.tscn" id="6_kmhfv"]
+[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/slick_coin.tscn" id="7_5mrjc"]
 [ext_resource type="PackedScene" uid="uid://d3k2rcsj8omf3" path="res://src/UI/HUD.tscn" id="7_rlaii"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eewff"]
@@ -56,6 +57,25 @@ transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0,
 
 [node name="Ring" parent="Level" unique_id=1798653930 instance=ExtResource("6_kmhfv")]
 transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -0.08752761, 1.9999988, -119.00214)
+
+[node name="SlickCoin" parent="Level" unique_id=1649155444 instance=ExtResource("7_5mrjc")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 0.99999994, 1.9999998, -23.642746)
+
+[node name="SlickCoin2" parent="Level" unique_id=1651057714 instance=ExtResource("7_5mrjc")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 0.99999946, 0.82925653, -32.03591)
+_letter = 1
+
+[node name="SlickCoin3" parent="Level" unique_id=2045840382 instance=ExtResource("7_5mrjc")]
+transform = Transform3D(0.99999905, 0, 0, 0, 0.99999905, 0, 0, 0, 1, 0, 1.5, -40.025)
+_letter = 2
+
+[node name="SlickCoin4" parent="Level" unique_id=2145930322 instance=ExtResource("7_5mrjc")]
+transform = Transform3D(0.9999989, 0, 0, 0, 0.9999989, 0, 0, 0, 1, -1.0000005, 0.8292562, -48.02489)
+_letter = 3
+
+[node name="SlickCoin5" parent="Level" unique_id=798590192 instance=ExtResource("7_5mrjc")]
+transform = Transform3D(0.99999857, 0, 0, 0, 0.99999857, 0, 0, 0, 1, 0.99999994, 0.49999997, -86.025)
+_letter = 4
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1247532592]
 

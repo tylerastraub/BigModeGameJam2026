@@ -34,7 +34,7 @@ var _min_grind_speed : float = 7.0
 var _starting_aerial_angle : float = 0.0
 var _total_aerial_rotation : float = 0.0
 var _aerial_rotate_max_speed : float = 7.0
-var _aerial_rotate_accel : float = 1.0
+var _aerial_rotate_accel : float = 1.5
 var _aerial_rotate_velocity : float = 0.0
 var _turned_180 : bool = true
 
@@ -56,6 +56,13 @@ const SPIN_TRICK_RATE : int = 180
 var _score : int = 0
 var _input_dir : Vector3 = Vector3.ZERO
 var _ticks_since_touching_ground : int = 0
+var _coins : Dictionary[SlickCoin.Letter, bool] = {
+    SlickCoin.Letter.S : false,
+    SlickCoin.Letter.L : false,
+    SlickCoin.Letter.I : false,
+    SlickCoin.Letter.C : false,
+    SlickCoin.Letter.K : false,
+}
 
 # Debug
 var forward_dir : Vector3 = Vector3.ZERO
@@ -64,8 +71,8 @@ var up_dir : Vector3 = Vector3.ZERO
 ## ========== GODOT METHODS ==========
 
 func _ready() -> void:
-    $RigidBody3D/BodyArea.area_entered.connect(_on_area_3d_area_entered)
-    $RigidBody3D/BodyArea.area_exited.connect(_on_area_3d_area_exited)
+    $PlayerVisuals/Mesh/BodyArea.area_entered.connect(_on_area_3d_area_entered)
+    $PlayerVisuals/Mesh/BodyArea.area_exited.connect(_on_area_3d_area_exited)
     Global.trickScored.connect(_on_trick_scored)
     _rb._max_velocity = _max_velocity
     _rb._min_velocity = _min_velocity
@@ -134,6 +141,9 @@ func set_state(state: Global.PlayerState) -> void:
             Global.trickScored.emit(_current_trick)
             _current_trick = null
 
+func is_player_actionable() -> bool:
+    return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL
+
 ## ========== PRIVATE METHODS ==========
 
 func _move(delta: float) -> void:
@@ -181,12 +191,15 @@ func _handle_orientation(delta: float) -> void:
         if abs(Vector3.UP.dot(_rb.linear_velocity.normalized())) > 0.98:
             target_offset.z = -0.01
         _visuals.look_at(_visuals.global_position + _rb.linear_velocity.normalized() + target_offset, _visuals.basis.y)
+    elif _state == Global.PlayerState.GRINDING:
+        _visuals.rotation = _grind_rail.get_follow_rotation()
     forward_dir = _rb.linear_velocity.normalized()
     up_dir = _visuals.basis.y
 
 func _check_raycasts() -> Array[RayCast3D]:
     var result : Array[RayCast3D] = []
     for child in _raycasts.get_children():
+        if child is not RayCast3D: continue
         var raycast := child as RayCast3D
         if raycast.is_colliding():
             result.push_back(raycast)
@@ -268,8 +281,10 @@ func _check_for_180() -> void:
             _turned_180 = !_turned_180
         Global.trickScored.emit(Trick.new(str(spins * 180) + "° SPIN", spins * SPIN_TRICK_RATE, Trick.Type.SPIN))
 
-func is_player_actionable() -> bool:
-    return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL
+func _collect_coin(coin: SlickCoin) -> void:
+    _coins[coin._letter] = true
+
+## ========== SIGNAL CALLBACKS ==========
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)
@@ -284,6 +299,10 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _boost_time = 0.5
         _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
         Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
+    elif mask[mask.length() - 7] == "1":
+        var coin := area as SlickCoin
+        _collect_coin(coin)
+        Global.slickCoinCollected.emit(coin)
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)

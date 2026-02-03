@@ -10,6 +10,8 @@ class Score:
     var timer : float = 0.0
     var timer_enabled : bool = true
     
+    var rainbow_effect : bool = false
+    
     func _init(_trick: Trick) -> void:
         trick = _trick
         local_value = _trick.trick_value
@@ -66,6 +68,8 @@ func _physics_process(delta: float) -> void:
 func add_score(trick: Trick, timer_enabled: bool) -> void:
     var score : Score = Score.new(trick)
     score.timer_enabled = timer_enabled
+    if score.trick.trick_type == Trick.Type.SLICK_COIN_ALL:
+        score.rainbow_effect = true
     if _last_score == null:
         _last_score = score
     elif _last_score.trick == trick:
@@ -81,6 +85,10 @@ func add_score(trick: Trick, timer_enabled: bool) -> void:
 func update_score_infos() -> void:
     if _last_score:
         $LastScore.text = _last_score.trick.trick_name + "\n" + str(_last_score.local_value)
+        if _last_score.rainbow_effect:
+            $LastScore.add_theme_color_override("default_color", _get_rainbow_color(_last_score.timer))
+        else:
+            $LastScore.add_theme_color_override("default_color", Color.WHITE)
     else:
         $LastScore.text = ""
     for info in _score_infos:
@@ -91,9 +99,45 @@ func update_score_infos() -> void:
             info.info_node = info_node
             $ScoreInfoHistory.add_child(info_node)
             $ScoreInfoHistory.move_child(info_node, 0)
+        if info.rainbow_effect:
+            info.info_node.set_text_color(_get_rainbow_color(info.timer))
     var h := $ScoreInfoHistory.get_children().size() * 46
     $ScoreInfoHistory.size.y = h
     $ScoreInfoHistory.position.y = 285 - h
+
+# returns color from rainbow spectrum based on value between 0 and 1
+func _get_rainbow_color(index: float) -> Color:
+    var res : Color
+    index -= int(index) # get 0.0-1.0 value
+    # red
+    if index <= 1.0/6.0 or index > 5.0/6.0:
+        res.r = 1.0
+    elif index > 2.0/6.0 and index <= 4.0/6.0:
+        res.r = 0.0
+    elif index > 1.0/6.0 and index <= 2.0/6.0:
+        res.r = 1.0 - ((index - 1.0/6.0) / (1.0/6.0))
+    else:
+        res.r = (index - 4.0/6.0) / (1.0/6.0)
+    # green
+    if index <= 1.0/6.0:
+        res.g = index / (1.0/6.0)
+    elif index > 1.0/6.0 and index <= 3.0/6.0:
+        res.g = 1.0
+    elif index > 3.0/6.0 and index <= 4.0/6.0:
+        res.g = 1.0 - ((index - 3.0/6.0) / (1.0/6.0))
+    else:
+        res.g = 0.0
+    # blue
+    if index <= 2.0/6.0:
+        res.b = 0.0
+    elif index > 2.0/6.0 and index <= 3.0/6.0:
+        res.b = (index - 2.0/6.0) / (1.0/6.0)
+    elif index > 3.0/6.0 and index <= 5.0/6.0:
+        res.b = 1.0
+    else:
+        res.b = 1.0 - ((index - 5.0/6.0) / (1.0/6.0))
+    
+    return res
 
 func _on_trick_started(trick: Trick) -> void:
     add_score(trick, false)
