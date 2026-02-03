@@ -72,3 +72,22 @@ offset_right = 176.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Penalty" type="RichTextLabel" parent="." unique_id=1202823247]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 32.0
+offset_right = -510.0
+offset_bottom = 67.0
+grow_horizontal = 2
+theme = ExtResource("1_5hfrm")
+theme_override_colors/default_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "-1000"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2

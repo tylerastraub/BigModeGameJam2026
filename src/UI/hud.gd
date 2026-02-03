@@ -34,10 +34,14 @@ var _score_add_delay : float = 1.0
 var _score_infos : Array[Score] = []
 var _last_score : Score = null
 
+var _penalty : int = 0
+var _penalty_timer : float = 0.0
+
 func _ready() -> void:
     Global.trickStarted.connect(_on_trick_started)
     Global.trickScored.connect(_on_trick_scored)
     Global.currentTrickUpdated.connect(_on_current_trick_updated)
+    Global.scorePenalty.connect(_on_score_penalty)
 
 func _physics_process(delta: float) -> void:
     if _last_score:
@@ -61,9 +65,26 @@ func _physics_process(delta: float) -> void:
                 _score_infos.erase(info)
         if info.timer_enabled:
             info.timer += delta
+    
+    if _penalty > 0:
+        $Penalty.text = "-" + str(_penalty)
+        $Penalty.visible = true
+        if _penalty_timer > _score_add_delay:
+            var rem := _penalty
+            _penalty -= int(_score_add_speed * delta * 2)
+            if _penalty < 0:
+                _penalty = 0
+                _score -= rem
+            else:
+                _score -= int(_score_add_speed * delta * 2)
+        _penalty_timer += delta
+    else:
+        $Penalty.visible = false
+    
     update_score_infos()
-    if Input.is_action_just_pressed("test_button"):
-        add_score(Trick.new("test", randi_range(500, 2000), Trick.Type.NOVAL), true)
+    
+    #if Input.is_action_just_pressed("test_button"):
+        #add_score(Trick.new("test", randi_range(500, 2000), Trick.Type.NOVAL), true)
     $Score.text = "%06d" % _score
 
 func add_score(trick: Trick, timer_enabled: bool) -> void:
@@ -152,3 +173,12 @@ func _on_current_trick_updated(trick: Trick) -> void:
     if _last_score:
         if _last_score.trick == trick:
             _last_score.local_value = trick.trick_value
+
+func _on_score_penalty(value: int) -> void:
+    if _last_score:
+        if _last_score.timer_enabled == false:
+            _last_score.timer_enabled = true
+            _last_score.local_value = 0
+            _last_score.text_color = Color.RED
+    _penalty_timer = 0.0
+    _penalty = value

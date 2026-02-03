@@ -19,7 +19,6 @@ var _accel : float = 700.0
 var _air_accel : float = 50.0
 var _max_velocity : float = 10.0
 var _min_velocity : float = 3.0
-var _jump_power : float = 4.0
 
 # States
 var _state : Global.PlayerState = Global.PlayerState.NOVAL
@@ -53,6 +52,10 @@ const GRIND_TRICK_RATE : int = 6
 const BOOST_RING_TRICK_VALUE : int = 400
 const SPIN_TRICK_RATE : int = 180
 
+# Shock
+var _shock_timer : float = 10.0
+const SHOCK_TIME : float = 1.0
+
 # Misc
 var _score : int = 0
 var _input_dir : Vector3 = Vector3.ZERO
@@ -64,7 +67,6 @@ var _coins : Dictionary[SlickCoin.Letter, bool] = {
     SlickCoin.Letter.C : false,
     SlickCoin.Letter.K : false,
 }
-var _jump_timer : float = 1.0
 
 # Debug
 var forward_dir : Vector3 = Vector3.ZERO
@@ -87,6 +89,7 @@ func _physics_process(delta: float) -> void:
     
     _handle_orientation(delta)
     _handle_states()
+    _shock()
     _trick()
     _grind(delta)
     _aerial(delta)
@@ -98,7 +101,7 @@ func _physics_process(delta: float) -> void:
         relative_velocity = _rb.linear_velocity.length() / _rb._max_velocity
     _spring_arm._update(delta, is_player_actionable(), relative_velocity)
     
-    if _state != Global.PlayerState.AERIAL:
+    if _state != Global.PlayerState.AERIAL and _state != Global.PlayerState.SHOCKED:
         if _turned_180:
             $PlayerVisuals/Mesh.rotation.y = lerp_angle($PlayerVisuals/Mesh.rotation.y, deg_to_rad(180.0), delta * 10.0)
         else:
@@ -111,7 +114,7 @@ func _physics_process(delta: float) -> void:
     if _rb.get_contact_count() > 0 or _state == Global.PlayerState.GRINDING:
         _ticks_since_touching_ground = 0
     _boost_timer += delta
-    _jump_timer += delta
+    _shock_timer += delta
     
     _animate(delta)
 
@@ -124,9 +127,8 @@ func set_state(state: Global.PlayerState) -> void:
     _rb._player_state = _state
     
     if _last_state == Global.PlayerState.AERIAL:
-        _check_for_180()
-    elif _last_state == Global.PlayerState.HALF_PIPE:
-        Global.trickScored.emit(_current_trick)
+        if _state != Global.PlayerState.SHOCKED:
+            _check_for_180()
     
     if state == Global.PlayerState.GRINDING:
         if _current_trick == null:
@@ -147,7 +149,7 @@ func set_state(state: Global.PlayerState) -> void:
             _current_trick = null
 
 func is_player_actionable() -> bool:
-    return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL
+    return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL and _state != Global.PlayerState.SHOCKED
 
 ## ========== PRIVATE METHODS ==========
 
@@ -163,6 +165,8 @@ func _move(delta: float) -> void:
     _rb.apply_central_force(_input_dir * delta * accel)
 
 func _handle_states() -> void:
+    if _state == Global.PlayerState.SHOCKED:
+        return
     if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
             set_state(Global.PlayerState.GROUNDED)
@@ -184,7 +188,18 @@ func _handle_orientation(delta: float) -> void:
         if(_state != Global.PlayerState.AERIAL):
             _visuals.rotation.y = lerp_angle(_visuals.rotation.y, move_dir, delta * _rb.linear_velocity.length() * ROTATION_SPEED)
     var raycast_result := _check_raycasts()
-    if raycast_result.size() > 0:
+    if _state == Global.PlayerState.SHOCKED:
+        if raycast_result.size() > 0:
+            var avg_normal : Vector3 = Vector3.ZERO
+            for res in raycast_result:
+                avg_normal += res.get_collision_normal()
+            avg_normal /= raycast_result.size()
+            _visuals.global_transform = _align_with_y(_visuals.global_transform, avg_normal) 
+        else:
+            _visuals.global_transform = _align_with_y(_visuals.global_transform, Vector3.UP)
+        _visuals.rotation.y = 0.0
+        $PlayerVisuals/Mesh.rotation.y = deg_to_rad(180.0) if _turned_180 else 0.0
+    elif raycast_result.size() > 0:
         var avg_normal : Vector3 = Vector3.ZERO
         for res in raycast_result:
             avg_normal += res.get_collision_normal()
@@ -260,11 +275,7 @@ func _aerial(delta: float) -> void:
     $PlayerVisuals/Mesh.rotate_y(_aerial_rotate_velocity * delta)
 
 func _jump() -> void:
-    if _state == Global.PlayerState.GROUNDED:
-        set_state(Global.PlayerState.AERIAL)
-        _rb.apply_central_impulse(_visuals.basis.y.normalized() * _jump_power)
-        _jump_timer = 0.0
-    elif _state == Global.PlayerState.GRINDING:
+    if _state == Global.PlayerState.GRINDING:
         _stop_grind()
 
 func _boost() -> void:
@@ -291,16 +302,30 @@ func _check_for_180() -> void:
 func _collect_coin(coin: SlickCoin) -> void:
     _coins[coin._letter] = true
 
-func _animate(_delta: float) -> void:
-    if _jump_timer < 0.5 and _state == Global.PlayerState.AERIAL:
-        $AnimationTree.set("parameters/conditions/jumping", true)
+func _shock() -> void:
+    if _state != Global.PlayerState.SHOCKED:
+        $PlayerVisuals/Mesh/Armature.visible = true
+        return
+    if _shock_timer >= SHOCK_TIME:
+        set_state(Global.PlayerState.GROUNDED)
+        $PlayerVisuals/Mesh.position.x = 0.0
     else:
-        $AnimationTree.set("parameters/conditions/jumping", false)
+        $PlayerVisuals/Mesh/Armature.visible = roundi(_shock_timer / get_physics_process_delta_time()) % 3 != 0
+        var coefficient : float = 1.0 if randi() % 2 else -1.0
+        $PlayerVisuals/Mesh.position.x = 0.1 * (SHOCK_TIME - _shock_timer) * coefficient
+
+func _animate(_delta: float) -> void:
+    if _state == Global.PlayerState.SHOCKED:
+        $AnimationTree.set("parameters/conditions/shocked", true)
+    else:
+        $AnimationTree.set("parameters/conditions/shocked", false)
         $AnimationTree.get("parameters/playback").travel("Sliding")
 
 ## ========== SIGNAL CALLBACKS ==========
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
+    if _state == Global.PlayerState.SHOCKED:
+        return
     var mask := String.num_int64(area.collision_layer, 2)
     var coefficient : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
     if mask[mask.length() - 3] == "1":
@@ -317,6 +342,17 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         var coin := area as SlickCoin
         _collect_coin(coin)
         Global.slickCoinCollected.emit(coin)
+    elif mask[mask.length() - 9] == "1":
+        _current_trick = null
+        set_state(Global.PlayerState.SHOCKED)
+        _shock_timer = 0.0
+        Global.scorePenalty.emit(1000)
+        _score = max(_score - 1000, 0)
+        area.set_deferred("monitorable", false)
+        area.set_deferred("monitoring", false)
+        #_rb.kill_velocity()
+        var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
+        _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)

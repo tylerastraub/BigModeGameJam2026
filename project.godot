@@ -103,6 +103,7 @@ test_button={
 3d_physics/layer_6="player_area"
 3d_physics/layer_7="slick_coin"
 3d_physics/layer_8="grind_rail_object"
+3d_physics/layer_9="electric_ball"
 
 [physics]
 
