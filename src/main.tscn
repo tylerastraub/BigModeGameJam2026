@@ -53,7 +53,10 @@ transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -0.9999998, 0
 transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0, -64)
 
 [node name="GrindRail2" parent="Level" unique_id=1069411627 instance=ExtResource("5_fyndt")]
-transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0, -32)
+transform = Transform3D(0.9999991, 1.4210853e-14, 0, -1.4210853e-14, 0.9999991, 0, 0, 0, 1, 0.9999997, -9.5367426e-07, -32)
+
+[node name="GrindRail4" parent="Level" unique_id=227147702 instance=ExtResource("5_fyndt")]
+transform = Transform3D(0.7071062, 0.7071062, 0, -0.7071062, 0.7071062, 0, 0, 0, 1, -4.3691564, 0.5001132, -32)
 
 [node name="Ring" parent="Level" unique_id=1798653930 instance=ExtResource("6_kmhfv")]
 transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -0.08752761, 1.9999988, -119.00214)

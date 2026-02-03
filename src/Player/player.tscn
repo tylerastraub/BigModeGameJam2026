@@ -10,6 +10,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lowyb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_rc2ur"]
+margin = 0.01
 radius = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ehvfd"]
@@ -19,16 +20,28 @@ radius = 0.1
 radius = 0.2
 height = 1.0
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52h17"]
+animation = &"Jump"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vgmdf"]
 animation = &"Sliding"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_52h17"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vtbm7"]
+advance_mode = 2
+advance_condition = &"jumping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0m8bu"]
+xfade_time = 0.1
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vgmdf"]
+states/Jump/node = SubResource("AnimationNodeAnimation_52h17")
+states/Jump/position = Vector2(577, 100)
 states/Sliding/node = SubResource("AnimationNodeAnimation_vgmdf")
 states/Sliding/position = Vector2(396, 100)
-transitions = ["Start", "Sliding", SubResource("AnimationNodeStateMachineTransition_52h17")]
+transitions = ["Start", "Sliding", SubResource("AnimationNodeStateMachineTransition_52h17"), "Sliding", "Jump", SubResource("AnimationNodeStateMachineTransition_vtbm7"), "Jump", "Sliding", SubResource("AnimationNodeStateMachineTransition_0m8bu")]
 
 [node name="Player" type="Node3D" unique_id=436721077]
 script = ExtResource("1_lowyb")
@@ -66,6 +79,7 @@ hit_from_inside = true
 
 [node name="SpringArm" type="SpringArm3D" parent="CameraPivot" unique_id=810132887]
 transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0)
+collision_mask = 129
 shape = SubResource("SphereShape3D_ehvfd")
 spring_length = 3.0
 script = ExtResource("4_bktlc")
@@ -76,29 +90,31 @@ fov = 54.0
 
 [node name="PlayerVisuals" type="Node3D" parent="." unique_id=1873270741]
 
-[node name="Mesh" parent="PlayerVisuals" unique_id=866323256 instance=ExtResource("4_vgmdf")]
+[node name="Mesh" parent="PlayerVisuals" unique_id=1822934892 instance=ExtResource("4_vgmdf")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.2, 0)
 
-[node name="Skeleton3D" parent="PlayerVisuals/Mesh/Armature" parent_id_path=PackedInt32Array(866323256, 1231428684) index="0" unique_id=142313175]
+[node name="Skeleton3D" parent="PlayerVisuals/Mesh/Armature" parent_id_path=PackedInt32Array(1822934892, 306452764) index="0" unique_id=1544272773]
 bones/0/position = Vector3(9.600156e-16, 0.26817226, 0.033070475)
-bones/0/rotation = Quaternion(0.69471526, 4.791156e-08, 4.714299e-08, 0.71928483)
+bones/0/rotation = Quaternion(0.69533056, 4.789974e-08, 4.6093408e-08, 0.71869016)
 bones/1/rotation = Quaternion(-0.0715038, -6.2311267e-15, -9.530034e-09, 0.99744034)
 bones/2/rotation = Quaternion(-0.14564797, -3.64449e-08, -1.40466305e-08, 0.98933655)
 bones/3/rotation = Quaternion(-0.52416337, 0.003181425, 0.010062401, 0.85155237)
 bones/4/rotation = Quaternion(-0.00034993514, 0.057390224, -0.9968425, 0.054876715)
 bones/5/rotation = Quaternion(0.04899183, 0.0009256903, -0.048233088, 0.99763346)
+bones/6/rotation = Quaternion(-0.014931514, -0.00054603367, -0.036503606, 0.9992219)
 bones/7/rotation = Quaternion(-4.210932e-09, 3.8996225e-07, 0.002218999, 0.99999756)
 bones/8/rotation = Quaternion(-1.8676989e-08, 1.2938714e-08, -0.0016327947, 0.9999987)
 bones/9/rotation = Quaternion(-0.00035005435, -0.057390228, 0.9968425, 0.054876536)
 bones/10/rotation = Quaternion(0.048991833, -0.00092568283, 0.048233125, 0.9976335)
+bones/11/rotation = Quaternion(-0.014931514, 0.0005460335, 0.036503594, 0.99922186)
 bones/12/rotation = Quaternion(-5.858801e-09, -3.9026335e-07, -0.0022189878, 0.99999756)
 bones/13/rotation = Quaternion(-1.647343e-08, -1.389243e-08, 0.0016327798, 0.9999987)
-bones/14/rotation = Quaternion(0.0054305843, 0.04804715, 0.9987187, -0.014931066)
-bones/15/rotation = Quaternion(-0.053504597, -4.2321153e-05, -0.0042287065, 0.9985587)
-bones/16/rotation = Quaternion(0.010824143, 0.99666786, 0.080674075, -0.005260944)
-bones/17/rotation = Quaternion(-0.005430465, 0.04804701, 0.9987187, 0.014931088)
-bones/18/rotation = Quaternion(-0.053504497, 4.2293144e-05, 0.0042286683, 0.9985587)
-bones/19/rotation = Quaternion(-0.010823807, 0.9966679, 0.08067417, 0.005260676)
+bones/14/rotation = Quaternion(0.005441413, 0.04893763, 0.9986756, -0.014921589)
+bones/15/rotation = Quaternion(-0.05305596, -4.2321935e-05, -0.004193247, 0.9985827)
+bones/16/rotation = Quaternion(0.010835475, 0.99671197, 0.080127396, -0.005245494)
+bones/17/rotation = Quaternion(-0.005441292, 0.0489375, 0.9986756, 0.014921622)
+bones/18/rotation = Quaternion(-0.053055864, 4.2293625e-05, 0.0041932096, 0.9985827)
+bones/19/rotation = Quaternion(-0.010835116, 0.9967119, 0.08012775, 0.0052452185)
 bones/20/position = Vector3(0.3023343, 0.12137323, -2.2793703)
 bones/20/rotation = Quaternion(0.5350065, 0, 0, 0.8448479)
 bones/21/position = Vector3(0.2829793, -0.46939838, -1.1461134)
@@ -127,5 +143,6 @@ script = ExtResource("5_vgmdf")
 root_node = NodePath("../PlayerVisuals/Mesh")
 tree_root = SubResource("AnimationNodeStateMachine_vgmdf")
 anim_player = NodePath("../PlayerVisuals/Mesh/AnimationPlayer")
+parameters/conditions/jumping = false
 
 [editable path="PlayerVisuals/Mesh"]

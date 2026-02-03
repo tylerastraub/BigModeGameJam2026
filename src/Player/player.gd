@@ -27,6 +27,7 @@ var _last_state : Global.PlayerState = Global.PlayerState.NOVAL
 
 # Grinding
 var _grind_rail : GrindRail = null
+var _last_grind_rail : GrindRail = null
 var _grind_speed : float = 1.0
 var _min_grind_speed : float = 7.0
 
@@ -63,6 +64,7 @@ var _coins : Dictionary[SlickCoin.Letter, bool] = {
     SlickCoin.Letter.C : false,
     SlickCoin.Letter.K : false,
 }
+var _jump_timer : float = 1.0
 
 # Debug
 var forward_dir : Vector3 = Vector3.ZERO
@@ -109,6 +111,9 @@ func _physics_process(delta: float) -> void:
     if _rb.get_contact_count() > 0 or _state == Global.PlayerState.GRINDING:
         _ticks_since_touching_ground = 0
     _boost_timer += delta
+    _jump_timer += delta
+    
+    _animate(delta)
 
 ## ========== PUBLIC METHODS ==========
 
@@ -127,7 +132,7 @@ func set_state(state: Global.PlayerState) -> void:
         if _current_trick == null:
             _current_trick = Trick.new("GRIND", 0, Trick.Type.GRIND)
             Global.trickStarted.emit(_current_trick)
-        else:
+        elif _last_grind_rail != _grind_rail:
             _current_trick.trick_level += 1
             _current_trick.trick_name = str(_current_trick.trick_level + 1) + "x GRIND"
     elif state == Global.PlayerState.HALF_PIPE:
@@ -192,7 +197,7 @@ func _handle_orientation(delta: float) -> void:
             target_offset.z = -0.01
         _visuals.look_at(_visuals.global_position + _rb.linear_velocity.normalized() + target_offset, _visuals.basis.y)
     elif _state == Global.PlayerState.GRINDING:
-        _visuals.rotation = _grind_rail.get_follow_rotation()
+        _visuals.global_rotation = _grind_rail.get_follow_rotation()
     forward_dir = _rb.linear_velocity.normalized()
     up_dir = _visuals.basis.y
 
@@ -226,8 +231,8 @@ func _grind(delta: float) -> void:
         _stop_grind()
 
 func _start_grind(rail: GrindRail) -> void:
-    set_state(Global.PlayerState.GRINDING)
     _grind_rail = rail
+    set_state(Global.PlayerState.GRINDING)
     _grind_speed = max(_rb.linear_velocity.length(), _min_grind_speed)
     _grind_rail.set_grind_pos(_grind_rail.find_nearest_start_ratio(_rb.global_position))
     _rb.global_position = _grind_rail.get_grind_pos()
@@ -235,6 +240,7 @@ func _start_grind(rail: GrindRail) -> void:
 func _stop_grind() -> void:
     set_state(Global.PlayerState.AERIAL)
     _ticks_since_touching_ground = COYOTE_TIME
+    _last_grind_rail = _grind_rail
     _grind_rail = null
     var exit_vel : Vector3 = Vector3((Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) * 0.3, 0.2, -1.0)
     _rb.apply_central_impulse(exit_vel.normalized() * _max_velocity)
@@ -257,6 +263,7 @@ func _jump() -> void:
     if _state == Global.PlayerState.GROUNDED:
         set_state(Global.PlayerState.AERIAL)
         _rb.apply_central_impulse(_visuals.basis.y.normalized() * _jump_power)
+        _jump_timer = 0.0
     elif _state == Global.PlayerState.GRINDING:
         _stop_grind()
 
@@ -283,6 +290,13 @@ func _check_for_180() -> void:
 
 func _collect_coin(coin: SlickCoin) -> void:
     _coins[coin._letter] = true
+
+func _animate(_delta: float) -> void:
+    if _jump_timer < 0.5 and _state == Global.PlayerState.AERIAL:
+        $AnimationTree.set("parameters/conditions/jumping", true)
+    else:
+        $AnimationTree.set("parameters/conditions/jumping", false)
+        $AnimationTree.get("parameters/playback").travel("Sliding")
 
 ## ========== SIGNAL CALLBACKS ==========
 

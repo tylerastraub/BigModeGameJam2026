@@ -35,4 +35,4 @@ func get_grind_ratio() -> float:
     return _follow.progress_ratio
 
 func get_follow_rotation() -> Vector3:
-    return _follow.rotation
+    return _follow.global_rotation

@@ -11,6 +11,7 @@ class Score:
     var timer_enabled : bool = true
     
     var rainbow_effect : bool = false
+    var text_color : Color = Color.WHITE
     
     func _init(_trick: Trick) -> void:
         trick = _trick
@@ -88,7 +89,7 @@ func update_score_infos() -> void:
         if _last_score.rainbow_effect:
             $LastScore.add_theme_color_override("default_color", _get_rainbow_color(_last_score.timer))
         else:
-            $LastScore.add_theme_color_override("default_color", Color.WHITE)
+            $LastScore.add_theme_color_override("default_color", _last_score.text_color)
     else:
         $LastScore.text = ""
     for info in _score_infos:
@@ -101,6 +102,8 @@ func update_score_infos() -> void:
             $ScoreInfoHistory.move_child(info_node, 0)
         if info.rainbow_effect:
             info.info_node.set_text_color(_get_rainbow_color(info.timer))
+        else:
+            info.info_node.set_text_color(info.text_color)
     var h := $ScoreInfoHistory.get_children().size() * 46
     $ScoreInfoHistory.size.y = h
     $ScoreInfoHistory.position.y = 285 - h
