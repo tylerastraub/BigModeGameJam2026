@@ -1,6 +1,6 @@
 extends Area3D
 
-class_name Ring
+class_name BoostRing
 
 const BASE_COLOR : Color = Color(0.46, 0.68, 1.0, 1.0)
 const BOOST_COLOR : Color = Color(0.84, 0.9, 1.0, 1.0)

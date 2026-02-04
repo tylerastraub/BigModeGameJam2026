@@ -8,6 +8,7 @@ enum Type {
     GRIND,
     HALF_PIPE,
     BOOST_RING,
+    BOOST_PAD,
     SLICK_COIN_SINGLE,
     SLICK_COIN_ALL,
 }

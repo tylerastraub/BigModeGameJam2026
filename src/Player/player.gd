@@ -50,6 +50,7 @@ var _current_trick : Trick = null
 const HALF_PIPE_TRICK_RATE : int = 3
 const GRIND_TRICK_RATE : int = 6
 const BOOST_RING_TRICK_VALUE : int = 400
+const BOOST_PAD_TRICK_VALUE : int = 250
 const SPIN_TRICK_RATE : int = 180
 
 # Shock
@@ -327,22 +328,26 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
     if _state == Global.PlayerState.SHOCKED:
         return
     var mask := String.num_int64(area.collision_layer, 2)
-    var coefficient : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
     if mask[mask.length() - 3] == "1":
-        _rb._half_pipe_direction = coefficient
+        # half pipe zone
+        _rb._half_pipe_direction = 1.0 if _rb.global_position.x < 0 else -1.0
         set_state(Global.PlayerState.HALF_PIPE)
     elif mask[mask.length() - 4] == "1":
+        # grind rail
         _start_grind(area as GrindRail)
     elif mask[mask.length() - 5] == "1":
+        # boost ring
         _boost_timer = 0.0
         _boost_time = 0.5
         _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
         Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
     elif mask[mask.length() - 7] == "1":
+        # slick coin
         var coin := area as SlickCoin
         _collect_coin(coin)
         Global.slickCoinCollected.emit(coin)
     elif mask[mask.length() - 9] == "1":
+        # electric ball
         _current_trick = null
         set_state(Global.PlayerState.SHOCKED)
         _shock_timer = 0.0
@@ -350,9 +355,17 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _score = max(_score - 1000, 0)
         area.set_deferred("monitorable", false)
         area.set_deferred("monitoring", false)
-        #_rb.kill_velocity()
         var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
         _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
+    elif mask[mask.length() - 10] == "1":
+        # finish line
+        print("finish yay :)")
+    elif mask[mask.length() - 11] == "1":
+        # boost pad
+        _boost_timer = 0.0
+        _boost_time = 1.0
+        _rb.apply_central_impulse(_rb.linear_velocity.normalized() * _boost_power)
+        Global.trickScored.emit(Trick.new("BOOST PAD", BOOST_PAD_TRICK_VALUE, Trick.Type.BOOST_PAD))
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)

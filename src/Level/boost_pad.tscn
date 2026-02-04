@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://dfupfby5qmi62"]
+
+[ext_resource type="Texture2D" uid="uid://b5mjbu00fwcgj" path="res://res/textures/boost_pad.png" id="1_l08xn"]
+[ext_resource type="Shader" uid="uid://1vq1jfwwgpiv" path="res://src/Shaders/energy_wall.gdshader" id="2_tpkqx"]
+[ext_resource type="Texture2D" uid="uid://c7ve1uppk428u" path="res://res/textures/energy_wall_row.png" id="3_0047j"]
+[ext_resource type="PackedScene" uid="uid://bf1hk205l74l2" path="res://res/models/energy_field.glb" id="4_8qukp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpkqx"]
+transparency = 1
+albedo_texture = ExtResource("1_l08xn")
+emission = Color(0.7154126, 0.00046840846, 0.7325231, 1)
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pr4ee"]
+material = SubResource("StandardMaterial3D_tpkqx")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l08xn"]
+size = Vector3(2, 0.2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0047j"]
+render_priority = 0
+shader = ExtResource("2_tpkqx")
+shader_parameter/albedo_texture = ExtResource("3_0047j")
+shader_parameter/scroll_speed = 0.08
+shader_parameter/scale = 50.0
+shader_parameter/gap_factor = 1.2
+shader_parameter/opacity = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qukp"]
+material = SubResource("ShaderMaterial_0047j")
+size = Vector3(2, 2, 2)
+
+[node name="BoostPad" type="Area3D" unique_id=11053129]
+collision_layer = 1024
+collision_mask = 0
+
+[node name="PadMesh" type="MeshInstance3D" parent="." unique_id=23912613]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
+mesh = SubResource("PlaneMesh_pr4ee")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2091331307]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_l08xn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=556260417]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 1, 0)
+visible = false
+mesh = SubResource("BoxMesh_8qukp")
+
+[node name="energy_field" parent="." unique_id=821967449 instance=ExtResource("4_8qukp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Cube" parent="energy_field" index="0" unique_id=1214780213]
+surface_material_override/0 = SubResource("ShaderMaterial_0047j")
+
+[editable path="energy_field"]
