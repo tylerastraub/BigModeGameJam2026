@@ -10,6 +10,7 @@ offset_bottom = 46.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme = ExtResource("1_awjpj")
 script = ExtResource("2_u5pf6")
 

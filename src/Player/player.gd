@@ -57,6 +57,12 @@ const SPIN_TRICK_RATE : int = 180
 var _shock_timer : float = 10.0
 const SHOCK_TIME : float = 1.0
 
+# Level stats
+var _level : Level = null
+var _drums_collected : int = 0
+var _total_drums : int = 0
+var _level_timer : Timer = Timer.new()
+
 # Misc
 var _score : int = 0
 var _input_dir : Vector3 = Vector3.ZERO
@@ -79,13 +85,19 @@ func _ready() -> void:
     $PlayerVisuals/Mesh/BodyArea.area_entered.connect(_on_area_3d_area_entered)
     $PlayerVisuals/Mesh/BodyArea.area_exited.connect(_on_area_3d_area_exited)
     Global.trickScored.connect(_on_trick_scored)
+    Global.levelStarted.connect(_on_level_started)
     _rb._max_velocity = _max_velocity
     _rb._min_velocity = _min_velocity
     if Global.debug:
         $Debug.draw.add_vector(self, "forward_dir", 1, 4, Color.RED, $PlayerVisuals)
         $Debug.draw.add_vector(self, "up_dir", 1, 4, Color.BLUE, $PlayerVisuals)
+    
+    _level_timer.one_shot = false
+    add_child(_level_timer)
+    _drums_collected = 19
 
 func _physics_process(delta: float) -> void:
+    Global.levelTimerUpdate.emit(_level_timer.time_left)
     _raycasts.global_position = _rb.global_position
     
     _handle_orientation(delta)
@@ -100,7 +112,16 @@ func _physics_process(delta: float) -> void:
     var relative_velocity : float = 1.0
     if _state != Global.PlayerState.GRINDING:
         relative_velocity = _rb.linear_velocity.length() / _rb._max_velocity
-    _spring_arm._update(delta, is_player_actionable(), relative_velocity)
+    
+    if _state == Global.PlayerState.FINISHED:
+        _spring_arm.rotation.y = lerp_angle(_spring_arm.rotation.y, deg_to_rad(170), delta * 2.0)
+        _spring_arm._default_camera_tilt = 10
+        _spring_arm.position.x = lerpf(_spring_arm.position.x, 0.4, delta * 2.0)
+        _spring_arm.position.y = lerpf(_spring_arm.position.y, -0.8, delta * 2.0)
+        _spring_arm.spring_length = lerpf(_spring_arm.spring_length, 1.5, delta * 2.0)
+        _spring_arm._update(delta * 0.5, is_player_actionable(), relative_velocity)
+    else:
+        _spring_arm._update(delta, is_player_actionable(), relative_velocity)
     
     if _state != Global.PlayerState.AERIAL and _state != Global.PlayerState.SHOCKED:
         if _turned_180:
@@ -150,7 +171,7 @@ func set_state(state: Global.PlayerState) -> void:
             _current_trick = null
 
 func is_player_actionable() -> bool:
-    return _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING and _state != Global.PlayerState.AERIAL and _state != Global.PlayerState.SHOCKED
+    return _state == Global.PlayerState.GROUNDED
 
 ## ========== PRIVATE METHODS ==========
 
@@ -166,15 +187,18 @@ func _move(delta: float) -> void:
     _rb.apply_central_force(_input_dir * delta * accel)
 
 func _handle_states() -> void:
-    if _state == Global.PlayerState.SHOCKED:
+    if _state == Global.PlayerState.SHOCKED or _state == Global.PlayerState.FINISHED:
         return
     if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
             set_state(Global.PlayerState.GROUNDED)
             if _boost_on_land:
                 _boost_on_land = false
-                _boost_timer = 0.0
-                _boost_time = 0.25
+                if _boost_timer > _boost_time:
+                    _boost_timer = 0.0
+                    _boost_time = 0.25
+                else:
+                    _boost_time += 0.25
                 _rb.apply_central_impulse(_visuals.basis.z * _boost_power * -1.0)
     elif _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING:
         set_state(Global.PlayerState.AERIAL)
@@ -184,10 +208,12 @@ func _handle_orientation(delta: float) -> void:
     if(_state == Global.PlayerState.GRINDING):
         _pivot.rotation.y = lerp_angle(_pivot.rotation.y, 0.0, delta * 10.0 * CAMERA_ROTATE_LERP)
         _visuals.rotation.y = lerp_angle(_visuals.rotation.y, 0.0, delta * 10.0 * ROTATION_SPEED)
-    elif(!is_equal_approx(_rb.linear_velocity.x, 0.0) or !is_equal_approx(_rb.linear_velocity.z, 0.0)):
+    elif(!is_equal_approx(_rb.linear_velocity.x, 0.0) or !is_equal_approx(_rb.linear_velocity.z, 0.0) and _state != Global.PlayerState.FINISHED):
         _pivot.rotation.y = lerp_angle(_pivot.rotation.y, move_dir, delta * _rb.linear_velocity.length() * CAMERA_ROTATE_LERP)
         if(_state != Global.PlayerState.AERIAL):
             _visuals.rotation.y = lerp_angle(_visuals.rotation.y, move_dir, delta * _rb.linear_velocity.length() * ROTATION_SPEED)
+    else:
+        _pivot.rotation.y = lerp_angle(_pivot.rotation.y, 0.0, delta * 10.0 * CAMERA_ROTATE_LERP)
     var raycast_result := _check_raycasts()
     if _state == Global.PlayerState.SHOCKED:
         if raycast_result.size() > 0:
@@ -315,6 +341,13 @@ func _shock() -> void:
         var coefficient : float = 1.0 if randi() % 2 else -1.0
         $PlayerVisuals/Mesh.position.x = 0.1 * (SHOCK_TIME - _shock_timer) * coefficient
 
+func _get_level_grade(score: int) -> String:
+    var all_coins_collected = true
+    for letter in _coins:
+        if _coins[letter] == false:
+            all_coins_collected = false
+    return _level.calculate_rank(score, all_coins_collected)
+
 func _animate(_delta: float) -> void:
     if _state == Global.PlayerState.SHOCKED:
         $AnimationTree.set("parameters/conditions/shocked", true)
@@ -338,7 +371,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
     elif mask[mask.length() - 5] == "1":
         # boost ring
         _boost_timer = 0.0
-        _boost_time = 0.5
+        _boost_time = 1.0
         _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
         Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
     elif mask[mask.length() - 7] == "1":
@@ -351,15 +384,19 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _current_trick = null
         set_state(Global.PlayerState.SHOCKED)
         _shock_timer = 0.0
-        Global.scorePenalty.emit(1000)
-        _score = max(_score - 1000, 0)
+        Global.scorePenalty.emit(Global.ELECTRIC_BALL_PENALTY)
+        _score = max(_score - Global.ELECTRIC_BALL_PENALTY, 0)
         area.set_deferred("monitorable", false)
         area.set_deferred("monitoring", false)
         var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
         _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
     elif mask[mask.length() - 10] == "1":
         # finish line
-        print("finish yay :)")
+        _rb._auto_move = false
+        set_state(Global.PlayerState.FINISHED)
+        var final_score : int = _score + ceili(_level_timer.time_left) * Global.TIME_SCORE_VALUE + _drums_collected * Global.DRUM_SCORE_VALUE
+        Global.levelFinished.emit(_score, _level_timer.time_left, _drums_collected, _total_drums, _get_level_grade(final_score))
+        _score = final_score
     elif mask[mask.length() - 11] == "1":
         # boost pad
         _boost_timer = 0.0
@@ -374,3 +411,10 @@ func _on_area_3d_area_exited(area: Area3D) -> void:
 
 func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value
+
+func _on_level_started(level: Level, level_timer: float, total_drums: int) -> void:
+    _level = level
+    _level_timer.start(level_timer)
+    _total_drums = total_drums
+    Global.levelTimerUpdate.emit(level_timer)
+    

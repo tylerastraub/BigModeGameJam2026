@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/finish_line.tscn" id="9_mgm53"]
 [ext_resource type="PackedScene" uid="uid://dwrpcxtwxmopq" path="res://res/resources/floor_base_50m.res" id="10_uewes"]
 [ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/boost_pad.tscn" id="11_kqbth"]
+[ext_resource type="PackedScene" uid="uid://xtcbu6i16n8w" path="res://src/UI/level_end_screen.tscn" id="13_srxbw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eewff"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -39,13 +40,13 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="Skeleton3D" parent="Player/PlayerVisuals/Mesh/Armature" parent_id_path=PackedInt32Array(436721077, 1407415875, 984729352) index="0" unique_id=1800341705]
-bones/0/rotation = Quaternion(0.70078874, 4.7542763e-08, 4.6549722e-08, 0.71336895)
-bones/14/rotation = Quaternion(0.005538567, 0.056737952, 0.9982637, -0.014825486)
-bones/15/rotation = Quaternion(-0.052475367, -4.2322932e-05, -0.0041473596, 0.99861366)
-bones/16/rotation = Quaternion(0.01085114, 0.99676806, 0.07942661, -0.005225809)
-bones/17/rotation = Quaternion(-0.005538446, 0.05673798, 0.9982637, 0.014825523)
-bones/18/rotation = Quaternion(-0.052475285, 4.229423e-05, 0.004147322, 0.9986137)
-bones/19/rotation = Quaternion(-0.010850779, 0.99676794, 0.07942664, 0.00522555)
+bones/0/rotation = Quaternion(0.70073646, 4.754171e-08, 4.6721837e-08, 0.71342033)
+bones/14/rotation = Quaternion(0.0055376245, 0.056664005, 0.9982679, -0.014826506)
+bones/15/rotation = Quaternion(-0.052556798, -4.2322805e-05, -0.0041537955, 0.99860936)
+bones/16/rotation = Quaternion(0.010849125, 0.99676, 0.07952616, -0.005228626)
+bones/17/rotation = Quaternion(-0.0055375053, 0.056663964, 0.9982679, 0.014826534)
+bones/18/rotation = Quaternion(-0.05255671, 4.2294152e-05, 0.004153758, 0.9986093)
+bones/19/rotation = Quaternion(-0.010848767, 0.9967601, 0.07952616, 0.005228369)
 
 [node name="Level" type="Node3D" parent="." unique_id=511411310]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
@@ -88,11 +89,11 @@ transform = Transform3D(0.9999989, 0, 0, 0, 0.9999989, 0, 0, 0, 1, -1.0000005, 0
 _letter = 3
 
 [node name="SlickCoin5" parent="Level" unique_id=798590192 instance=ExtResource("7_5mrjc")]
-transform = Transform3D(0.9999985, 0, 0, 0, 0.9999985, 0, 0, 0, 1, -2, 0.49999994, -86.025)
+transform = Transform3D(0.99999845, 0, 0, 0, 0.99999845, 0, 0, 0, 1, -2.924067, 0.4999999, -86.025)
 _letter = 4
 
 [node name="ElectricBall" parent="Level" unique_id=478524619 instance=ExtResource("8_kf8lf")]
-transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, 0.99692357, 1.0692301, -74.60282)
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 0.9969234, 0.6895081, -97.69089)
 
 [node name="floor_base_200m" parent="Level" unique_id=873125560 instance=ExtResource("8_mgm53")]
 
@@ -103,11 +104,13 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -201.004)
 
 [node name="BoostPad" parent="Level" unique_id=11053129 instance=ExtResource("11_kqbth")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.003876, 0, -46.272217)
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -0.60114336, 0, -161.1701)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1247532592]
 
 [node name="HUD" parent="CanvasLayer" unique_id=1997232785 instance=ExtResource("7_rlaii")]
+
+[node name="LevelEndScreen" parent="CanvasLayer" unique_id=1976248465 instance=ExtResource("13_srxbw")]
 
 [editable path="Player"]
 [editable path="Player/PlayerVisuals/Mesh"]

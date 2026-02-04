@@ -42,8 +42,12 @@ func _ready() -> void:
     Global.trickScored.connect(_on_trick_scored)
     Global.currentTrickUpdated.connect(_on_current_trick_updated)
     Global.scorePenalty.connect(_on_score_penalty)
+    Global.levelFinished.connect(_on_level_finished)
+    Global.levelTimerUpdate.connect(_on_level_timer_update)
 
 func _physics_process(delta: float) -> void:
+    if visible == false: return
+    
     if _last_score:
         if _last_score.timer_enabled:
             _last_score.timer += delta
@@ -72,11 +76,13 @@ func _physics_process(delta: float) -> void:
         if _penalty_timer > _score_add_delay:
             var rem := _penalty
             _penalty -= int(_score_add_speed * delta * 2)
-            if _penalty < 0:
+            if _penalty <= 0:
                 _penalty = 0
                 _score -= rem
             else:
                 _score -= int(_score_add_speed * delta * 2)
+            if _score < 0:
+                _score = 0
         _penalty_timer += delta
     else:
         $Penalty.visible = false
@@ -182,3 +188,10 @@ func _on_score_penalty(value: int) -> void:
             _last_score.text_color = Color.RED
     _penalty_timer = 0.0
     _penalty = value
+
+func _on_level_finished(_player_score: int, _time: int, _drums_collected: int, _drums_total: int, _rank: String) -> void:
+    visible = false
+
+func _on_level_timer_update(_level_timer: float) -> void:
+    @warning_ignore("integer_division")
+    $Timer.text = str((int(_level_timer) / 60) % 60) + ":%.2f" % [float(int(_level_timer) % 60) + (_level_timer - floorf(_level_timer))]

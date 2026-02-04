@@ -2,5 +2,17 @@
 
 [ext_resource type="FontFile" uid="uid://bs4bjs5emdx3w" path="res://res/fonts/digitalix.ttf" id="1_6h4jt"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6h4jt"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
+
 [resource]
 default_font = ExtResource("1_6h4jt")
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = null
+Button/styles/normal = SubResource("StyleBoxFlat_6h4jt")
+Button/styles/pressed = null

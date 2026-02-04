@@ -11,7 +11,8 @@
 layout_mode = 3
 anchors_preset = 0
 offset_right = 352.0
-offset_bottom = 72.0
+offset_bottom = 96.0
+mouse_filter = 2
 script = ExtResource("1_5avn6")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1772780410]

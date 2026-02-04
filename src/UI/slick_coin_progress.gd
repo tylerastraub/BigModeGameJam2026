@@ -60,7 +60,6 @@ func all_coins_found() -> void:
     _all_coins_found = true
     for key in SlickCoin.Letter.values():
         get_coin_child(key).visible = true
-    # todo: cool wave effect?
 
 func _on_slick_coin_collected(coin: SlickCoin) -> void:
     _coins[coin._letter] = true
