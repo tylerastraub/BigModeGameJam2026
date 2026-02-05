@@ -10,7 +10,9 @@ func _on_hover(is_hovering: bool, rank_reqs: Dictionary[String, int]) -> void:
         $Benchmarks.text = ""
         var ordered_ranks : Array[String] = ["S","A","B","C","D"]
         for rank in ordered_ranks:
-            $Benchmarks.text += rank + ": " + str(rank_reqs[rank]) + "\n"
+            var extra_text : String = ""
+            if rank == "S": extra_text = " + all S.L.I.C.K. coins"
+            $Benchmarks.text += rank + ": " + str(rank_reqs[rank]) + extra_text + "\n"
         # todo: personal best saving + retrieving
         $Benchmarks.visible = true
         $PersonalBest.visible = true

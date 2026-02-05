@@ -2,10 +2,16 @@ extends Area3D
 
 class_name GrindRail
 
-@onready var _follow : PathFollow3D = $GrindRailPath/GrindRailPathFollow
-@export var _rail_length : float = 10.0
 @warning_ignore("unused_private_class_variable")
 @export var _can_jump_off : bool = true
+@export var _grind_speed : float = 10.0
+
+@onready var _follow : PathFollow3D = $GrindRailPath/GrindRailPathFollow
+
+var _rail_length : float = 0.0
+
+func _ready() -> void:
+    _rail_length = $GrindRailPath.curve.get_baked_length()
 
 func find_nearest_start_ratio(player_pos: Vector3) -> float:
     var step : float = 0.01
@@ -27,8 +33,8 @@ func set_grind_pos(progress_ratio: float) -> void:
     if progress_ratio > 1.0: progress_ratio = 1.0
     _follow.progress_ratio = progress_ratio
 
-func move_grind_pos(speed: float) -> void:
-    _follow.progress_ratio += speed / _rail_length
+func move_grind_pos(delta: float) -> void:
+    _follow.progress_ratio += (_grind_speed * delta) / _rail_length
 
 func get_grind_pos() -> Vector3:
     return _follow.global_position

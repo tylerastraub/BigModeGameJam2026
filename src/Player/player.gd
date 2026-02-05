@@ -27,7 +27,6 @@ var _last_state : Global.PlayerState = Global.PlayerState.NOVAL
 # Grinding
 var _grind_rail : GrindRail = null
 var _last_grind_rail : GrindRail = null
-var _grind_speed : float = 1.0
 
 # Aerial
 var _starting_aerial_angle : float = 0.0
@@ -269,7 +268,7 @@ func _grind(delta: float) -> void:
     if _grind_rail == null:
         set_state(Global.PlayerState.AERIAL)
         return
-    _grind_rail.move_grind_pos(_grind_speed * delta)
+    _grind_rail.move_grind_pos(delta)
     _rb.global_position = _grind_rail.get_grind_pos()
     if _grind_rail.get_grind_ratio() > 0.98:
         _stop_grind()
@@ -277,7 +276,6 @@ func _grind(delta: float) -> void:
 func _start_grind(rail: GrindRail) -> void:
     _grind_rail = rail
     set_state(Global.PlayerState.GRINDING)
-    _grind_speed = _max_velocity
     _grind_rail.set_grind_pos(_grind_rail.find_nearest_start_ratio(_rb.global_position))
     _rb.global_position = _grind_rail.get_grind_pos()
 
