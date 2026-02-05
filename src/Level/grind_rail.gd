@@ -4,6 +4,8 @@ class_name GrindRail
 
 @onready var _follow : PathFollow3D = $GrindRailPath/GrindRailPathFollow
 @export var _rail_length : float = 10.0
+@warning_ignore("unused_private_class_variable")
+@export var _can_jump_off : bool = true
 
 func find_nearest_start_ratio(player_pos: Vector3) -> float:
     var step : float = 0.01

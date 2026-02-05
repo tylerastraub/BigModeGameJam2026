@@ -134,5 +134,4 @@ func _on_delay_timer_timeout() -> void:
     _add_to_score = true
 
 func _on_continue_pressed() -> void:
-    print("continue")
     Global.returnToMainMenu.emit(true)

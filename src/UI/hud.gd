@@ -26,7 +26,7 @@ class Score:
             return rem
         return score
 
-var _score_info_scene : PackedScene = preload("res://src/UI/score_info.tscn")
+var _score_info_scene : PackedScene = load("res://src/UI/score_info.tscn")
 
 var _score : int = 0
 var _score_add_speed : float = 400.0 # how many score to tack up per second
@@ -194,4 +194,4 @@ func _on_level_finished(_player_score: int, _time: int, _drums_collected: int, _
 
 func _on_level_timer_update(_level_timer: float) -> void:
     @warning_ignore("integer_division")
-    $Timer.text = str((int(_level_timer) / 60) % 60) + ":%.2f" % [float(int(_level_timer) % 60) + (_level_timer - floorf(_level_timer))]
+    $Timer.text = str((int(_level_timer) / 60) % 60) + ":%05.2f" % [float(int(_level_timer) % 60) + (_level_timer - floorf(_level_timer))]

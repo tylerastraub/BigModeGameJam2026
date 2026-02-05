@@ -29,6 +29,8 @@ signal levelTimerUpdate(level_timer: float)
 signal levelStarted(level: Level, level_timer: float, total_drums: int)
 @warning_ignore("unused_signal")
 signal returnToMainMenu(goto_level_select: bool)
+@warning_ignore("unused_signal")
+signal levelSelected(level_path: String)
 
 const TIME_SCORE_VALUE : int = 20
 const DRUM_SCORE_VALUE : int = 150

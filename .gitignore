@@ -8,3 +8,5 @@ todo.txt
 *.tmp
 *.uid
 settings.json
+export_presets.cfg
+build/*

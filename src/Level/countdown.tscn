@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://mm2wjsnv0i5i"]
+
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_ev3a5"]
+
+[node name="Countdown" type="CanvasLayer" unique_id=2082313855]
+
+[node name="Text" type="RichTextLabel" parent="." unique_id=1494486985]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_ev3a5")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/normal_font_size = 96
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1

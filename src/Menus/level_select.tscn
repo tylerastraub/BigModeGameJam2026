@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://u0ykld0sg1lp"]
+
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_2kpu1"]
+[ext_resource type="Script" uid="uid://btc4i2bnjkuyn" path="res://src/Menus/level_select.gd" id="2_p5jvn"]
+[ext_resource type="FontFile" uid="uid://dy5nck5nktf0g" path="res://res/fonts/visitor1.ttf" id="3_x7dxc"]
+
+[node name="LevelSelect" type="Control" unique_id=441460835]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2kpu1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=2131301535]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14, 0.077, 0, 1)
+
+[node name="Levels" type="MarginContainer" parent="." unique_id=1107878750]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 192.0
+offset_bottom = 256.0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="button_1_1" type="Button" parent="Levels" unique_id=1579813770]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1-1"
+script = ExtResource("2_p5jvn")
+level_path = "res://res/levels/test_level1.tscn"
+
+[node name="controls" type="Label" parent="." unique_id=726262299]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.0
+offset_top = 143.0
+offset_right = 175.0
+offset_bottom = 198.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_x7dxc")
+theme_override_font_sizes/font_size = 28
+text = "WASD to move
+space to jump off rail
+r to quick restart"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=464189426]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/normal_font_size = 32
+text = "LEVEL SELECT"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

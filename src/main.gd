@@ -1,0 +1,50 @@
+extends Node3D
+
+var level : PackedScene = null
+var player : PackedScene = load("res://src/Player/player.tscn")
+var hud : PackedScene = load("res://src/UI/HUD.tscn")
+var end_screen : PackedScene = load("res://src/UI/level_end_screen.tscn")
+var level_select_scene : PackedScene = load("res://src/Menus/level_select.tscn")
+
+func _ready() -> void:
+    Global.levelSelected.connect(_on_level_selected)
+    Global.levelStarted.connect(_on_level_started)
+    Global.returnToMainMenu.connect(_on_return_to_main_menu)
+
+func _input(_event: InputEvent) -> void:
+    if Input.is_action_just_released("restart") and $game.get_children().size() > 0:
+        for child in $CanvasLayer.get_children():
+            $CanvasLayer.remove_child(child)
+            child.queue_free()
+        for child in $game.get_children():
+            $game.remove_child(child)
+            child.queue_free()
+        for child in $menus.get_children():
+            $menus.remove_child(child)
+            child.queue_free()
+        $game.add_child(player.instantiate())
+        $game.add_child(level.instantiate())
+
+func _on_level_selected(level_path: String) -> void:
+    level = load(level_path)
+    for child in $menus.get_children():
+        $menus.remove_child(child)
+        child.queue_free()
+    $game.add_child(player.instantiate())
+    $game.add_child(level.instantiate())
+
+func _on_level_started(_level: Level, _level_timer: float, _total_drums: int) -> void:
+    $CanvasLayer.add_child(end_screen.instantiate())
+    var hud_temp := hud.instantiate()
+    $CanvasLayer.add_child(hud_temp)
+    hud_temp._physics_process(get_physics_process_delta_time())
+
+func _on_return_to_main_menu(goto_level_select: bool) -> void:
+    if goto_level_select:
+        for child in $CanvasLayer.get_children():
+            $CanvasLayer.remove_child(child)
+            child.queue_free()
+        for child in $game.get_children():
+            $game.remove_child(child)
+            child.queue_free()
+        $menus.add_child(level_select_scene.instantiate())

@@ -2,11 +2,11 @@ extends Area3D
 
 class_name SlickCoin
 
-var s_tex : Texture2D = preload("res://res/textures/coin_s_tex.png")
-var l_tex : Texture2D = preload("res://res/textures/coin_l_tex.png")
-var i_tex : Texture2D = preload("res://res/textures/coin_i_tex.png")
-var c_tex : Texture2D = preload("res://res/textures/coin_c_tex.png")
-var k_tex : Texture2D = preload("res://res/textures/coin_k_tex.png")
+var s_tex : Texture2D = load("res://res/textures/coin_s_tex.png")
+var l_tex : Texture2D = load("res://res/textures/coin_l_tex.png")
+var i_tex : Texture2D = load("res://res/textures/coin_i_tex.png")
+var c_tex : Texture2D = load("res://res/textures/coin_c_tex.png")
+var k_tex : Texture2D = load("res://res/textures/coin_k_tex.png")
 
 enum Letter {
     S,

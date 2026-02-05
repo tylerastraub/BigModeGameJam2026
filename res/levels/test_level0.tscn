@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cb4mnxku64puu"]
+
+[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/level.gd" id="1_wj8hm"]
+[ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="2_trn5t"]
+[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="3_pqyop"]
+[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/boost_ring.tscn" id="4_3yxac"]
+[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/slick_coin.tscn" id="5_dyh33"]
+[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/ElectricBall.tscn" id="6_ifxp2"]
+[ext_resource type="PackedScene" uid="uid://ijhqvfwk4rwj" path="res://res/resources/floor_base_200m.res" id="7_rk3an"]
+[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/finish_line.tscn" id="8_cwfiw"]
+[ext_resource type="PackedScene" uid="uid://dwrpcxtwxmopq" path="res://res/resources/floor_base_50m.res" id="9_gqmrn"]
+[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/boost_pad.tscn" id="10_di8ue"]
+
+[node name="Level" type="Node3D" unique_id=1195139326]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_wj8hm")
+
+[node name="ramp_2x4" parent="." unique_id=1293330896 instance=ExtResource("2_trn5t")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 1.0000002, 0, -19)
+
+[node name="ramp_2x3" parent="." unique_id=1633538650 instance=ExtResource("2_trn5t")]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, -4.7683707e-07, 0, -115)
+
+[node name="GrindRail" parent="." unique_id=226234324 instance=ExtResource("3_pqyop")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -0.9999998, 0, -48)
+
+[node name="GrindRail3" parent="." unique_id=1930355141 instance=ExtResource("3_pqyop")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 1.0000002, 0, -64)
+
+[node name="GrindRail2" parent="." unique_id=2050293074 instance=ExtResource("3_pqyop")]
+transform = Transform3D(0.9999991, 1.4210853e-14, 0, -1.4210853e-14, 0.9999991, 0, 0, 0, 1, 0.9999997, -9.5367426e-07, -32)
+
+[node name="GrindRail4" parent="." unique_id=1258676648 instance=ExtResource("3_pqyop")]
+transform = Transform3D(0.7071062, 0.7071062, 0, -0.7071062, 0.7071062, 0, 0, 0, 1, -4.3691564, 0.5001132, -32)
+
+[node name="Ring" parent="." unique_id=1798653930 instance=ExtResource("4_3yxac")]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -0.08752761, 1.9999988, -119.00214)
+
+[node name="SlickCoin" parent="." unique_id=1649155444 instance=ExtResource("5_dyh33")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 0.99999994, 1.9999998, -23.642746)
+
+[node name="SlickCoin2" parent="." unique_id=188001396 instance=ExtResource("5_dyh33")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 0.99999946, 0.82925653, -32.03591)
+_letter = 1
+
+[node name="SlickCoin3" parent="." unique_id=794423011 instance=ExtResource("5_dyh33")]
+transform = Transform3D(0.99999905, 0, 0, 0, 0.99999905, 0, 0, 0, 1, 0, 1.5, -40.025)
+_letter = 2
+
+[node name="SlickCoin4" parent="." unique_id=1829592585 instance=ExtResource("5_dyh33")]
+transform = Transform3D(0.9999989, 0, 0, 0, 0.9999989, 0, 0, 0, 1, -1.0000005, 0.8292562, -48.02489)
+_letter = 3
+
+[node name="SlickCoin5" parent="." unique_id=454675545 instance=ExtResource("5_dyh33")]
+transform = Transform3D(0.99999845, 0, 0, 0, 0.99999845, 0, 0, 0, 1, -2.924067, 0.4999999, -86.025)
+_letter = 4
+
+[node name="ElectricBall" parent="." unique_id=478524619 instance=ExtResource("6_ifxp2")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 0.9969234, 0.6895081, -97.69089)
+
+[node name="floor_base_200m" parent="." unique_id=873125560 instance=ExtResource("7_rk3an")]
+
+[node name="FinishLine" parent="." unique_id=115987813 instance=ExtResource("8_cwfiw")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.01, -195.501)
+
+[node name="floor_base_50m" parent="." unique_id=1071005019 instance=ExtResource("9_gqmrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, -201.004)
+
+[node name="BoostPad" parent="." unique_id=11053129 instance=ExtResource("10_di8ue")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -0.60114336, 0, -161.1701)

@@ -21,14 +21,13 @@ var _max_velocity : float = 10.0
 var _min_velocity : float = 3.0
 
 # States
-var _state : Global.PlayerState = Global.PlayerState.NOVAL
+var _state : Global.PlayerState = Global.PlayerState.GROUNDED
 var _last_state : Global.PlayerState = Global.PlayerState.NOVAL
 
 # Grinding
 var _grind_rail : GrindRail = null
 var _last_grind_rail : GrindRail = null
 var _grind_speed : float = 1.0
-var _min_grind_speed : float = 7.0
 
 # Aerial
 var _starting_aerial_angle : float = 0.0
@@ -40,6 +39,7 @@ var _turned_180 : bool = true
 
 # Boost
 var _boost_on_land : bool = false
+var _boost_ring_active : bool = false
 var _boost_factor : float = 2.0 # multiplicative factor for top speed when boosting
 var _boost_power : float = 15.0 # initial boost
 var _boost_timer : float = 1.0
@@ -61,7 +61,7 @@ const SHOCK_TIME : float = 1.0
 var _level : Level = null
 var _drums_collected : int = 0
 var _total_drums : int = 0
-var _level_timer : Timer = Timer.new()
+@onready var _level_timer : Timer = $LevelTimer
 
 # Misc
 var _score : int = 0
@@ -87,14 +87,14 @@ func _ready() -> void:
     Global.trickScored.connect(_on_trick_scored)
     Global.levelStarted.connect(_on_level_started)
     _rb._max_velocity = _max_velocity
-    _rb._min_velocity = _min_velocity
+    _rb._min_forward_velocity = _min_velocity
     if Global.debug:
         $Debug.draw.add_vector(self, "forward_dir", 1, 4, Color.RED, $PlayerVisuals)
         $Debug.draw.add_vector(self, "up_dir", 1, 4, Color.BLUE, $PlayerVisuals)
     
     _level_timer.one_shot = false
-    add_child(_level_timer)
-    _drums_collected = 19
+    _level_timer.stop()
+    _drums_collected = 0
 
 func _physics_process(delta: float) -> void:
     Global.levelTimerUpdate.emit(_level_timer.time_left)
@@ -192,6 +192,8 @@ func _handle_states() -> void:
     if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
             set_state(Global.PlayerState.GROUNDED)
+            if _boost_ring_active:
+                _boost_ring_active = false
             if _boost_on_land:
                 _boost_on_land = false
                 if _boost_timer > _boost_time:
@@ -275,7 +277,7 @@ func _grind(delta: float) -> void:
 func _start_grind(rail: GrindRail) -> void:
     _grind_rail = rail
     set_state(Global.PlayerState.GRINDING)
-    _grind_speed = max(_rb.linear_velocity.length(), _min_grind_speed)
+    _grind_speed = _max_velocity
     _grind_rail.set_grind_pos(_grind_rail.find_nearest_start_ratio(_rb.global_position))
     _rb.global_position = _grind_rail.get_grind_pos()
 
@@ -302,8 +304,8 @@ func _aerial(delta: float) -> void:
     $PlayerVisuals/Mesh.rotate_y(_aerial_rotate_velocity * delta)
 
 func _jump() -> void:
-    if _state == Global.PlayerState.GRINDING:
-        _stop_grind()
+    if _state == Global.PlayerState.GRINDING and _grind_rail:
+        if _grind_rail._can_jump_off: _stop_grind()
 
 func _boost() -> void:
     if _boost_timer < _boost_time:
@@ -370,10 +372,12 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _start_grind(area as GrindRail)
     elif mask[mask.length() - 5] == "1":
         # boost ring
-        _boost_timer = 0.0
-        _boost_time = 1.0
-        _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
-        Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
+        if _boost_ring_active == false:
+            _boost_ring_active = true
+            _boost_timer = 0.0
+            _boost_time = 1.0
+            _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
+            Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
     elif mask[mask.length() - 7] == "1":
         # slick coin
         var coin := area as SlickCoin
@@ -416,5 +420,6 @@ func _on_level_started(level: Level, level_timer: float, total_drums: int) -> vo
     _level = level
     _level_timer.start(level_timer)
     _total_drums = total_drums
+    _rb.freeze = false
     Global.levelTimerUpdate.emit(level_timer)
     
