@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cfeqmqism6el3"]
 
 [ext_resource type="PackedScene" uid="uid://q6h87ednijnb" path="res://res/models/slick_coin.glb" id="1_224ra"]
-[ext_resource type="Script" uid="uid://dfdf4t2cy5dqk" path="res://src/Level/slick_coin.gd" id="2_nq0dr"]
+[ext_resource type="Script" uid="uid://dfdf4t2cy5dqk" path="res://src/Level/Scripts/slick_coin.gd" id="2_nq0dr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_224ra"]
 size = Vector3(0.7, 1, 0.5)

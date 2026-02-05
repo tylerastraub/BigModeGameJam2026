@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://u0ykld0sg1lp"]
 
 [ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_2kpu1"]
-[ext_resource type="Script" uid="uid://btc4i2bnjkuyn" path="res://src/Menus/level_select.gd" id="2_p5jvn"]
+[ext_resource type="Script" uid="uid://btc4i2bnjkuyn" path="res://src/Menus/level_select_button.gd" id="2_p5jvn"]
 [ext_resource type="FontFile" uid="uid://dy5nck5nktf0g" path="res://res/fonts/visitor1.ttf" id="3_x7dxc"]
+[ext_resource type="Script" uid="uid://cxhgh63tywuv6" path="res://src/Menus/level_benchmarks.gd" id="4_b2n31"]
 
 [node name="LevelSelect" type="Control" unique_id=441460835]
 layout_mode = 3
@@ -38,6 +39,13 @@ theme_override_font_sizes/font_size = 24
 text = "1-1"
 script = ExtResource("2_p5jvn")
 level_path = "res://res/levels/test_level1.tscn"
+rank_reqs = Dictionary[String, int]({
+"A": 15000,
+"B": 12000,
+"C": 9000,
+"D": 6000,
+"S": 18000
+})
 
 [node name="controls" type="Label" parent="." unique_id=726262299]
 layout_mode = 1
@@ -72,3 +80,70 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="LevelBenchmarks" type="Control" parent="." unique_id=499098588]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 256.0
+offset_right = -32.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_b2n31")
+
+[node name="Background" type="ColorRect" parent="LevelBenchmarks" unique_id=1839778234]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28, 0.2044, 0.111999996, 1)
+
+[node name="BenchmarksTitle" type="RichTextLabel" parent="LevelBenchmarks" unique_id=1329004847]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_x7dxc")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[u]BENCHMARKS"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Benchmarks" type="RichTextLabel" parent="LevelBenchmarks" unique_id=1704101457]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = 234.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("3_x7dxc")
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "S: 10000
+A: 8000
+B: 6000
+C: 4000
+D: 2000"
+scroll_active = false
+
+[node name="PersonalBest" type="RichTextLabel" parent="LevelBenchmarks" unique_id=704876205]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 298.0
+offset_right = 1072.0
+offset_bottom = 338.0
+theme_override_fonts/normal_font = ExtResource("3_x7dxc")
+theme_override_font_sizes/normal_font_size = 28
+text = "PERSONAL BEST: N/A"
+scroll_active = false

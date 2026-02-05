@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bqnf21uu1j2a6"]
+
+[ext_resource type="Script" uid="uid://dctish3omi0de" path="res://src/Level/Scripts/grease_drum.gd" id="1_201yd"]
+[ext_resource type="PackedScene" uid="uid://cdhcmryntwgau" path="res://res/models/grease_drum.glb" id="1_klir6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_klir6"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="GreaseDrum" type="Area3D" unique_id=1975654130]
+collision_layer = 2048
+collision_mask = 32
+script = ExtResource("1_201yd")
+
+[node name="grease_drum" parent="." unique_id=1996377019 instance=ExtResource("1_klir6")]
+transform = Transform3D(0.8, 0, 0, 0, 0.77274066, -0.20705524, 0, 0.20705524, 0.77274066, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1452695225]
+shape = SubResource("BoxShape3D_klir6")

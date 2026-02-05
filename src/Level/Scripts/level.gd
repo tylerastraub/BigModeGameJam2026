@@ -2,17 +2,18 @@ extends Node3D
 
 class_name Level
 
-@export var _rank_reqs : Dictionary[String, int] = {
+@export var _timer : float = 180.0
+@export var _total_drums : int = 0
+
+var _rank_reqs : Dictionary[String, int] = {
     "S" : 10000,
     "A" : 8000,
     "B" : 5000,
     "C" : 3000,
     "D" : 1000,
 }
-@export var _timer : float = 180.0
-@export var _total_drums : int = 0
 
-var countdown_scene : PackedScene = load("res://src/Level/countdown.tscn")
+var countdown_scene : PackedScene = load("res://src/Level/Scenes/countdown.tscn")
 var _countdown_text : RichTextLabel = null
 var _countdown : CanvasLayer = null
 var _countdown_timer : Timer = Timer.new()

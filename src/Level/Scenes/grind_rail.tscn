@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c7ufcl6hmtxc2"]
 
-[ext_resource type="Script" uid="uid://d1c0pqh1gn4xp" path="res://src/Level/grind_rail.gd" id="1_8vy1r"]
+[ext_resource type="Script" uid="uid://d1c0pqh1gn4xp" path="res://src/Level/Scripts/grind_rail.gd" id="1_8vy1r"]
 [ext_resource type="PackedScene" uid="uid://bh5fxlg87xytk" path="res://res/models/grind_rail_ramp.glb" id="2_78evc"]
 
 [sub_resource type="Curve3D" id="Curve3D_8vy1r"]

@@ -407,6 +407,9 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _boost_time = 1.0
         _rb.apply_central_impulse(_rb.linear_velocity.normalized() * _boost_power)
         Global.trickScored.emit(Trick.new("BOOST PAD", BOOST_PAD_TRICK_VALUE, Trick.Type.BOOST_PAD))
+    elif mask[mask.length() - 12] == "1":
+        # grease drum
+        _drums_collected += 1
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
     var mask := String.num_int64(area.collision_layer, 2)

@@ -111,6 +111,7 @@ restart={
 3d_physics/layer_9="electric_ball"
 3d_physics/layer_10="finish"
 3d_physics/layer_11="boost_pad"
+3d_physics/layer_12="grease_drum"
 
 [physics]
 

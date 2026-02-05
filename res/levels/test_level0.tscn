@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://cb4mnxku64puu"]
 
-[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/level.gd" id="1_wj8hm"]
+[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/Scripts/level.gd" id="1_wj8hm"]
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="2_trn5t"]
-[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="3_pqyop"]
-[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/boost_ring.tscn" id="4_3yxac"]
-[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/slick_coin.tscn" id="5_dyh33"]
-[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/ElectricBall.tscn" id="6_ifxp2"]
+[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/Scenes/grind_rail.tscn" id="3_pqyop"]
+[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/Scenes/boost_ring.tscn" id="4_3yxac"]
+[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/Scenes/slick_coin.tscn" id="5_dyh33"]
+[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/Scenes/electric_ball.tscn" id="6_ifxp2"]
 [ext_resource type="PackedScene" uid="uid://ijhqvfwk4rwj" path="res://res/resources/floor_base_200m.res" id="7_rk3an"]
-[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/finish_line.tscn" id="8_cwfiw"]
+[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/Scenes/finish_line.tscn" id="8_cwfiw"]
 [ext_resource type="PackedScene" uid="uid://dwrpcxtwxmopq" path="res://res/resources/floor_base_50m.res" id="9_gqmrn"]
-[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/boost_pad.tscn" id="10_di8ue"]
+[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/Scenes/boost_pad.tscn" id="10_di8ue"]
 
 [node name="Level" type="Node3D" unique_id=1195139326]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)

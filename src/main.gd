@@ -1,6 +1,6 @@
 extends Node3D
 
-var level : PackedScene = null
+var _level_path : String = ""
 var player : PackedScene = load("res://src/Player/player.tscn")
 var hud : PackedScene = load("res://src/UI/HUD.tscn")
 var end_screen : PackedScene = load("res://src/UI/level_end_screen.tscn")
@@ -10,7 +10,6 @@ func _ready() -> void:
     Global.levelSelected.connect(_on_level_selected)
     Global.levelStarted.connect(_on_level_started)
     Global.returnToMainMenu.connect(_on_return_to_main_menu)
-    _on_level_selected("res://res/levels/test_level1.tscn")
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_released("restart") and $game.get_children().size() > 0:
@@ -24,15 +23,18 @@ func _input(_event: InputEvent) -> void:
             $menus.remove_child(child)
             child.queue_free()
         $game.add_child(player.instantiate())
-        $game.add_child(level.instantiate())
+        $game.add_child(load(_level_path).instantiate())
 
-func _on_level_selected(level_path: String) -> void:
-    level = load(level_path)
+func _on_level_selected(level_path: String, rank_reqs: Dictionary[String, int]) -> void:
+    _level_path = level_path
+    var level_scene := load(_level_path)
     for child in $menus.get_children():
         $menus.remove_child(child)
         child.queue_free()
     $game.add_child(player.instantiate())
-    $game.add_child(level.instantiate())
+    var level : Level = level_scene.instantiate()
+    level._rank_reqs = rank_reqs
+    $game.add_child(level)
 
 func _on_level_started(_level: Level, _level_timer: float, _total_drums: int) -> void:
     $CanvasLayer.add_child(end_screen.instantiate())

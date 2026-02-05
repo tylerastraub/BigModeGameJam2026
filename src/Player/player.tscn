@@ -199,7 +199,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -
 
 [node name="Skeleton3D" parent="PlayerVisuals/Mesh/Armature" parent_id_path=PackedInt32Array(1407415875, 984729352) index="0" unique_id=1800341705]
 bones/0/position = Vector3(9.600156e-16, 0.26817226, 0.033070475)
-bones/0/rotation = Quaternion(0.7009151, 4.7530683e-08, 4.670749e-08, 0.71324474)
+bones/0/rotation = Quaternion(0.7008265, 4.753613e-08, 4.671546e-08, 0.7133318)
 bones/1/rotation = Quaternion(-0.0715038, -6.2311267e-15, -9.530034e-09, 0.99744034)
 bones/2/rotation = Quaternion(-0.14564797, -3.64449e-08, -1.40466305e-08, 0.98933655)
 bones/3/rotation = Quaternion(-0.52416337, 0.003181425, 0.010062401, 0.85155237)
@@ -213,12 +213,12 @@ bones/10/rotation = Quaternion(0.048991833, -0.00092568283, 0.048233125, 0.99763
 bones/11/rotation = Quaternion(-0.014931514, 0.0005460335, 0.036503594, 0.99922186)
 bones/12/rotation = Quaternion(-5.858801e-09, -3.9026335e-07, -0.0022189878, 0.99999756)
 bones/13/rotation = Quaternion(-1.647343e-08, -1.389243e-08, 0.0016327798, 0.9999987)
-bones/14/rotation = Quaternion(0.0055408394, 0.056915935, 0.9982536, -0.014822964)
-bones/15/rotation = Quaternion(-0.05244611, -4.2322983e-05, -0.0041450467, 0.9986152)
-bones/16/rotation = Quaternion(0.010852046, 0.99677074, 0.079392076, -0.00522485)
-bones/17/rotation = Quaternion(-0.0055407207, 0.05691582, 0.9982536, 0.014822982)
-bones/18/rotation = Quaternion(-0.05244602, 4.2294265e-05, 0.0041450094, 0.99861526)
-bones/19/rotation = Quaternion(-0.010851681, 0.9967708, 0.079392016, 0.0052245893)
+bones/14/rotation = Quaternion(0.005539246, 0.05679106, 0.99826074, -0.014824724)
+bones/15/rotation = Quaternion(-0.05250124, -4.23229e-05, -0.004149404, 0.99861234)
+bones/16/rotation = Quaternion(0.01085059, 0.9967654, 0.07945895, -0.0052267313)
+bones/17/rotation = Quaternion(-0.0055391253, 0.05679098, 0.9982607, 0.01482475)
+bones/18/rotation = Quaternion(-0.05250114, 4.2294203e-05, 0.004149366, 0.9986123)
+bones/19/rotation = Quaternion(-0.010850235, 0.99676543, 0.07945884, 0.0052264747)
 bones/20/position = Vector3(0.3023343, 0.12137323, -2.2793703)
 bones/20/rotation = Quaternion(0.5350065, 0, 0, 0.8448479)
 bones/21/position = Vector3(0.2829793, -0.46939838, -1.1461134)
@@ -237,7 +237,7 @@ skeleton = NodePath("..")
 [node name="BodyArea" type="Area3D" parent="PlayerVisuals/Mesh" unique_id=1616327092]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 collision_layer = 32
-collision_mask = 1884
+collision_mask = 3932
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerVisuals/Mesh/BodyArea" unique_id=238960311]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)

@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://e8643a6f2qd0"]
 
-[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/level.gd" id="1_is1am"]
+[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/Scripts/level.gd" id="1_is1am"]
 [ext_resource type="PackedScene" uid="uid://idldvtq01sgs" path="res://res/resources/floor_base_100m.res" id="2_ms5la"]
 [ext_resource type="Material" uid="uid://crub5tfmxv8ow" path="res://res/materials/tile_purple.tres" id="3_228pk"]
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="4_5tg1a"]
-[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/GrindRail.tscn" id="5_txvh1"]
+[ext_resource type="PackedScene" uid="uid://bqnf21uu1j2a6" path="res://src/Level/Scenes/grease_drum.tscn" id="4_672tv"]
+[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/Scenes/grind_rail.tscn" id="5_txvh1"]
 [ext_resource type="PackedScene" uid="uid://ijhqvfwk4rwj" path="res://res/resources/floor_base_200m.res" id="6_xfnna"]
-[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/boost_ring.tscn" id="7_d18d0"]
-[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/slick_coin.tscn" id="8_1hhxo"]
+[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/Scenes/boost_ring.tscn" id="7_d18d0"]
+[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/Scenes/slick_coin.tscn" id="8_1hhxo"]
 [ext_resource type="Texture2D" uid="uid://23mnpyax3tpf" path="res://res/textures/tile_grey.png" id="9_3lwph"]
-[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/boost_pad.tscn" id="10_is1am"]
-[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/ElectricBall.tscn" id="11_xrnhc"]
-[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/finish_line.tscn" id="12_87so7"]
+[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/Scenes/boost_pad.tscn" id="10_is1am"]
+[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/Scenes/electric_ball.tscn" id="11_xrnhc"]
+[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/Scenes/finish_line.tscn" id="12_87so7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d18d0"]
 size = Vector3(1, 50, 1000)
@@ -42,18 +43,15 @@ data = PackedVector3Array(-3, 0.5, 8, 3, 0.5, 8, -3, -0.5, 8, 3, 0.5, 8, 3, -0.5
 [node name="Level" type="Node3D" unique_id=1195139326]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_is1am")
-_rank_reqs = Dictionary[String, int]({
-"A": 15000,
-"B": 12000,
-"C": 9000,
-"D": 6000,
-"S": 18000
-})
+_total_drums = 1
 
 [node name="floor_base_100m" parent="." unique_id=1159389297 instance=ExtResource("2_ms5la")]
 
 [node name="Plane" parent="floor_base_100m" index="0" unique_id=812651001]
 material_override = ExtResource("3_228pk")
+
+[node name="GreaseDrum" parent="floor_base_100m/Plane/StaticBody3D" parent_id_path=PackedInt32Array(1159389297, 92747280) index="1" unique_id=1975654130 instance=ExtResource("4_672tv")]
+transform = Transform3D(-1, 2.2626677e-08, 8.444391e-08, 0, 0.9659258, -0.25881904, -8.742278e-08, -0.25881904, -0.9659258, -2.7975286e-06, 1, 32)
 
 [node name="ramp_2x2" parent="." unique_id=1293330896 instance=ExtResource("4_5tg1a")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -20)

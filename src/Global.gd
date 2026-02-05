@@ -27,10 +27,13 @@ signal levelFinished(player_score: int, time_left: float, drums_collected: int, 
 signal levelTimerUpdate(level_timer: float)
 @warning_ignore("unused_signal")
 signal levelStarted(level: Level, level_timer: float, total_drums: int)
+
 @warning_ignore("unused_signal")
 signal returnToMainMenu(goto_level_select: bool)
 @warning_ignore("unused_signal")
-signal levelSelected(level_path: String)
+signal levelSelected(level_path: String, rank_reqs: Dictionary[String, int])
+@warning_ignore("unused_signal")
+signal levelSelectButtonHovered(is_hovering: bool, rank_reqs: Dictionary[String, int])
 
 const TIME_SCORE_VALUE : int = 20
 const DRUM_SCORE_VALUE : int = 150
