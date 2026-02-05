@@ -327,16 +327,9 @@ transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, -0.4999998, -17
 transform = Transform3D(0.9999989, 0, 0, 0, 0.9999989, 0, 0, 0, 1, 2.4999983, -17.499985, -568)
 
 [node name="BoostRing5" parent="." unique_id=1239062920 instance=ExtResource("7_d18d0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -17, -569)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0.9999999, -17.486853, -569)
 
 [node name="FinishLine" parent="." unique_id=115987813 instance=ExtResource("12_87so7")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -18.01, -598.5)
 
-[node name="floor_base_100m3" parent="." unique_id=381953105 instance=ExtResource("2_ms5la")]
-transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -17.999998, -604)
-
-[node name="Plane" parent="floor_base_100m3" index="0" unique_id=812651001]
-material_override = ExtResource("3_228pk")
-
 [editable path="floor_base_100m"]
-[editable path="floor_base_100m3"]

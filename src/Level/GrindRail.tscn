@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c7ufcl6hmtxc2"]
 
 [ext_resource type="Script" uid="uid://d1c0pqh1gn4xp" path="res://src/Level/grind_rail.gd" id="1_8vy1r"]
+[ext_resource type="PackedScene" uid="uid://bh5fxlg87xytk" path="res://res/models/grind_rail_ramp.glb" id="2_78evc"]
 
 [sub_resource type="Curve3D" id="Curve3D_8vy1r"]
 _data = {
@@ -17,6 +18,9 @@ data = PackedVector3Array(-0.049999997, 0.25, 5, 0.049999997, 0.25, 5, -0.049999
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8vy1r"]
 size = Vector3(0.4, 0.2, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_78evc"]
+data = PackedVector3Array(0, 0, 0.049999997, 0, 0.5, -0.049999997, 0, 0.5, 0.049999997, 0, 0, 0.049999997, 0, 0, -0.049999997, 0, 0.5, -0.049999997, 0, 0, -0.049999997, 1, 0, -0.25, 0, 0.5, -0.049999997, 1, 0, 0.25, 0, 0, 0.049999997, 0, 0.5, 0.049999997, 1, 0, -0.25, 0, 0.5, 0.049999997, 0, 0.5, -0.049999997, 1, 0, -0.25, 1, 0, 0.25, 0, 0.5, 0.049999997)
 
 [node name="GrindRail" type="Area3D" unique_id=226234324]
 collision_layer = 8
@@ -47,3 +51,13 @@ shape = SubResource("ConcavePolygonShape3D_lrwgh")
 [node name="GrindRailAreaCollision" type="CollisionShape3D" parent="." unique_id=433892262]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("BoxShape3D_8vy1r")
+
+[node name="grind_rail_ramp" parent="." unique_id=1592385671 instance=ExtResource("2_78evc")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="grind_rail_ramp/Cube" parent_id_path=PackedInt32Array(1592385671, 616507085) index="0" unique_id=1349215144]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="grind_rail_ramp/Cube/StaticBody3D" unique_id=1550484198]
+shape = SubResource("ConcavePolygonShape3D_78evc")
+
+[editable path="grind_rail_ramp"]

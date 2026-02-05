@@ -10,6 +10,7 @@ func _ready() -> void:
     Global.levelSelected.connect(_on_level_selected)
     Global.levelStarted.connect(_on_level_started)
     Global.returnToMainMenu.connect(_on_return_to_main_menu)
+    _on_level_selected("res://res/levels/test_level1.tscn")
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_released("restart") and $game.get_children().size() > 0:

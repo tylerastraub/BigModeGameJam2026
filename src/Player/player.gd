@@ -2,7 +2,7 @@ extends Node3D
 
 const ROTATION_SPEED : float = 4.0
 const XFORM_SPEED : float = 20.0
-const CAMERA_MOVE_LERP : float = 20.0
+const CAMERA_MOVE_LERP : float = 50.0
 const CAMERA_ROTATE_LERP : float = 0.5
 
 const AERIAL_180_LEEWAY : float = 50.0
@@ -111,7 +111,7 @@ func _physics_process(delta: float) -> void:
     if Input.is_action_just_pressed("jump"): _jump()
     var relative_velocity : float = 1.0
     if _state != Global.PlayerState.GRINDING:
-        relative_velocity = _rb.linear_velocity.length() / _rb._max_velocity
+        relative_velocity = min(_rb.linear_velocity.length() / _max_velocity, 1.8)
     
     if _state == Global.PlayerState.FINISHED:
         _spring_arm.rotation.y = lerp_angle(_spring_arm.rotation.y, deg_to_rad(170), delta * 2.0)
@@ -417,6 +417,7 @@ func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value
 
 func _on_level_started(level: Level, level_timer: float, total_drums: int) -> void:
+    _total_aerial_rotation = 0.0
     _level = level
     _level_timer.start(level_timer)
     _total_drums = total_drums
