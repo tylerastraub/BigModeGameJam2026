@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://chokg84rvprf1"]
+
+[ext_resource type="Texture2D" uid="uid://dorka4tha5fty" path="res://res/textures/metal_tex.png" id="1_ph2uv"]
+
+[resource]
+albedo_texture = ExtResource("1_ph2uv")
+uv1_scale = Vector3(48.888, 48.888, 48.888)
+texture_filter = 0

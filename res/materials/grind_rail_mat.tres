@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cqqwup8fsg8pc"]
+
+[ext_resource type="Texture2D" uid="uid://bu3hbtekv21n8" path="res://res/textures/grind_rail_tex.png" id="1_6vu6l"]
+
+[resource]
+albedo_texture = ExtResource("1_6vu6l")
+texture_filter = 1

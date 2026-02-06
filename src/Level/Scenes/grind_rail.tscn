@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c7ufcl6hmtxc2"]
 
 [ext_resource type="Script" uid="uid://d1c0pqh1gn4xp" path="res://src/Level/Scripts/grind_rail.gd" id="1_8vy1r"]
+[ext_resource type="Material" uid="uid://cqqwup8fsg8pc" path="res://res/materials/grind_rail_mat.tres" id="2_28g3h"]
 [ext_resource type="PackedScene" uid="uid://bh5fxlg87xytk" path="res://res/models/grind_rail_ramp.glb" id="2_78evc"]
 
 [sub_resource type="Curve3D" id="Curve3D_8vy1r"]
@@ -33,6 +34,7 @@ loop = false
 
 [node name="GrindRailMesh" type="CSGPolygon3D" parent="GrindRailPath" unique_id=503096670]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_28g3h")
 use_collision = true
 collision_layer = 128
 collision_mask = 0
@@ -56,7 +58,10 @@ shape = SubResource("BoxShape3D_8vy1r")
 
 [node name="grind_rail_ramp" parent="." unique_id=1027570736 instance=ExtResource("2_78evc")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="grind_rail_ramp/Cube" parent_id_path=PackedInt32Array(1027570736, 638438079) index="0" unique_id=422130727]
+[node name="Cube" parent="grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("2_28g3h")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="grind_rail_ramp/Cube" index="0" unique_id=422130727]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="grind_rail_ramp/Cube/StaticBody3D" unique_id=1804849818]
 shape = SubResource("ConcavePolygonShape3D_8ty8t")

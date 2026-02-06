@@ -8,6 +8,7 @@ enum PlayerState {
     GRINDING,
     SHOCKED,
     FINISHED,
+    STARTING,
 }
 
 @warning_ignore("unused_signal")
@@ -34,6 +35,10 @@ signal returnToMainMenu(goto_level_select: bool)
 signal levelSelected(level_path: String, rank_reqs: Dictionary[String, int])
 @warning_ignore("unused_signal")
 signal levelSelectButtonHovered(is_hovering: bool, rank_reqs: Dictionary[String, int])
+@warning_ignore("unused_signal")
+signal restartLevel()
+@warning_ignore("unused_signal")
+signal pauseSet(_pause: bool)
 
 @warning_ignore("unused_signal")
 signal cameraUpdate(pos: Vector3)
@@ -42,4 +47,6 @@ const TIME_SCORE_VALUE : int = 20
 const DRUM_SCORE_VALUE : int = 150
 const ELECTRIC_BALL_PENALTY : int = 1000
 
+var pause : bool = false
 var debug : bool = false
+var quick_restart : bool = false

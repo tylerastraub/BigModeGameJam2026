@@ -27,6 +27,9 @@ var _add_to_score : bool = false
 const TIME_DRAIN_RATE : float = 60.0
 const DRUM_DRAIN_RATE : float = 15.0
 
+var _stream_score_blip : String = "res://res/audio/score_blip.wav"
+var _blip_id : int = -1
+
 func _ready() -> void:
     $Timers.add_child(_display_timer)
     $Timers.add_child(_delay_timer)
@@ -53,6 +56,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
     if _add_to_score:
+        if Audio.is_playing(_blip_id) == false:
+            _blip_id = Audio.play(_stream_score_blip, 0.3)
         if _screen_stage == ScreenStage.TIME:
             var rem := _time
             _time -= ceili(TIME_DRAIN_RATE * delta)

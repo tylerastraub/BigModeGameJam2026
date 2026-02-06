@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://d38nkjll4u6"]
+
+[ext_resource type="Texture2D" uid="uid://3xxve5d0s2me" path="res://res/textures/concrete_tex.png" id="1_w8jjc"]
+
+[resource]
+albedo_texture = ExtResource("1_w8jjc")
+uv1_scale = Vector3(2, 2, 2)
+uv1_offset = Vector3(-0.125, 0, 0)
+texture_filter = 0

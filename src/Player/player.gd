@@ -11,8 +11,12 @@ const AERIAL_180_LEEWAY : float = 50.0
 const COYOTE_TIME : int = 4
 
 # Resources
-var _stream_drum_collected : AudioStreamWAV = preload("res://res/audio/drum_collected.wav")
-var _stream_shock : AudioStreamWAV = preload("res://res/audio/shock.wav")
+var _stream_drum_collected : String = "res://res/audio/drum_collected.wav"
+var _stream_shock : String = "res://res/audio/shock.wav"
+var _stream_grinding : String = "res://res/audio/grinding.wav"
+var _stream_jump : String = "res://res/audio/slime_jump.wav"
+var _stream_boost_pad : String = "res://res/audio/boost_pad.wav"
+var _stream_boost_ring : String = "res://res/audio/boost_ring.wav"
 
 # Children
 @onready var _rb : RigidBody3D = $RigidBody3D
@@ -28,7 +32,7 @@ var _max_velocity : float = 10.0
 var _min_velocity : float = 3.0
 
 # States
-var _state : Global.PlayerState = Global.PlayerState.GROUNDED
+var _state : Global.PlayerState = Global.PlayerState.STARTING
 var _last_state : Global.PlayerState = Global.PlayerState.NOVAL
 
 # Grinding
@@ -69,6 +73,9 @@ var _drums_collected : int = 0
 var _total_drums : int = 0
 @onready var _level_timer : Timer = $LevelTimer
 
+# Sound IDs
+var _grind_sound_id : int = -1
+
 # Misc
 var _score : int = 0
 var _input_dir : Vector3 = Vector3.ZERO
@@ -92,6 +99,7 @@ func _ready() -> void:
     Global.levelStarted.connect(_on_level_started)
     _rb._max_velocity = _max_velocity
     _rb._min_forward_velocity = _min_velocity
+    _rb._player_state = _state
     if Global.debug:
         $Debug.draw.add_vector(self, "move_vec", 1, 4, Color.RED, $PlayerVisuals)
     
@@ -100,6 +108,7 @@ func _ready() -> void:
     _drums_collected = 0
 
 func _physics_process(delta: float) -> void:
+    if Global.pause: return
     Global.levelTimerUpdate.emit(_level_timer.time_left)
     _raycasts.global_position = _rb.global_position
     
@@ -192,7 +201,7 @@ func _move(delta: float) -> void:
     _rb.apply_central_force(move_dir * delta * accel)
 
 func _handle_states() -> void:
-    if _state == Global.PlayerState.SHOCKED or _state == Global.PlayerState.FINISHED:
+    if _state == Global.PlayerState.SHOCKED or _state == Global.PlayerState.FINISHED or _state == Global.PlayerState.STARTING:
         return
     if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
@@ -284,6 +293,7 @@ func _start_grind(rail: GrindRail) -> void:
     set_state(Global.PlayerState.GRINDING)
     _grind_rail.set_grind_pos(_grind_rail.find_nearest_start_ratio(_rb.global_position))
     _rb.global_position = _grind_rail.get_grind_pos()
+    _grind_sound_id = Audio.play(_stream_grinding)
 
 func _stop_grind() -> void:
     set_state(Global.PlayerState.AERIAL)
@@ -293,6 +303,8 @@ func _stop_grind() -> void:
     var exit_vel : Vector3 = Vector3((Input.get_action_strength("move_right") - Input.get_action_strength("move_left")) * 0.3, 0.2, -1.0)
     _rb.apply_central_impulse(exit_vel.normalized() * _max_velocity)
     _boost_on_land = true
+    Audio.stop(_grind_sound_id)
+    Audio.play(_stream_jump, 0.2)
 
 func _aerial(delta: float) -> void:
     if _state != Global.PlayerState.AERIAL:
@@ -382,6 +394,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
             _boost_time = 1.0
             _rb.apply_central_impulse(Vector3(0.0, 0.0, _boost_power * -1).rotated(Vector3.RIGHT, deg_to_rad(-15)))
             Global.trickScored.emit(Trick.new("BOOST RING", BOOST_RING_TRICK_VALUE, Trick.Type.BOOST_RING))
+            Audio.play(_stream_boost_ring, 0.5)
     elif mask[mask.length() - 7] == "1":
         # slick coin
         var coin := area as SlickCoin
@@ -398,8 +411,8 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         area.set_deferred("monitoring", false)
         var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
         _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
-        $AudioStreamPlayer.stream = _stream_shock
-        $AudioStreamPlayer.play()
+        Audio.stop(_grind_sound_id)
+        Audio.play(_stream_shock)
     elif mask[mask.length() - 10] == "1":
         # finish line
         _rb._auto_move = false
@@ -413,11 +426,11 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         _boost_time = 1.0
         _rb.apply_central_impulse(_rb.linear_velocity.normalized() * _boost_power)
         Global.trickScored.emit(Trick.new("BOOST PAD", BOOST_PAD_TRICK_VALUE, Trick.Type.BOOST_PAD))
+        Audio.play(_stream_boost_pad)
     elif mask[mask.length() - 12] == "1":
         # grease drum
         _drums_collected += 1
-        $AudioStreamPlayer.stream = _stream_drum_collected
-        $AudioStreamPlayer.play()
+        Audio.play(_stream_drum_collected)
 
 func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value
@@ -428,5 +441,6 @@ func _on_level_started(level: Level, level_timer: float, total_drums: int) -> vo
     _level_timer.start(level_timer)
     _total_drums = total_drums
     _rb.freeze = false
+    set_state(Global.PlayerState.GROUNDED)
     Global.levelTimerUpdate.emit(level_timer)
     

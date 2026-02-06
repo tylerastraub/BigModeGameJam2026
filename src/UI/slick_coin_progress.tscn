@@ -85,5 +85,3 @@ offset_right = 64.0
 offset_bottom = 64.0
 texture = ExtResource("5_ir3hy")
 expand_mode = 2
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1102315436]

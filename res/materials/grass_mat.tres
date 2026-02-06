@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://mim6nvy578fn"]
+
+[ext_resource type="Texture2D" uid="uid://dx0o1ks1n1tvu" path="res://res/textures/grass_tex.png" id="1_nhe0s"]
+
+[resource]
+albedo_texture = ExtResource("1_nhe0s")
+uv1_scale = Vector3(10, 10, 10)
+texture_filter = 1

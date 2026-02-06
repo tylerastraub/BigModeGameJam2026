@@ -27,6 +27,8 @@ class Score:
         return score
 
 var _score_info_scene : PackedScene = load("res://src/UI/score_info.tscn")
+var _stream_score_blip : String = "res://res/audio/score_blip.wav"
+var _blip_id : int = -1
 
 var _score : int = 0
 var _score_add_speed : float = 400.0 # how many score to tack up per second
@@ -37,6 +39,8 @@ var _last_score : Score = null
 var _penalty : int = 0
 var _penalty_timer : float = 0.0
 
+var _level_finished : bool = false
+
 func _ready() -> void:
     Global.trickStarted.connect(_on_trick_started)
     Global.trickScored.connect(_on_trick_scored)
@@ -46,6 +50,7 @@ func _ready() -> void:
     Global.levelTimerUpdate.connect(_on_level_timer_update)
 
 func _physics_process(delta: float) -> void:
+    visible = !Global.pause and !_level_finished
     if visible == false: return
     
     if _last_score:
@@ -55,6 +60,8 @@ func _physics_process(delta: float) -> void:
             var step : int = int(_score_add_speed * delta)
             var rem : int = _last_score.score_remainder(step)
             _score += rem
+            if Audio.is_playing(_blip_id) == false:
+                _blip_id = Audio.play(_stream_score_blip, 0.3)
             if _last_score.local_value <= 0:
                 _last_score = null
     
@@ -191,6 +198,7 @@ func _on_score_penalty(value: int) -> void:
 
 func _on_level_finished(_player_score: int, _time: int, _drums_collected: int, _drums_total: int, _rank: String) -> void:
     visible = false
+    _level_finished = true
 
 func _on_level_timer_update(_level_timer: float) -> void:
     @warning_ignore("integer_division")

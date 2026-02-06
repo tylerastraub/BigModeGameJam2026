@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://bwhv78w1s8ipu"]
+
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_6uag2"]
+[ext_resource type="Script" uid="uid://cyqkat3p85wfg" path="res://src/Menus/pause_menu.gd" id="2_c5l87"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hmit8"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c5l87"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="DPITexture" id="DPITexture_c5l87"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"16\"><rect width=\"30\" height=\"14\" x=\"1\" y=\"1\" fill=\"#fff\" fill-opacity=\".75\" rx=\"7\"/><circle cx=\"24\" cy=\"8\" r=\"5\" fill=\"#1a1a1a\"/></svg>
+"
+base_scale = 1.5
+
+[sub_resource type="DPITexture" id="DPITexture_hmit8"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"16\"><g fill-opacity=\".5\"><rect width=\"30\" height=\"14\" x=\"1\" y=\"1\" fill=\"#1a1a1a\" rx=\"7\"/><circle cx=\"8\" cy=\"8\" r=\"5\" fill=\"#fff\"/></g></svg>
+"
+base_scale = 1.5
+
+[node name="PauseMenu" type="Control" unique_id=1587096882]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6uag2")
+script = ExtResource("2_c5l87")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1895021614]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21, 0.21, 0.21, 0.20392157)
+
+[node name="PausedLabel" type="RichTextLabel" parent="." unique_id=1701674576]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 269.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/normal_font_size = 48
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2021523820]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -227.0
+offset_right = 202.0
+offset_bottom = 323.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ResumeButon" type="Button" parent="VBoxContainer" unique_id=632855133]
+layout_mode = 2
+text = "resume"
+
+[node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=540680509]
+layout_mode = 2
+text = "restart"
+
+[node name="QuickRestartToggle" type="CheckButton" parent="VBoxContainer" unique_id=1207712262]
+layout_mode = 2
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hmit8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_c5l87")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_c5l87")
+theme_override_icons/checked = SubResource("DPITexture_c5l87")
+theme_override_icons/unchecked = SubResource("DPITexture_hmit8")
+text = "        enable quick
+        restart (R)"
+alignment = 1
+
+[node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=1004109229]
+layout_mode = 2
+text = "exit level"

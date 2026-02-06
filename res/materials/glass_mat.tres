@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://d23pjhwbj30vu"]
+
+[ext_resource type="Texture2D" uid="uid://dt1raj8yllr30" path="res://res/textures/glass_tex.png" id="1_wik6i"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 1.0
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_wik6i")
+uv1_scale = Vector3(48.88, 48.88, 48.88)
+texture_filter = 1

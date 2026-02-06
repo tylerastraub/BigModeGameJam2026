@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dk0moyhreef6w" path="res://src/main.gd" id="1_fyndt"]
 [ext_resource type="Shader" uid="uid://cegsc18xryb2j" path="res://src/Shaders/sokpop_skybox.gdshader" id="2_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://u0ykld0sg1lp" path="res://src/Menus/level_select.tscn" id="2_gh0ne"]
+[ext_resource type="PackedScene" uid="uid://bwhv78w1s8ipu" path="res://src/Menus/pause_menu.tscn" id="4_3cfgd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fyndt"]
 shader = ExtResource("2_3cfgd")
@@ -53,3 +54,5 @@ shadow_enabled = true
 [node name="menus" type="Node3D" parent="." unique_id=1033346174]
 
 [node name="LevelSelect" parent="menus" unique_id=441460835 instance=ExtResource("2_gh0ne")]
+
+[node name="PauseMenu" parent="." unique_id=1587096882 instance=ExtResource("4_3cfgd")]

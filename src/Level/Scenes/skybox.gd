@@ -4,4 +4,5 @@ func _ready() -> void:
     Global.cameraUpdate.connect(_on_camera_update)
 
 func _on_camera_update(pos: Vector3) -> void:
-    global_position = pos
+    if is_inside_tree():
+        global_position = pos

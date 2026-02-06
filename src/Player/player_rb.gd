@@ -8,13 +8,21 @@ var _half_pipe_direction : float = 0.0
 var _kill_velocity : bool = false
 var _auto_move : bool = true
 
+var _stored_linear_velocity : Vector3 = Vector3.ZERO
+var _stored_angular_velocity : Vector3 = Vector3.ZERO
+
 var counter : int = 0
+
+func _ready() -> void:
+    Global.pauseSet.connect(_on_pause_set)
 
 func _integrate_forces(_state: PhysicsDirectBodyState3D) -> void:
     if _player_state == Global.PlayerState.HALF_PIPE:
         linear_velocity.x = 0.05 * _half_pipe_direction
     elif _player_state == Global.PlayerState.GRINDING:
         linear_velocity = Vector3.ZERO
+    elif _player_state == Global.PlayerState.STARTING:
+        freeze = true
     
     if (linear_velocity.y < -10.0):
         linear_velocity.y = -10.0
@@ -41,6 +49,15 @@ func _physics_process(_delta: float) -> void:
             print(str(counter) + ": " + str(linear_velocity.length()))
         else:
             counter = 0
+
+func _on_pause_set(_pause: bool) -> void:
+    if _pause:
+        _stored_linear_velocity = linear_velocity
+        _stored_angular_velocity = angular_velocity
+    freeze = _pause
+    if !_pause:
+        linear_velocity = _stored_linear_velocity
+        angular_velocity = _stored_angular_velocity
 
 func kill_velocity() -> void:
     _kill_velocity = true

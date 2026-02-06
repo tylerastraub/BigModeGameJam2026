@@ -2,25 +2,33 @@
 
 [ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/Scripts/level.gd" id="1_o0kov"]
 [ext_resource type="PackedScene" uid="uid://idldvtq01sgs" path="res://res/resources/floor_base_100m.res" id="2_atm1x"]
-[ext_resource type="Material" uid="uid://crub5tfmxv8ow" path="res://res/materials/tile_purple.tres" id="3_7rkbr"]
+[ext_resource type="Material" uid="uid://mim6nvy578fn" path="res://res/materials/grass_mat.tres" id="3_7rkbr"]
+[ext_resource type="Material" uid="uid://d23pjhwbj30vu" path="res://res/materials/glass_mat.tres" id="3_atm1x"]
 [ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="4_mubo1"]
+[ext_resource type="Texture2D" uid="uid://3xxve5d0s2me" path="res://res/textures/concrete_tex.png" id="5_atm1x"]
 [ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/Scenes/grind_rail.tscn" id="5_xuwt3"]
 [ext_resource type="PackedScene" uid="uid://ijhqvfwk4rwj" path="res://res/resources/floor_base_200m.res" id="6_4pcxl"]
 [ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/Scenes/boost_ring.tscn" id="7_wffwh"]
 [ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/Scenes/slick_coin.tscn" id="8_ymrfq"]
-[ext_resource type="Texture2D" uid="uid://23mnpyax3tpf" path="res://res/textures/tile_grey.png" id="9_5unjw"]
 [ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/Scenes/boost_pad.tscn" id="10_dc4oa"]
 [ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/Scenes/electric_ball.tscn" id="11_10b2x"]
+[ext_resource type="Texture2D" uid="uid://dorka4tha5fty" path="res://res/textures/metal_tex.png" id="12_atm1x"]
 [ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/Scenes/finish_line.tscn" id="12_vviuf"]
 [ext_resource type="PackedScene" uid="uid://bqnf21uu1j2a6" path="res://src/Level/Scenes/grease_drum.tscn" id="13_k0wcv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rkbr"]
+albedo_texture = ExtResource("5_atm1x")
+uv1_scale = Vector3(2, 2, 2)
+texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d18d0"]
 size = Vector3(1, 50, 1000)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_is1am"]
-albedo_texture = ExtResource("9_5unjw")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0kov"]
+albedo_texture = ExtResource("5_atm1x")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_offset = Vector3(-0.125, 0, 0)
 uv1_triplanar = true
-uv1_world_triplanar = true
 texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_1hhxo"]
@@ -29,8 +37,8 @@ size = Vector3(4, 0.2, 24)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3lwph"]
 data = PackedVector3Array(-2, 0.099999994, 12, 2, 0.099999994, 12, -2, -0.099999994, 12, 2, 0.099999994, 12, 2, -0.099999994, 12, -2, -0.099999994, 12, 2, 0.099999994, -12, -2, 0.099999994, -12, 2, -0.099999994, -12, -2, 0.099999994, -12, -2, -0.099999994, -12, 2, -0.099999994, -12, 2, 0.099999994, 12, 2, 0.099999994, -12, 2, -0.099999994, 12, 2, 0.099999994, -12, 2, -0.099999994, -12, 2, -0.099999994, 12, -2, 0.099999994, -12, -2, 0.099999994, 12, -2, -0.099999994, -12, -2, 0.099999994, 12, -2, -0.099999994, 12, -2, -0.099999994, -12, 2, 0.099999994, 12, -2, 0.099999994, 12, 2, 0.099999994, -12, -2, 0.099999994, 12, -2, 0.099999994, -12, 2, 0.099999994, -12, -2, -0.099999994, 12, 2, -0.099999994, 12, -2, -0.099999994, -12, 2, -0.099999994, 12, 2, -0.099999994, -12, -2, -0.099999994, -12)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xrnhc"]
-albedo_texture = ExtResource("9_5unjw")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mubo1"]
+albedo_texture = ExtResource("12_atm1x")
 uv1_triplanar = true
 texture_filter = 0
 
@@ -52,6 +60,9 @@ material_override = ExtResource("3_7rkbr")
 [node name="ramp_2x2" parent="." unique_id=1293330896 instance=ExtResource("4_mubo1")]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -20)
 
+[node name="Cube" parent="ramp_2x2" index="0" unique_id=1448428151]
+material_override = SubResource("StandardMaterial3D_7rkbr")
+
 [node name="GrindRail" parent="." unique_id=226234324 instance=ExtResource("5_xuwt3")]
 transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0, 0, -28)
 
@@ -63,6 +74,9 @@ transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, 2.0000005, 0,
 
 [node name="floor_base_200m" parent="." unique_id=873125560 instance=ExtResource("6_4pcxl")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -9.999999, -103)
+
+[node name="Plane" parent="floor_base_200m" index="0" unique_id=177045185]
+material_override = ExtResource("3_7rkbr")
 
 [node name="ramp_2x3" parent="." unique_id=875354872 instance=ExtResource("4_mubo1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -94)
@@ -138,7 +152,7 @@ _letter = 2
 
 [node name="platform" type="MeshInstance3D" parent="." unique_id=1000337375]
 transform = Transform3D(0.9999994, 0, 0, 0, 0.9999994, 0, 0, 0, 1, -0.9999999, -8.749998, -226)
-material_override = SubResource("StandardMaterial3D_is1am")
+material_override = SubResource("StandardMaterial3D_o0kov")
 mesh = SubResource("BoxMesh_1hhxo")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="platform" unique_id=1991233745]
@@ -161,11 +175,18 @@ transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, -1.9999998, -
 [node name="floor_base_100m2" parent="." unique_id=153512065 instance=ExtResource("2_atm1x")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -13.999998, -303)
 
+[node name="Plane" parent="floor_base_100m2" index="0" unique_id=812651001]
+transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+material_override = ExtResource("3_atm1x")
+
 [node name="BoostPad" parent="." unique_id=11053129 instance=ExtResource("10_dc4oa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -14, -355)
 
 [node name="floor_base_200m2" parent="." unique_id=13908835 instance=ExtResource("6_4pcxl")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -17.999998, -403)
+
+[node name="Plane" parent="floor_base_200m2" index="0" unique_id=177045185]
+material_override = ExtResource("3_7rkbr")
 
 [node name="GrindRail11" parent="." unique_id=1196977213 instance=ExtResource("5_xuwt3")]
 transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -17.999996, -402)
@@ -228,7 +249,7 @@ transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 1.9999998, 
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1949772573]
 transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, 1.1920927e-07, -17.499992, -486)
-material_override = SubResource("StandardMaterial3D_xrnhc")
+material_override = SubResource("StandardMaterial3D_mubo1")
 mesh = SubResource("BoxMesh_xrnhc")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1297204166]
@@ -390,3 +411,7 @@ transform = Transform3D(0.99999934, 0, 0, 0, 0.99999934, 0, 0, 0, 1, 1.0388677, 
 transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 1.0388676, -17.499979, -565)
 
 [editable path="floor_base_100m"]
+[editable path="ramp_2x2"]
+[editable path="floor_base_200m"]
+[editable path="floor_base_100m2"]
+[editable path="floor_base_200m2"]
