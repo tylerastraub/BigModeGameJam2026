@@ -75,21 +75,18 @@ var _coins : Dictionary[SlickCoin.Letter, bool] = {
 }
 
 # Debug
-var forward_dir : Vector3 = Vector3.ZERO
-var up_dir : Vector3 = Vector3.ZERO
+var move_vec : Vector3 = Vector3.ZERO
 
 ## ========== GODOT METHODS ==========
 
 func _ready() -> void:
     $PlayerVisuals/Mesh/BodyArea.area_entered.connect(_on_area_3d_area_entered)
-    $PlayerVisuals/Mesh/BodyArea.area_exited.connect(_on_area_3d_area_exited)
     Global.trickScored.connect(_on_trick_scored)
     Global.levelStarted.connect(_on_level_started)
     _rb._max_velocity = _max_velocity
     _rb._min_forward_velocity = _min_velocity
     if Global.debug:
-        $Debug.draw.add_vector(self, "forward_dir", 1, 4, Color.RED, $PlayerVisuals)
-        $Debug.draw.add_vector(self, "up_dir", 1, 4, Color.BLUE, $PlayerVisuals)
+        $Debug.draw.add_vector(self, "move_vec", 1, 4, Color.RED, $PlayerVisuals)
     
     _level_timer.one_shot = false
     _level_timer.stop()
@@ -183,13 +180,17 @@ func _move(delta: float) -> void:
     if is_player_actionable() == false:
             return
     var accel : float = _air_accel if _state == Global.PlayerState.AERIAL else _accel
-    _rb.apply_central_force(_input_dir * delta * accel)
+    var move_dir : Vector3 = _input_dir - _visuals.transform.basis.y * _input_dir.dot(_visuals.transform.basis.y)
+    move_vec = move_dir
+    _rb.apply_central_force(move_dir * delta * accel)
 
 func _handle_states() -> void:
     if _state == Global.PlayerState.SHOCKED or _state == Global.PlayerState.FINISHED:
         return
     if _ticks_since_touching_ground < COYOTE_TIME: # 4 frames of buffer time
         if (_state == Global.PlayerState.HALF_PIPE and _rb.linear_velocity.y < 0.0) or _state == Global.PlayerState.AERIAL:
+            if _state == Global.PlayerState.HALF_PIPE:
+                _rb.apply_central_impulse(Vector3(0.2 * _rb._half_pipe_direction, _rb.linear_velocity.y, _rb.linear_velocity.z))
             set_state(Global.PlayerState.GROUNDED)
             if _boost_ring_active:
                 _boost_ring_active = false
@@ -241,8 +242,6 @@ func _handle_orientation(delta: float) -> void:
         _visuals.look_at(_visuals.global_position + _rb.linear_velocity.normalized() + target_offset, _visuals.basis.y)
     elif _state == Global.PlayerState.GRINDING:
         _visuals.global_rotation = _grind_rail.get_follow_rotation()
-    forward_dir = _rb.linear_velocity.normalized()
-    up_dir = _visuals.basis.y
 
 func _check_raycasts() -> Array[RayCast3D]:
     var result : Array[RayCast3D] = []
@@ -408,11 +407,6 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
     elif mask[mask.length() - 12] == "1":
         # grease drum
         _drums_collected += 1
-
-func _on_area_3d_area_exited(area: Area3D) -> void:
-    var mask := String.num_int64(area.collision_layer, 2)
-    if mask[mask.length() - 3] == "1":
-        _rb.apply_central_impulse(Vector3(0.2 * _rb._half_pipe_direction, _rb.linear_velocity.y, _rb.linear_velocity.z))
 
 func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value

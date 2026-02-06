@@ -22,7 +22,7 @@ func _ready() -> void:
     rotation.x = deg_to_rad(-15)
     var countdown := countdown_scene.instantiate()
     _countdown_text = countdown.get_child(0)
-    _countdown_text.text = "3"
+    _countdown_text.text = ""
     _countdown = countdown
     add_child(countdown)
     add_child(_countdown_timer)
@@ -44,7 +44,9 @@ func calculate_rank(score: int, all_coins_collected: bool) -> String:
     return "F"
 
 func _on_countdown_timer() -> void:
-    if _countdown_text.text == "3":
+    if _countdown_text.text == "":
+        _countdown_text.text = "3"
+    elif _countdown_text.text == "3":
         _countdown_text.text = "2"
     elif _countdown_text.text == "2":
         _countdown_text.text = "1"
