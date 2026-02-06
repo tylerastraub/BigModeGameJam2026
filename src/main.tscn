@@ -1,35 +1,55 @@
 [gd_scene format=3 uid="uid://btyh50ea7jknn"]
 
 [ext_resource type="Script" uid="uid://dk0moyhreef6w" path="res://src/main.gd" id="1_fyndt"]
+[ext_resource type="Shader" uid="uid://cegsc18xryb2j" path="res://src/Shaders/sokpop_skybox.gdshader" id="2_3cfgd"]
 [ext_resource type="PackedScene" uid="uid://u0ykld0sg1lp" path="res://src/Menus/level_select.tscn" id="2_gh0ne"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eewff"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyndt"]
+shader = ExtResource("2_3cfgd")
+shader_parameter/color_top = Color(0.68893296, 0.8133439, 1, 1)
+shader_parameter/color_horizon = Color(0.55305254, 0.75131595, 1, 1)
+shader_parameter/color_bottom = Color(0.55305254, 0.75131595, 1, 1)
+shader_parameter/exponent_factor_top = 1.0000000475
+shader_parameter/exponent_factor_bottom = 4.630000219925
+shader_parameter/intensity_amp = 1.0
 
 [sub_resource type="Sky" id="Sky_gh0ne"]
-sky_material = SubResource("ProceduralSkyMaterial_eewff")
+sky_material = SubResource("ShaderMaterial_fyndt")
 
 [sub_resource type="Environment" id="Environment_5q4o7"]
 background_mode = 2
 sky = SubResource("Sky_gh0ne")
+ambient_light_source = 3
+ambient_light_color = Color(0.7090917, 0.7919043, 0.8378393, 1)
+ambient_light_energy = 0.5
 tonemap_mode = 2
 glow_enabled = true
+fog_mode = 1
+fog_light_color = Color(1, 0.4, 0.42, 1)
+fog_density = 1.0
+fog_sky_affect = 0.328
+fog_depth_begin = 0.0
+fog_depth_end = 500.0
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(1, 0.4, 0.42, 1)
+volumetric_fog_emission = Color(1, 0.6515, 0.59000003, 1)
+volumetric_fog_length = 500.0
+volumetric_fog_sky_affect = 0.451
 
 [node name="main" type="Node3D" unique_id=1727107007]
 script = ExtResource("1_fyndt")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=237934130]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1138092642]
 environment = SubResource("Environment_5q4o7")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=731124729]
-transform = Transform3D(0.87675196, 0.41650882, -0.24047144, 2.7805946e-08, 0.49999994, 0.86602545, 0.48094293, -0.7592895, 0.43837586, 0, 3, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1538952866]
+transform = Transform3D(0.6954214, 0.57746094, -0.42770076, -0.05602792, 0.63694364, 0.7688717, 0.71641463, -0.5107267, 0.47529817, 0, 3, 0)
 shadow_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=471944546]
 
+[node name="game" type="Node3D" parent="." unique_id=399578996]
+
 [node name="menus" type="Node3D" parent="." unique_id=1033346174]
 
 [node name="LevelSelect" parent="menus" unique_id=441460835 instance=ExtResource("2_gh0ne")]
-
-[node name="game" type="Node3D" parent="." unique_id=1460263733]

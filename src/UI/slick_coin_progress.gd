@@ -2,6 +2,9 @@ extends Control
 
 class_name SlickCoinProgress
 
+var _stream_all_slick_coins : AudioStreamWAV = preload("res://res/audio/all_slick_coins.wav")
+var _stream_slick_coin_collected : AudioStreamWAV = preload("res://res/audio/slick_coin_collected.wav")
+
 const FLASH_INTERVAL : int = 25
 const COINS_DISPLAY_TIME_INCOMPLETE : int = 175
 const COINS_DISPLAY_TIME_COMPLETE : int = 250
@@ -55,11 +58,15 @@ func get_coin_child(letter: SlickCoin.Letter) -> Node2D:
 func new_coin_found() -> void:
     for key in SlickCoin.Letter.values():
         get_coin_child(key).visible = _coins[key]
+    $AudioStreamPlayer.stream = _stream_slick_coin_collected
+    $AudioStreamPlayer.play()
 
 func all_coins_found() -> void:
     _all_coins_found = true
     for key in SlickCoin.Letter.values():
         get_coin_child(key).visible = true
+    $AudioStreamPlayer.stream = _stream_all_slick_coins
+    $AudioStreamPlayer.play()
 
 func _on_slick_coin_collected(coin: SlickCoin) -> void:
     _coins[coin._letter] = true

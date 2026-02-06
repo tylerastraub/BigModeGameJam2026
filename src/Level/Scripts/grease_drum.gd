@@ -1,5 +1,7 @@
 extends Area3D
 
+class_name GreaseDrum
+
 const ROTATE_SPEED : float = 180.0
 
 func _ready() -> void:

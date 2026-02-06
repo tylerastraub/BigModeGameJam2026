@@ -11,6 +11,9 @@ var _fov_default : float = 54
 var _fov_speed_mod : float = 20
 var _fov_accel_mod : float = 16
 
+func _physics_process(_delta: float) -> void:
+    Global.cameraUpdate.emit(_camera.global_position)
+
 func _update(delta: float, player_actionable: bool, vel_scale: float) -> void:
     var no_rotate_input : Vector3 = Vector3.ZERO
     if player_actionable:

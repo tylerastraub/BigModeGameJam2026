@@ -3,8 +3,8 @@ extends Node3D
 class_name Level
 
 @export var _timer : float = 180.0
-@export var _total_drums : int = 0
 
+var _total_drums : int = 0
 var _rank_reqs : Dictionary[String, int] = {
     "S" : 10000,
     "A" : 8000,
@@ -52,6 +52,9 @@ func _on_countdown_timer() -> void:
         _countdown_text.text = "1"
     elif _countdown_text.text == "1":
         _countdown_text.text = "GO"
+        for child in get_children():
+            if child is GreaseDrum:
+                _total_drums += 1
         Global.levelStarted.emit(self, _timer, _total_drums)
     elif _countdown_text.text == "GO":
         remove_child(_countdown)

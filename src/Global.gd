@@ -35,6 +35,9 @@ signal levelSelected(level_path: String, rank_reqs: Dictionary[String, int])
 @warning_ignore("unused_signal")
 signal levelSelectButtonHovered(is_hovering: bool, rank_reqs: Dictionary[String, int])
 
+@warning_ignore("unused_signal")
+signal cameraUpdate(pos: Vector3)
+
 const TIME_SCORE_VALUE : int = 20
 const DRUM_SCORE_VALUE : int = 150
 const ELECTRIC_BALL_PENALTY : int = 1000

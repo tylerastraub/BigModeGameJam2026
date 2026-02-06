@@ -1,6 +1,8 @@
 extends Node3D
 
-const ROTATION_SPEED : float = 4.0
+class_name Player
+
+const ROTATION_SPEED : float = 20.0
 const XFORM_SPEED : float = 20.0
 const CAMERA_MOVE_LERP : float = 50.0
 const CAMERA_ROTATE_LERP : float = 0.5
@@ -8,6 +10,11 @@ const CAMERA_ROTATE_LERP : float = 0.5
 const AERIAL_180_LEEWAY : float = 50.0
 const COYOTE_TIME : int = 4
 
+# Resources
+var _stream_drum_collected : AudioStreamWAV = preload("res://res/audio/drum_collected.wav")
+var _stream_shock : AudioStreamWAV = preload("res://res/audio/shock.wav")
+
+# Children
 @onready var _rb : RigidBody3D = $RigidBody3D
 @onready var _visuals : Node3D = $PlayerVisuals
 @onready var _pivot : Node3D = $CameraPivot
@@ -213,7 +220,7 @@ func _handle_orientation(delta: float) -> void:
     elif(!is_equal_approx(_rb.linear_velocity.x, 0.0) or !is_equal_approx(_rb.linear_velocity.z, 0.0) and _state != Global.PlayerState.FINISHED):
         _pivot.rotation.y = lerp_angle(_pivot.rotation.y, move_dir, delta * _rb.linear_velocity.length() * CAMERA_ROTATE_LERP)
         if(_state != Global.PlayerState.AERIAL):
-            _visuals.rotation.y = lerp_angle(_visuals.rotation.y, move_dir, delta * _rb.linear_velocity.length() * ROTATION_SPEED)
+            _visuals.rotation.y = lerp_angle(_visuals.rotation.y, move_dir, delta * ROTATION_SPEED)
     else:
         _pivot.rotation.y = lerp_angle(_pivot.rotation.y, 0.0, delta * 10.0 * CAMERA_ROTATE_LERP)
     var raycast_result := _check_raycasts()
@@ -391,6 +398,8 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         area.set_deferred("monitoring", false)
         var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
         _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
+        $AudioStreamPlayer.stream = _stream_shock
+        $AudioStreamPlayer.play()
     elif mask[mask.length() - 10] == "1":
         # finish line
         _rb._auto_move = false
@@ -407,6 +416,8 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
     elif mask[mask.length() - 12] == "1":
         # grease drum
         _drums_collected += 1
+        $AudioStreamPlayer.stream = _stream_drum_collected
+        $AudioStreamPlayer.play()
 
 func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value

@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ckqe257xuhhyb"]
+
+[ext_resource type="Shader" uid="uid://brkmnr22n0axf" path="res://src/Shaders/cloud.gdshader" id="1_qk5s2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5q4o7"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3cfgd"]
+noise = SubResource("FastNoiseLite_5q4o7")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3cfgd"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fyndt"]
+noise = SubResource("FastNoiseLite_3cfgd")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qk5s2")
+shader_parameter/Speed_1 = Vector2(0.005, 0.005)
+shader_parameter/Cloud_Noise_1 = SubResource("NoiseTexture2D_3cfgd")
+shader_parameter/noise_multiplier = 16.272000772221478
+shader_parameter/Speed_2 = Vector2(0.005, 0.005)
+shader_parameter/Cloud_Noise_2 = SubResource("NoiseTexture2D_fyndt")
+shader_parameter/scatter_color = Color(1, 1, 1, 1)
+shader_parameter/base_color = Color(0.925353, 0.925353, 0.925353, 1)
+shader_parameter/cloud_transparency_threshold = 1.0
+shader_parameter/transparency_multiplier = 5.0
+shader_parameter/cloud_thickness = 56.82300269583262

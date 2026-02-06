@@ -27,7 +27,7 @@ func _integrate_forces(_state: PhysicsDirectBodyState3D) -> void:
         linear_velocity.z = _min_forward_velocity * -1
     elif _auto_move == false:
         linear_velocity = linear_velocity.lerp(Vector3.ZERO, 0.04)
-        if linear_velocity.length() < 1.3:
+        if linear_velocity.length() < 1.4:
             freeze = true
     
     if _kill_velocity:

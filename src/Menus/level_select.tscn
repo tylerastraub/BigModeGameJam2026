@@ -38,13 +38,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "1-1"
 script = ExtResource("2_p5jvn")
-level_path = "res://res/levels/test_level1.tscn"
+level_path = "res://res/levels/level_1-1.tscn"
 rank_reqs = Dictionary[String, int]({
-"A": 15000,
-"B": 12000,
+"A": 17000,
+"B": 13000,
 "C": 9000,
-"D": 6000,
-"S": 18000
+"D": 5000,
+"S": 21000
 })
 
 [node name="controls" type="Label" parent="." unique_id=726262299]
