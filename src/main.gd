@@ -38,7 +38,6 @@ func _physics_process(_delta: float) -> void:
 
 func _restart_level() -> void:
     if $game.get_children().size() > 0:
-        Audio.stop_all_sounds()
         for child in $CanvasLayer.get_children():
             $CanvasLayer.remove_child(child)
             child.queue_free()
@@ -50,6 +49,7 @@ func _restart_level() -> void:
         Global.pauseSet.emit(false)
 
 func _load_level(level_path: String, rank_reqs: Dictionary[String, int]) -> void:
+    Audio.stop_all_sounds()
     _level_path = level_path
     _rank_reqs = rank_reqs
     var level_scene := load(_level_path)

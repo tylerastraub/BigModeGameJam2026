@@ -172,7 +172,7 @@ curve = SubResource("Curve3D_3adxt")
 debug_custom_color = Color(1, 0, 0, 1)
 
 [node name="GrindRailPathFollow" type="PathFollow3D" parent="section1/GrindRail/GrindRailPath" unique_id=1937811886]
-transform = Transform3D(0.9999844, 4.665945e-07, -5.2104417e-05, 0, 0.99993557, 0.008954534, 5.2106607e-05, -0.008954473, 0.99994236, 1.3998176e-07, 0.29998797, -0.0026864074)
+transform = Transform3D(0.9999844, 4.6659449e-07, -5.2104413e-05, 0, 0.9999355, 0.008954533, 5.2106607e-05, -0.008954473, 0.9999423, 1.3998176e-07, 0.29998797, -0.0026864074)
 v_offset = 0.3
 loop = false
 
@@ -242,7 +242,7 @@ curve = SubResource("Curve3D_ymtnt")
 debug_custom_color = Color(1, 0, 0, 1)
 
 [node name="GrindRailPathFollow" type="PathFollow3D" parent="section1/GrindRail4/GrindRailPath" unique_id=1522026166]
-transform = Transform3D(0.99999255, 0, 0, 0, 0.99770844, -0.06752663, 0, 0.06752613, 0.9977158, 0, 0.29931524, 0.020258024)
+transform = Transform3D(0.99999255, 0, 0, 0, 0.9977084, -0.06752663, 0, 0.06752613, 0.9977158, 0, 0.29931524, 0.020258024)
 v_offset = 0.3
 loop = false
 

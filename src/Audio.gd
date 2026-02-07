@@ -13,7 +13,7 @@ class SoundInfo:
 
 static var SOUND_ID : int = 0
 
-var num_players = 8
+var num_players = 16
 var bus = "master"
 
 var available : Array[AudioStreamPlayer] = []  # The available players.
@@ -45,9 +45,19 @@ func play(sound_path: String, volume: float = 1.0) -> int:
 
 func stop(sound_id: int) -> void:
     for info in playing:
-        if info.id == sound_id:
+        if info.id == sound_id and info.player.playing:
             info.player.stop()
             info.player.finished.emit()
+
+func pause(sound_id: int) -> void:
+    for info in playing:
+        if info.id == sound_id:
+            info.player.stream_paused = true
+
+func resume(sound_id: int) -> void:
+    for info in playing:
+        if info.id == sound_id:
+            info.player.stream_paused = false
 
 func is_playing(sound_id: int) -> bool:
     for info in playing:
@@ -56,9 +66,10 @@ func is_playing(sound_id: int) -> bool:
     return false
 
 func stop_all_sounds() -> void:
-    for info in playing:
-        info.player.stop()
-        info.player.finished.emit()
+    for child in get_children():
+        if child.playing:
+            child.stop()
+            child.finished.emit()
 
 func _process(_delta):
     # Play a queued sound if any players are available.

@@ -2,6 +2,9 @@ extends Node3D
 
 class_name Level
 
+const _stream_greaseman_theme : String = "res://res/audio/music/greaseman_theme.wav"
+var _theme_id : int = -1
+
 @export var _timer : float = 180.0
 @warning_ignore("unused_private_class_variable")
 @export var _level_number : int = 0
@@ -30,6 +33,8 @@ func _ready() -> void:
     add_child(_countdown_timer)
     _countdown_timer.start(0.5)
     _countdown_timer.timeout.connect(_on_countdown_timer)
+    Global.pauseSet.connect(_on_pause)
+    _theme_id = Audio.play(_stream_greaseman_theme, 0.35)
 
 func calculate_rank(score: int, all_coins_collected: bool) -> String:
     if score >= _rank_reqs["S"] and all_coins_collected:
@@ -67,3 +72,9 @@ func _on_countdown_timer() -> void:
     elif _countdown_text.text == "GO":
         remove_child(_countdown)
         _countdown_timer.stop()
+
+func _on_pause(pause: bool) -> void:
+    if pause:
+        Audio.pause(_theme_id)
+    else:
+        Audio.resume(_theme_id)

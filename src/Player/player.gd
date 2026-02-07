@@ -105,7 +105,7 @@ func _ready() -> void:
     if Global.debug:
         $Debug.draw.add_vector(self, "move_vec", 1, 4, Color.RED, $PlayerVisuals)
     
-    _level_timer.one_shot = false
+    _level_timer.one_shot = true
     _level_timer.stop()
     _drums_collected = 0
 
@@ -295,7 +295,7 @@ func _start_grind(rail: GrindRail) -> void:
     set_state(Global.PlayerState.GRINDING)
     _grind_rail.set_grind_pos(_grind_rail.find_nearest_start_ratio(_rb.global_position))
     _rb.global_position = _grind_rail.get_grind_pos()
-    _grind_sound_id = Audio.play(_stream_grinding)
+    _grind_sound_id = Audio.play(_stream_grinding, 1.1)
 
 func _stop_grind() -> void:
     set_state(Global.PlayerState.AERIAL)

@@ -1,0 +1,739 @@
+[gd_scene format=3 uid="uid://tbou0f8iv6cf"]
+
+[ext_resource type="Script" uid="uid://csxjel10x1v53" path="res://src/Level/Scripts/level.gd" id="1_wfncq"]
+[ext_resource type="PackedScene" uid="uid://ijhqvfwk4rwj" path="res://res/resources/floor_base_200m.res" id="2_n1sps"]
+[ext_resource type="Script" uid="uid://d1c0pqh1gn4xp" path="res://src/Level/Scripts/grind_rail.gd" id="4_ihq7k"]
+[ext_resource type="Material" uid="uid://cqqwup8fsg8pc" path="res://res/materials/grind_rail_mat.tres" id="5_6nqvy"]
+[ext_resource type="PackedScene" uid="uid://bh5fxlg87xytk" path="res://res/models/grind_rail_ramp.glb" id="6_ntcfa"]
+[ext_resource type="PackedScene" uid="uid://bqnf21uu1j2a6" path="res://src/Level/Scenes/grease_drum.tscn" id="7_058mp"]
+[ext_resource type="PackedScene" uid="uid://c2fs18yyp1uef" path="res://src/Level/Scenes/boost_ring.tscn" id="8_vu5kj"]
+[ext_resource type="PackedScene" uid="uid://cfeqmqism6el3" path="res://src/Level/Scenes/slick_coin.tscn" id="9_05ysb"]
+[ext_resource type="PackedScene" uid="uid://c7ufcl6hmtxc2" path="res://src/Level/Scenes/grind_rail.tscn" id="10_uvurj"]
+[ext_resource type="PackedScene" uid="uid://dfupfby5qmi62" path="res://src/Level/Scenes/boost_pad.tscn" id="11_byevc"]
+[ext_resource type="PackedScene" uid="uid://d145dik22crjg" path="res://res/resources/ramp_2x_2.res" id="12_3g3sb"]
+[ext_resource type="Material" uid="uid://d23pjhwbj30vu" path="res://res/materials/glass_mat.tres" id="12_kai0u"]
+[ext_resource type="Material" uid="uid://d4ceu6kt044qv" path="res://res/materials/dirt_mat.tres" id="12_rd1ha"]
+[ext_resource type="PackedScene" uid="uid://bg2mgo82ar8b3" path="res://res/resources/triple_decker.tscn" id="13_nfic3"]
+[ext_resource type="PackedScene" uid="uid://385enfxmmlo6" path="res://src/Level/Scenes/electric_ball.tscn" id="14_1m3wf"]
+[ext_resource type="PackedScene" uid="uid://idldvtq01sgs" path="res://res/resources/floor_base_100m.res" id="15_jgy11"]
+[ext_resource type="PackedScene" uid="uid://dwfiq3b8qcxkd" path="res://src/Level/Scenes/finish_line.tscn" id="17_2squm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d18d0"]
+size = Vector3(1, 50, 1000)
+
+[sub_resource type="Curve3D" id="Curve3D_op668"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.019248098, 0.32212448, 0, 0.019248098, -0.32212448, 0, 0, -2, 0.24408102, 0, 0.4052086, -0.24408102, 0, -0.4052086, -1.9999999, 2.7445278, -5, 0, 0, 0, 0, 0, 0, -2.408, 2.7445276, -6.2388153),
+"tilts": PackedFloat32Array(0, 0, 0, 0.17958495)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vy1r"]
+size = Vector3(0.4, 0.2, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8ty8t"]
+data = PackedVector3Array(0, 0, 0.049999997, 0, 0.5, -0.049999997, 0, 0.5, 0.049999997, 0, 0, 0.049999997, 0, 0, -0.049999997, 0, 0.5, -0.049999997, 0, 0, -0.049999997, 1, 0, -0.25, 0, 0.5, -0.049999997, 1, 0, 0.25, 0, 0, 0.049999997, 0, 0.5, 0.049999997, 1, 0, -0.25, 0, 0.5, 0.049999997, 0, 0.5, -0.049999997, 1, 0, -0.25, 1, 0, 0.25, 0, 0.5, 0.049999997)
+
+[sub_resource type="Curve3D" id="Curve3D_kai0u"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.7202821, 1.167038, 0, 0.7202821, -1.167038, 0, 0.80750465, -1.9915695, 0, 0.0093102455, 5.9034576, 0, -0.0093102455, -5.9034576, 0, 3, -10),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kai0u"]
+size = Vector3(0.4, 0.2, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nfic3"]
+data = PackedVector3Array(0, 0, 0.049999997, 0, 0.5, -0.049999997, 0, 0.5, 0.049999997, 0, 0, 0.049999997, 0, 0, -0.049999997, 0, 0.5, -0.049999997, 0, 0, -0.049999997, 1, 0, -0.25, 0, 0.5, -0.049999997, 1, 0, 0.25, 0, 0, 0.049999997, 0, 0.5, 0.049999997, 1, 0, -0.25, 0, 0.5, 0.049999997, 0, 0.5, -0.049999997, 1, 0, -0.25, 1, 0, 0.25, 0, 0.5, 0.049999997)
+
+[sub_resource type="Curve3D" id="Curve3D_htgg1"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0005054474, 1.8412781, 0, -0.0005054474, -1.8412781, 0, 0, -2, 0, 0.0093102455, 5.9034576, 0, -0.0093102455, -5.9034576, 4, 1, -10),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_nfic3"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -0.8570447, 0.510582, 0, 0.8570447, -0.510582, -0.28147995, 1.6970196, -2.7795181, 0, 0.0093102455, 5.9034576, 0, -0.0093102455, -5.9034576, -4, 5, -10),
+"tilts": PackedFloat32Array(0, 0, 0.43542135)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_wfncq"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, -7.1525574e-07, -0.008653641, 0.97055054, 7.1525574e-07, 0.008653641, -0.97055054, 0, 0, -1, 7.1525574e-07, -0.005877495, 1.1852417, -7.1525574e-07, 0.005877495, -1.1852417, 0, 2, -4, 0, 0, 0, 0, 0, 0, 0, 2, -12),
+"tilts": PackedFloat32Array(0, 0, -1.5707964, -1.5707964)
+}
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n1sps"]
+size = Vector3(0.4, 0.2, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hrrn2"]
+data = PackedVector3Array(0, 0, 0.049999997, 0, 0.5, -0.049999997, 0, 0.5, 0.049999997, 0, 0, 0.049999997, 0, 0, -0.049999997, 0, 0.5, -0.049999997, 0, 0, -0.049999997, 1, 0, -0.25, 0, 0.5, -0.049999997, 1, 0, 0.25, 0, 0, 0.049999997, 0, 0.5, 0.049999997, 1, 0, -0.25, 0, 0.5, 0.049999997, 0, 0.5, -0.049999997, 1, 0, -0.25, 1, 0, 0.25, 0, 0.5, 0.049999997)
+
+[node name="Level" type="Node3D" unique_id=1195139326]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_wfncq")
+_timer = 5.0
+_level_number = 2
+
+[node name="wall boundary" type="StaticBody3D" parent="." unique_id=468258904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -500)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall boundary" unique_id=735953493]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_d18d0")
+
+[node name="wall boundary2" type="StaticBody3D" parent="." unique_id=404589544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, -500)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wall boundary2" unique_id=1544730683]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_d18d0")
+
+[node name="section1" type="Node3D" parent="." unique_id=1987920462]
+
+[node name="floor_base_100m" parent="section1" unique_id=1159389297 instance=ExtResource("15_jgy11")]
+
+[node name="ballz" type="Node3D" parent="section1" unique_id=1535963505]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -19)
+
+[node name="ElectricBall" parent="section1/ballz" unique_id=478524619 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ElectricBall2" parent="section1/ballz" unique_id=2095655355 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -0.99999994, 0, 0)
+
+[node name="ElectricBall3" parent="section1/ballz" unique_id=1969650179 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -1.9999999, 0, 0)
+
+[node name="ElectricBall7" parent="section1/ballz" unique_id=267978190 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -2.9999995, 0, 0)
+
+[node name="ElectricBall8" parent="section1/ballz" unique_id=1150882135 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, -3.999999, 0.24865119, 0)
+
+[node name="ElectricBall9" parent="section1/ballz" unique_id=986438768 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, 4, 0.24865118, 0)
+
+[node name="ElectricBall10" parent="section1/ballz" unique_id=71531615 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999992, 0, 0, 0, 0.9999992, 0, 0, 0, 1, 4.7492948, 1.0269986, 0)
+
+[node name="ElectricBall11" parent="section1/ballz" unique_id=1562486280 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999991, 0, 0, 0, 0.9999991, 0, 0, 0, 1, -4.7641525, 1.0269984, 0)
+
+[node name="ElectricBall4" parent="section1/ballz" unique_id=844892310 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="ElectricBall5" parent="section1/ballz" unique_id=802032555 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, 1.9999999, 0, 0)
+
+[node name="ElectricBall6" parent="section1/ballz" unique_id=1866890226 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 2.9999995, 0, 0)
+
+[node name="ballz2" type="Node3D" parent="section1" unique_id=1461682714]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, 0, 0, -32)
+
+[node name="ElectricBall" parent="section1/ballz2" unique_id=202622271 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="ElectricBall2" parent="section1/ballz2" unique_id=738187253 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -0.99999994, 0, 0)
+
+[node name="ElectricBall3" parent="section1/ballz2" unique_id=935522992 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -1.9999999, 0, 0)
+
+[node name="ElectricBall7" parent="section1/ballz2" unique_id=913513808 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -2.9999995, 0, 0)
+
+[node name="ElectricBall8" parent="section1/ballz2" unique_id=167965357 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, -3.999999, 0.24865119, 0)
+
+[node name="ElectricBall9" parent="section1/ballz2" unique_id=408885876 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, 4, 0.24865118, 0)
+
+[node name="ElectricBall10" parent="section1/ballz2" unique_id=1557140406 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999992, 0, 0, 0, 0.9999992, 0, 0, 0, 1, 4.7492948, 1.0269986, 0)
+
+[node name="ElectricBall11" parent="section1/ballz2" unique_id=1885832024 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999991, 0, 0, 0, 0.9999991, 0, 0, 0, 1, -4.7641525, 1.0269984, 0)
+
+[node name="ElectricBall4" parent="section1/ballz2" unique_id=741803839 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="ElectricBall5" parent="section1/ballz2" unique_id=1591093827 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, 1.9999999, 0, 0)
+
+[node name="ElectricBall6" parent="section1/ballz2" unique_id=929974896 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 2.9999995, 0, 0)
+
+[node name="SlickCoin" parent="section1" unique_id=1649155444 instance=ExtResource("9_05ysb")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 0, 0.33471525, -24.5954)
+
+[node name="GreaseDrum" parent="section1" unique_id=1975654130 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0, 0.4486406, -43)
+
+[node name="GreaseDrum2" parent="section1" unique_id=1590943167 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 0, 0.44864056, -46)
+
+[node name="GrindRail" type="Area3D" parent="section1" unique_id=226234324]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, -51)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ihq7k")
+
+[node name="GrindRailPath" type="Path3D" parent="section1/GrindRail" unique_id=1037364310]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_op668")
+debug_custom_color = Color(1, 0, 0, 1)
+
+[node name="GrindRailPathFollow" type="PathFollow3D" parent="section1/GrindRail/GrindRailPath" unique_id=1937811886]
+transform = Transform3D(0.99999374, 0, 0, 0, 0.99992675, 0.011470942, 0, -0.011470867, 0.99993324, 0, 0.29998028, -0.003441286)
+v_offset = 0.3
+loop = false
+
+[node name="GrindRailMesh" type="CSGPolygon3D" parent="section1/GrindRail/GrindRailPath" unique_id=503096670]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("5_6nqvy")
+use_collision = true
+collision_layer = 128
+collision_mask = 0
+polygon = PackedVector2Array(-0.05, 0, 0.05, 0, 0.05, -0.5, -0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="GrindRailAreaCollision" type="CollisionShape3D" parent="section1/GrindRail" unique_id=433892262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+shape = SubResource("BoxShape3D_8vy1r")
+
+[node name="grind_rail_ramp" parent="section1/GrindRail" unique_id=1027570736 instance=ExtResource("6_ntcfa")]
+
+[node name="Cube" parent="section1/GrindRail/grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("5_6nqvy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="section1/GrindRail/grind_rail_ramp/Cube" index="0" unique_id=422130727]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="section1/GrindRail/grind_rail_ramp/Cube/StaticBody3D" unique_id=1804849818]
+shape = SubResource("ConcavePolygonShape3D_8ty8t")
+
+[node name="GreaseDrum" parent="section1/GrindRail" unique_id=999593787 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, -2.918501, 3.8187582, -7.520813)
+
+[node name="GreaseDrum2" parent="section1/GrindRail" unique_id=227788876 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.99999934, 0, 0, 0, 0.99999934, 0, 0, 0, 1, -3.249613, 4.158514, -9.025631)
+
+[node name="BoostPad" parent="section1" unique_id=11053129 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -1.9999994, 0, -72)
+
+[node name="GreaseDrum3" parent="section1" unique_id=91196694 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, -1.999999, 0.44980448, -80)
+
+[node name="GreaseDrum4" parent="section1" unique_id=2081469294 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, -0.9999993, 0.44980448, -88)
+
+[node name="GrindRail2" parent="section1" unique_id=1279453342 instance=ExtResource("10_uvurj")]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, 1.324135, 0, -70.471)
+
+[node name="section2" type="Node3D" parent="." unique_id=248543739]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, 0, -100)
+
+[node name="floor_base_200m" parent="section2" unique_id=873125560 instance=ExtResource("2_n1sps")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -7.0000005, -2)
+
+[node name="Plane" parent="section2/floor_base_200m" index="0" unique_id=177045185]
+material_override = ExtResource("12_rd1ha")
+
+[node name="GrindRail3" type="Area3D" parent="section2" unique_id=980685232]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -7, -25)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ihq7k")
+
+[node name="GrindRailPath" type="Path3D" parent="section2/GrindRail3" unique_id=1803194239]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_kai0u")
+debug_custom_color = Color(1, 0, 0, 1)
+
+[node name="GrindRailPathFollow" type="PathFollow3D" parent="section2/GrindRail3/GrindRailPath" unique_id=1303498002]
+transform = Transform3D(0.999973, 0, 0, 0, 0.9944255, -0.10519534, 0, 0.10519472, 0.99443144, 0, 0.2983354, 0.031559236)
+v_offset = 0.3
+loop = false
+
+[node name="GrindRailMesh" type="CSGPolygon3D" parent="section2/GrindRail3/GrindRailPath" unique_id=13581156]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("5_6nqvy")
+use_collision = true
+collision_layer = 128
+collision_mask = 0
+polygon = PackedVector2Array(-0.05, 0, 0.05, 0, 0.05, -0.5, -0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="GrindRailAreaCollision" type="CollisionShape3D" parent="section2/GrindRail3" unique_id=1351254982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+shape = SubResource("BoxShape3D_kai0u")
+
+[node name="grind_rail_ramp" parent="section2/GrindRail3" unique_id=766453564 instance=ExtResource("6_ntcfa")]
+
+[node name="Cube" parent="section2/GrindRail3/grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("5_6nqvy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="section2/GrindRail3/grind_rail_ramp/Cube" index="0" unique_id=384171301]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="section2/GrindRail3/grind_rail_ramp/Cube/StaticBody3D" unique_id=472741140]
+shape = SubResource("ConcavePolygonShape3D_nfic3")
+
+[node name="GrindRail4" type="Area3D" parent="section2" unique_id=1871626078]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -2.0000002, -6.9999995, -25)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ihq7k")
+
+[node name="GrindRailPath" type="Path3D" parent="section2/GrindRail4" unique_id=1815599601]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_htgg1")
+debug_custom_color = Color(1, 0, 0, 1)
+
+[node name="GrindRailPathFollow" type="PathFollow3D" parent="section2/GrindRail4/GrindRailPath" unique_id=920291846]
+transform = Transform3D(0.99999374, 0, 0, 0, 0.99998224, -0.0031844494, 0, 0.0031844273, 0.99998915, 0, 0.2999985, 0.0009553404)
+v_offset = 0.3
+loop = false
+
+[node name="GrindRailMesh" type="CSGPolygon3D" parent="section2/GrindRail4/GrindRailPath" unique_id=892059383]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("5_6nqvy")
+use_collision = true
+collision_layer = 128
+collision_mask = 0
+polygon = PackedVector2Array(-0.05, 0, 0.05, 0, 0.05, -0.5, -0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="GrindRailAreaCollision" type="CollisionShape3D" parent="section2/GrindRail4" unique_id=1491679454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+shape = SubResource("BoxShape3D_kai0u")
+
+[node name="grind_rail_ramp" parent="section2/GrindRail4" unique_id=1643019938 instance=ExtResource("6_ntcfa")]
+
+[node name="Cube" parent="section2/GrindRail4/grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("5_6nqvy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="section2/GrindRail4/grind_rail_ramp/Cube" index="0" unique_id=849708835]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="section2/GrindRail4/grind_rail_ramp/Cube/StaticBody3D" unique_id=1749556779]
+shape = SubResource("ConcavePolygonShape3D_nfic3")
+
+[node name="GrindRail5" type="Area3D" parent="section2" unique_id=789880009]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 2.0000002, -6.999999, -25)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ihq7k")
+
+[node name="GrindRailPath" type="Path3D" parent="section2/GrindRail5" unique_id=195295517]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_nfic3")
+debug_custom_color = Color(1, 0, 0, 1)
+
+[node name="GrindRailPathFollow" type="PathFollow3D" parent="section2/GrindRail5/GrindRailPath" unique_id=1393372398]
+transform = Transform3D(0.9923825, 0.042455576, 0.11556074, -1.8626265e-09, 0.93863887, -0.3448491, -0.123113126, 0.34222323, 0.9315048, 0.012736915, 0.281597, 0.10266892)
+v_offset = 0.3
+loop = false
+
+[node name="GrindRailMesh" type="CSGPolygon3D" parent="section2/GrindRail5/GrindRailPath" unique_id=1980409984]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("5_6nqvy")
+use_collision = true
+collision_layer = 128
+collision_mask = 0
+polygon = PackedVector2Array(-0.05, 0, 0.05, 0, 0.05, -0.5, -0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="GrindRailAreaCollision" type="CollisionShape3D" parent="section2/GrindRail5" unique_id=1983224892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+shape = SubResource("BoxShape3D_kai0u")
+
+[node name="grind_rail_ramp" parent="section2/GrindRail5" unique_id=791454509 instance=ExtResource("6_ntcfa")]
+
+[node name="Cube" parent="section2/GrindRail5/grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("5_6nqvy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="section2/GrindRail5/grind_rail_ramp/Cube" index="0" unique_id=1521337606]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="section2/GrindRail5/grind_rail_ramp/Cube/StaticBody3D" unique_id=969458343]
+shape = SubResource("ConcavePolygonShape3D_nfic3")
+
+[node name="triple_decker" parent="section2" unique_id=1382497129 instance=ExtResource("13_nfic3")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 0, -5.75, -65)
+
+[node name="SlickCoin" parent="section2" unique_id=1192825924 instance=ExtResource("9_05ysb")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 1, -1.1169688, -71)
+_letter = 1
+
+[node name="GreaseDrum" parent="section2" unique_id=134867364 instance=ExtResource("7_058mp")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, -3.0000005, -37)
+
+[node name="GreaseDrum2" parent="section2" unique_id=718822512 instance=ExtResource("7_058mp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.0000005, -42)
+
+[node name="GreaseDrum3" parent="section2" unique_id=1829409052 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -3.0000005, -47)
+
+[node name="GreaseDrum4" parent="section2" unique_id=941816497 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0, -3.0000005, -52)
+
+[node name="BoostPad" parent="section2" unique_id=1558706028 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -5.5499997, -48)
+
+[node name="BoostRing" parent="section2" unique_id=1798653930 instance=ExtResource("8_vu5kj")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 2.0000002, -4.9999995, -96)
+
+[node name="BoostRing2" parent="section2" unique_id=832972654 instance=ExtResource("8_vu5kj")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -2.0000002, -4.999999, -96)
+
+[node name="ramp_2x2" parent="section2" unique_id=1293330896 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -1.0000001, -1.55, -94)
+
+[node name="ramp_2x3" parent="section2" unique_id=1880323354 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -3.0000005, -1.55, -94)
+
+[node name="ramp_2x4" parent="section2" unique_id=942180642 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 3.0000005, -1.55, -94)
+
+[node name="ramp_2x5" parent="section2" unique_id=1621150990 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 1.0000001, -1.55, -94)
+
+[node name="landmines" type="Node3D" parent="section2" unique_id=1668275770]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, -2.5935454, -6.9999957, -126.84627)
+
+[node name="ElectricBall" parent="section2/landmines" unique_id=523459246 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000005, 0, 0, 0, 1.0000005, 0, 0, 0, 1, 2.5935469, -4.2915344e-06, -2.1537323)
+
+[node name="ElectricBall2" parent="section2/landmines" unique_id=1009871580 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000005, 0, 0, 0, 1.0000005, 0, 0, 0, 1, 2.0216253, -3.33786e-06, -3.5677948)
+
+[node name="ElectricBall3" parent="section2/landmines" unique_id=155498176 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 3.2540178, -2.861023e-06, -6.1537323)
+
+[node name="ElectricBall4" parent="section2/landmines" unique_id=1666805689 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, 3.446131, -2.3841858e-06, -4.1537323)
+
+[node name="ElectricBall5" parent="section2/landmines" unique_id=66096467 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, 2.3309937, -2.3841858e-06, -5.3106995)
+
+[node name="ElectricBall6" parent="section2/landmines" unique_id=872232354 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.19157386, -1.9073486e-06, -6.6100464)
+
+[node name="ElectricBall7" parent="section2/landmines" unique_id=891090915 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1, -0.58772826, -1.4305115e-06, -3.0983582)
+
+[node name="ElectricBall8" parent="section2/landmines" unique_id=776916406 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1, -4.7683716e-07, -9.536743e-07, 0)
+
+[node name="ElectricBall9" parent="section2/landmines" unique_id=147236088 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6434197, 0, -10.613724)
+
+[node name="ElectricBall10" parent="section2/landmines" unique_id=268121839 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.899832, 0, -1.1379395)
+
+[node name="ElectricBall11" parent="section2/landmines" unique_id=1844879292 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 5.7373533, 4.7683716e-07, -6.080124)
+
+[node name="ElectricBall12" parent="section2/landmines" unique_id=1272311066 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0.32910442, 9.536743e-07, -10.757874)
+
+[node name="ElectricBall13" parent="section2/landmines" unique_id=1394472782 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -0.9916961, 0.18369913, -9.3637085)
+
+[node name="ElectricBall14" parent="section2/landmines" unique_id=538801771 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, 4.470548, -5.2452087e-06, -12.237732)
+
+[node name="ElectricBall15" parent="section2/landmines" unique_id=1297217952 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999995, 0, 0, 0, 0.9999995, 0, 0, 0, 1, 1.1862427, -4.7683716e-06, -14.688675)
+
+[node name="ElectricBall16" parent="section2/landmines" unique_id=1761377279 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999946, 0, 0, 0, 0.99999946, 0, 0, 0, 1, 0.7882843, -4.2915344e-06, -12.939148)
+
+[node name="ElectricBall17" parent="section2/landmines" unique_id=983932512 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999994, 0, 0, 0, 0.9999994, 0, 0, 0, 1, 4.15377, -2.861023e-06, -14.572754)
+
+[node name="ElectricBall20" parent="section2/landmines" unique_id=16487318 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999934, 0, 0, 0, 0.99999934, 0, 0, 0, 1, 5.2893248, -2.3841858e-06, -17.00232)
+
+[node name="ElectricBall21" parent="section2/landmines" unique_id=733259754 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 2.4186902, -1.9073486e-06, -17.508652)
+
+[node name="ElectricBall22" parent="section2/landmines" unique_id=1362892517 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999992, 0, 0, 0, 0.9999992, 0, 0, 0, 1, 5.938996, -9.536743e-07, -13.6801605)
+
+[node name="ElectricBall23" parent="section2/landmines" unique_id=1398107320 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999917, 0, 0, 0, 0.99999917, 0, 0, 0, 1, -0.37238646, 0, -16.421936)
+
+[node name="ElectricBall24" parent="section2/landmines" unique_id=485342216 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999991, 0, 0, 0, 0.9999991, 0, 0, 0, 1, 2.7432477, 4.7683716e-07, -19.778275)
+
+[node name="ElectricBall25" parent="section2/landmines" unique_id=2019993334 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999905, 0, 0, 0, 0.99999905, 0, 0, 0, 1, 6.1639433, 9.536743e-07, -20.893372)
+
+[node name="ElectricBall26" parent="section2/landmines" unique_id=1962845066 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999905, 0, 0, 0, 0.99999905, 0, 0, 0, 1, 6.1639433, 9.536743e-07, -20.893372)
+
+[node name="ElectricBall27" parent="section2/landmines" unique_id=129536744 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 6.1154556, 1.4305115e-06, -18.675064)
+
+[node name="ElectricBall28" parent="section2/landmines" unique_id=495469651 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999989, 0, 0, 0, 0.9999989, 0, 0, 0, 1, -0.06310725, 1.9073486e-06, -20.460388)
+
+[node name="ElectricBall29" parent="section2/landmines" unique_id=2140204448 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999887, 0, 0, 0, 0.99999887, 0, 0, 0, 1, -0.58732486, 2.3841858e-06, -18.990906)
+
+[node name="ElectricBall30" parent="section2/landmines" unique_id=2138932710 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.99999875, 0, 0, 0, 0.99999875, 0, 0, 0, 1, 2.0032182, 3.33786e-06, -18.861176)
+
+[node name="ElectricBall31" parent="section2/landmines" unique_id=382967516 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999987, 0, 0, 0, 0.9999987, 0, 0, 0, 1, 1.792396, 3.8146973e-06, -22.09761)
+
+[node name="ElectricBall32" parent="section2/landmines" unique_id=654392368 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999986, 0, 0, 0, 0.9999986, 0, 0, 0, 1, 3.3183665, 4.2915344e-06, -23.106064)
+
+[node name="ElectricBall18" parent="section2/landmines" unique_id=1187054038 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, -0.8708236, -2.861023e-06, -14.349152)
+
+[node name="ElectricBall19" parent="section2/landmines" unique_id=2026897634 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(0.9999992, 0, 0, 0, 0.9999992, 0, 0, 0, 1, 5.6695795, -2.3841858e-06, -8.744278)
+
+[node name="GreaseDrum5" parent="section2" unique_id=997746073 instance=ExtResource("7_058mp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -78)
+
+[node name="GreaseDrum6" parent="section2" unique_id=540259812 instance=ExtResource("7_058mp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -83)
+
+[node name="GreaseDrum7" parent="section2" unique_id=1766221432 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, 0, -0.9999999, -88)
+
+[node name="BoostPad2" parent="section2" unique_id=423300063 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, -0.9584962, -3.5499997, -76)
+
+[node name="BoostPad3" parent="section2" unique_id=1701521007 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 0.041503962, -3.549999, -92)
+
+[node name="SlickCoin2" parent="section2" unique_id=1275031675 instance=ExtResource("9_05ysb")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -1.5856003, -6.6051335, -146.07108)
+_letter = 2
+
+[node name="GreaseDrum8" parent="section2" unique_id=1660039272 instance=ExtResource("7_058mp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3473568, -6.7194285, -127.951096)
+
+[node name="GreaseDrum9" parent="section2" unique_id=2066118961 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 1, -1.9069494, -6.719427, -131.6981)
+
+[node name="GreaseDrum10" parent="section2" unique_id=1043419384 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, -0.71834767, -6.7194266, -135.87616)
+
+[node name="GreaseDrum11" parent="section2" unique_id=827192410 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, 0.18086725, -6.719426, -140.91118)
+
+[node name="GreaseDrum12" parent="section2" unique_id=1359503367 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999993, 0, 0, 0, 0.9999993, 0, 0, 0, 1, 0, -4.200477, -173.26294)
+
+[node name="GreaseDrum13" parent="section2" unique_id=429579893 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999991, 0, 0, 0, 0.9999991, 0, 0, 0, 1, 0, -3.5013924, -177.11984)
+
+[node name="GreaseDrum14" parent="section2" unique_id=178060658 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0, -3.5008469, -180.0653)
+
+[node name="BoostPad4" parent="section2" unique_id=1837932094 instance=ExtResource("11_byevc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7, -164)
+
+[node name="ramp_2x6" parent="section2" unique_id=2079633143 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -6.9999995, -168)
+
+[node name="ramp_2x7" parent="section2" unique_id=541645881 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, 0, -6.9999986, -196)
+
+[node name="ramp_2x8" parent="section2" unique_id=1441074833 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -2.0000002, -6.999998, -196)
+
+[node name="ramp_2x9" parent="section2" unique_id=866402435 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 2.0000002, -6.9999976, -196)
+
+[node name="ramp_2x10" parent="section2" unique_id=348559158 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.99999964, 0, 0, 0, 0.99999964, 0, 0, 0, 1, 4.0000005, -6.999997, -196)
+
+[node name="ramp_2x11" parent="section2" unique_id=260948022 instance=ExtResource("12_3g3sb")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, -4.0000005, -6.9999967, -196)
+
+[node name="BoostRing3" parent="section2" unique_id=1495402723 instance=ExtResource("8_vu5kj")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -5.9604634e-08, -3.999998, -182.57867)
+
+[node name="SlickCoin3" parent="section2" unique_id=591319153 instance=ExtResource("9_05ysb")]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, -4.149818, -184.63232)
+
+[node name="section3" type="Node3D" parent="." unique_id=102290073]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 0, -13.999999, -302)
+
+[node name="floor_base_100m" parent="section3" unique_id=154748230 instance=ExtResource("15_jgy11")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="Plane" parent="section3/floor_base_100m" index="0" unique_id=812651001]
+material_override = ExtResource("12_kai0u")
+
+[node name="GrindRail" parent="section3" unique_id=1965076563 instance=ExtResource("10_uvurj")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.0000008, 0.9999981, -25)
+
+[node name="GrindRailMesh" parent="section3/GrindRail/GrindRailPath" parent_id_path=PackedInt32Array(1965076563, 1037364310) index="1" unique_id=503096670]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0.4905243, -22.292572)
+
+[node name="grind_rail_ramp" parent="section3/GrindRail" index="2" unique_id=1027570736]
+visible = false
+
+[node name="ElectricBall" parent="section3" unique_id=1126006341 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.0000006, 2.4905233, -47.749634)
+
+[node name="ElectricBall4" parent="section3" unique_id=447849583 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.0000007, 2.4905233, -48.749634)
+
+[node name="ElectricBall2" parent="section3" unique_id=1032261244 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.0000008, 2.4905233, -56.749634)
+
+[node name="ElectricBall3" parent="section3" unique_id=1681290075 instance=ExtResource("14_1m3wf")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.000001, 2.4905233, -55.749634)
+
+[node name="SlickCoin" parent="section3" unique_id=1410058568 instance=ExtResource("9_05ysb")]
+transform = Transform3D(1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 1.0000008, 2.440055, -53.27301)
+_letter = 4
+
+[node name="GrindRail2" type="Area3D" parent="section3" unique_id=1602997272]
+transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, 3, 0, -37)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ihq7k")
+
+[node name="GrindRailPath" type="Path3D" parent="section3/GrindRail2" unique_id=1413034962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+curve = SubResource("Curve3D_wfncq")
+debug_custom_color = Color(1, 0, 0, 1)
+
+[node name="GrindRailPathFollow" type="PathFollow3D" parent="section3/GrindRail2/GrindRailPath" unique_id=733653366]
+transform = Transform3D(0.99999374, -6.8472746e-06, 2.3302298e-05, -9.0948896e-13, 0.95942765, 0.28192675, -2.4287416e-05, -0.2819251, 0.9594332, -2.0541997e-06, 0.2878307, -0.08457825)
+v_offset = 0.3
+loop = false
+
+[node name="GrindRailMesh" type="CSGPolygon3D" parent="section3/GrindRail2/GrindRailPath" unique_id=1683159130]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("5_6nqvy")
+use_collision = true
+collision_layer = 128
+collision_mask = 0
+polygon = PackedVector2Array(-0.05, 0, 0.05, 0, 0.05, -0.5, -0.05, -0.5)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+
+[node name="GrindRailAreaCollision" type="CollisionShape3D" parent="section3/GrindRail2" unique_id=1481069201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+visible = false
+shape = SubResource("BoxShape3D_n1sps")
+
+[node name="grind_rail_ramp" parent="section3/GrindRail2" unique_id=539474473 instance=ExtResource("6_ntcfa")]
+
+[node name="Cube" parent="section3/GrindRail2/grind_rail_ramp" index="0" unique_id=638438079]
+material_override = ExtResource("5_6nqvy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="section3/GrindRail2/grind_rail_ramp/Cube" index="0" unique_id=1500337407]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="section3/GrindRail2/grind_rail_ramp/Cube/StaticBody3D" unique_id=45744715]
+shape = SubResource("ConcavePolygonShape3D_hrrn2")
+
+[node name="FinishLine" parent="section3" unique_id=115987813 instance=ExtResource("17_2squm")]
+transform = Transform3D(-1.0000002, 0, -8.742279e-08, 0, 1.0000002, 0, 8.742278e-08, 0, -1, 0, -9.536743e-07, -99.5)
+
+[node name="BoostPad" parent="." unique_id=1692897298 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 1, -5.9604638e-08, -13.999997, -370)
+
+[node name="BoostPad2" parent="." unique_id=1422075236 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.99999976, 0, 0, 0, 1, -5.9604634e-08, -13.999996, -378)
+
+[node name="BoostPad3" parent="." unique_id=117882495 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, -5.960463e-08, -13.999995, -386)
+
+[node name="BoostPad4" parent="." unique_id=2024067756 instance=ExtResource("11_byevc")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9999996, 0, 0, 0, 1, -5.9604623e-08, -13.999993, -394)
+
+[node name="GreaseDrum" parent="." unique_id=134816085 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999997, 0, 0, 0, 0.9999997, 0, 0, 0, 1, 2.9999988, -13.196217, -339.40976)
+
+[node name="GreaseDrum2" parent="." unique_id=1212229004 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.9999994, 0, 0, 0, 0.9999994, 0, 0, 0, 1, 2.7389462, -12.134842, -341.55057)
+
+[node name="GreaseDrum3" parent="." unique_id=467037395 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.99999917, 0, 0, 0, 0.99999917, 0, 0, 0, 1, 2.7550755, -11.397259, -344.58368)
+
+[node name="GreaseDrum4" parent="." unique_id=684027105 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.99999905, 0, 0, 0, 0.99999905, 0, 0, 0, 1, 2.755075, -11.397257, -346.1412)
+
+[node name="GreaseDrum5" parent="." unique_id=961912634 instance=ExtResource("7_058mp")]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 2.7550747, -11.397256, -347.65155)
+
+[editable path="section1/GrindRail/grind_rail_ramp"]
+[editable path="section2/floor_base_200m"]
+[editable path="section2/GrindRail3/grind_rail_ramp"]
+[editable path="section2/GrindRail4/grind_rail_ramp"]
+[editable path="section2/GrindRail5/grind_rail_ramp"]
+[editable path="section3/floor_base_100m"]
+[editable path="section3/GrindRail"]
+[editable path="section3/GrindRail/grind_rail_ramp"]
+[editable path="section3/GrindRail2/grind_rail_ramp"]

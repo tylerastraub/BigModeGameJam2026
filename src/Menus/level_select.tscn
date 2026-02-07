@@ -63,6 +63,21 @@ rank_reqs = Dictionary[String, int]({
 "S": 20000
 })
 
+[node name="button_1_3" type="Button" parent="Levels" unique_id=962136713]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "1-3"
+script = ExtResource("2_p5jvn")
+level_path = "res://res/levels/level_1-3.tscn"
+rank_reqs = Dictionary[String, int]({
+"A": 12000,
+"B": 9000,
+"C": 6000,
+"D": 3000,
+"S": 15000
+})
+
 [node name="controls" type="Label" parent="." unique_id=726262299]
 layout_mode = 1
 anchors_preset = 8

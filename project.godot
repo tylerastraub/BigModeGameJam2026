@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="BigModeGameJam2026"
+config/name="GREASEMAN"
 run/main_scene="uid://btyh50ea7jknn"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bx076s38llgvc"
 
 [autoload]
 

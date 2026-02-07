@@ -120,7 +120,7 @@ grow_vertical = 2
 [node name="Sprite2D" type="AnimatedSprite2D" parent="Control/Logo" unique_id=448145335]
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_mxafv")
-frame_progress = 0.8437509
+frame_progress = 0.030615278
 
 [node name="Button" type="Button" parent="Control" unique_id=205956234]
 layout_mode = 1
