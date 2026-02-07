@@ -17,6 +17,8 @@ var _stream_grinding : String = "res://res/audio/grinding.wav"
 var _stream_jump : String = "res://res/audio/slime_jump.wav"
 var _stream_boost_pad : String = "res://res/audio/boost_pad.wav"
 var _stream_boost_ring : String = "res://res/audio/boost_ring.wav"
+var _stream_level_complete : String = "res://res/audio/level_finish.wav"
+var _stream_trick_landed : String = "res://res/audio/trick_landed.wav"
 
 # Children
 @onready var _rb : RigidBody3D = $RigidBody3D
@@ -423,6 +425,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         Global.levelFinished.emit(_score, _level_timer.time_left, _drums_collected, _total_drums, _get_level_grade(final_score))
         _score = final_score
         Global.checkForPlayerHighScore.emit(_level._level_number, _score, _get_level_grade(final_score))
+        Audio.play(_stream_level_complete)
     elif mask[mask.length() - 11] == "1":
         # boost pad
         _boost_timer = 0.0
@@ -437,6 +440,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 
 func _on_trick_scored(trick: Trick) -> void:
     _score += trick.trick_value
+    Audio.play(_stream_trick_landed, 0.2)
 
 func _on_level_started(level: Level, level_timer: float, total_drums: int) -> void:
     _total_aerial_rotation = 0.0

@@ -20,10 +20,6 @@ func _ready() -> void:
     Global.levelStarted.connect(_on_level_started)
     Global.returnToMainMenu.connect(_on_return_to_main_menu)
     Global.restartLevel.connect(_restart_level)
-    #Global.checkForPlayerHighScore.connect(_on_check_for_player_high_score)
-    _level_select = $menus/LevelSelect
-    #_level_scores = ScoreLoader.load_scores()
-    #_level_select.set_level_scores(_level_scores)
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("pause") and _player != null:
@@ -42,6 +38,7 @@ func _physics_process(_delta: float) -> void:
 
 func _restart_level() -> void:
     if $game.get_children().size() > 0:
+        Audio.stop_all_sounds()
         for child in $CanvasLayer.get_children():
             $CanvasLayer.remove_child(child)
             child.queue_free()
@@ -80,6 +77,7 @@ func _on_level_started(_level: Level, _level_timer: float, _total_drums: int) ->
     hud_temp._physics_process(get_physics_process_delta_time())
 
 func _on_return_to_main_menu(goto_level_select: bool) -> void:
+    Audio.stop_all_sounds()
     if goto_level_select:
         for child in $CanvasLayer.get_children():
             $CanvasLayer.remove_child(child)

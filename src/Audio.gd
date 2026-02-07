@@ -55,6 +55,11 @@ func is_playing(sound_id: int) -> bool:
             return true
     return false
 
+func stop_all_sounds() -> void:
+    for info in playing:
+        info.player.stop()
+        info.player.finished.emit()
+
 func _process(_delta):
     # Play a queued sound if any players are available.
     if not queue.is_empty() and not available.is_empty():

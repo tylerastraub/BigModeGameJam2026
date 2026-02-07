@@ -1,0 +1,143 @@
+[gd_scene format=3 uid="uid://ct771pwngd84g"]
+
+[ext_resource type="Script" uid="uid://cu07s6ahm2ob3" path="res://src/Menus/main_menu.gd" id="1_7l4dp"]
+[ext_resource type="PackedScene" uid="uid://bodulfto488ac" path="res://res/models/main_menu_track.glb" id="1_f0d06"]
+[ext_resource type="Material" uid="uid://bvv6i0fm5pyjg" path="res://res/materials/tile_green.tres" id="2_5iwvv"]
+[ext_resource type="PackedScene" uid="uid://dnhscjleb0wpi" path="res://res/models/grease_man.glb" id="3_5iwvv"]
+[ext_resource type="Texture2D" uid="uid://1itk550wxgti" path="res://res/sprites/grease_man.png" id="5_q475n"]
+[ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="6_jwia1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q475n"]
+atlas = ExtResource("5_q475n")
+region = Rect2(0, 0, 512, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwia1"]
+atlas = ExtResource("5_q475n")
+region = Rect2(512, 0, 512, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vaiqq"]
+atlas = ExtResource("5_q475n")
+region = Rect2(1024, 0, 512, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42oip"]
+atlas = ExtResource("5_q475n")
+region = Rect2(1536, 0, 512, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmull"]
+atlas = ExtResource("5_q475n")
+region = Rect2(2048, 0, 512, 93)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mxafv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q475n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwia1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vaiqq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42oip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmull")
+}],
+"loop": true,
+"name": &"default",
+"speed": 20.0
+}]
+
+[node name="MainMenu" type="Node3D" unique_id=35679284]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+script = ExtResource("1_7l4dp")
+
+[node name="main_menu_track" parent="." unique_id=1968321967 instance=ExtResource("1_f0d06")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 5, 0)
+
+[node name="Torus" parent="main_menu_track" index="0" unique_id=1510545541]
+material_override = ExtResource("2_5iwvv")
+
+[node name="grease_man" parent="." unique_id=365419009 instance=ExtResource("3_5iwvv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0638147, -0.020560011, 0.080388546)
+
+[node name="Skeleton3D" parent="grease_man/Armature" parent_id_path=PackedInt32Array(365419009, 984729352) index="0" unique_id=1800341705]
+bones/0/position = Vector3(9.600156e-16, 0.26817226, 0.033070475)
+bones/0/rotation = Quaternion(0.70091647, 4.753056e-08, 4.6709133e-08, 0.7132434)
+bones/1/rotation = Quaternion(-0.0715038, -6.2311267e-15, -9.530034e-09, 0.99744034)
+bones/2/rotation = Quaternion(-0.14564797, -3.64449e-08, -1.40466305e-08, 0.98933655)
+bones/3/rotation = Quaternion(-0.52416337, 0.003181425, 0.010062401, 0.85155237)
+bones/4/rotation = Quaternion(-0.00034993514, 0.057390224, -0.9968425, 0.054876715)
+bones/5/rotation = Quaternion(0.04899183, 0.0009256903, -0.048233088, 0.99763346)
+bones/6/rotation = Quaternion(-0.014931514, -0.00054603367, -0.036503606, 0.9992219)
+bones/7/rotation = Quaternion(-4.210932e-09, 3.8996225e-07, 0.002218999, 0.99999756)
+bones/8/rotation = Quaternion(-1.8676989e-08, 1.2938714e-08, -0.0016327947, 0.9999987)
+bones/9/rotation = Quaternion(-0.00035005435, -0.057390228, 0.9968425, 0.054876536)
+bones/10/rotation = Quaternion(0.048991833, -0.00092568283, 0.048233125, 0.9976335)
+bones/11/rotation = Quaternion(-0.014931514, 0.0005460335, 0.036503594, 0.99922186)
+bones/12/rotation = Quaternion(-5.858801e-09, -3.9026335e-07, -0.0022189878, 0.99999756)
+bones/13/rotation = Quaternion(-1.647343e-08, -1.389243e-08, 0.0016327798, 0.9999987)
+bones/14/rotation = Quaternion(0.0055408636, 0.05691779, 0.9982535, -0.014822941)
+bones/15/rotation = Quaternion(-0.052445803, -4.2322976e-05, -0.0041450225, 0.9986152)
+bones/16/rotation = Quaternion(0.010852058, 0.9967708, 0.079391755, -0.0052248375)
+bones/17/rotation = Quaternion(-0.0055407444, 0.056917667, 0.99825346, 0.014822967)
+bones/18/rotation = Quaternion(-0.052445713, 4.2294265e-05, 0.004144985, 0.99861526)
+bones/19/rotation = Quaternion(-0.010851692, 0.99677074, 0.07939169, 0.005224576)
+bones/20/position = Vector3(0.3023343, 0.12137323, -2.2793703)
+bones/20/rotation = Quaternion(0.5350065, 0, 0, 0.8448479)
+bones/21/position = Vector3(0.2829793, -0.46939838, -1.1461134)
+bones/21/rotation = Quaternion(0, -0.01114279, 0.99993795, 0)
+bones/22/position = Vector3(-0.3023343, 0.12137323, -2.2793703)
+bones/22/rotation = Quaternion(0.53500664, 0, 0, 0.8448479)
+bones/23/position = Vector3(-0.2829793, -0.46939838, -1.1461134)
+bones/23/rotation = Quaternion(0, -0.01114279, 0.99993795, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=86408533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08399415, 0.48946345, 1.2347932)
+
+[node name="Control" type="Control" parent="." unique_id=1185613702]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="Control" parent="Control" unique_id=1782242442]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -224.0
+offset_bottom = -224.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Control/Logo" unique_id=448145335]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_mxafv")
+frame_progress = 0.8437509
+
+[node name="Button" type="Button" parent="Control" unique_id=205956234]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -34.0
+offset_right = 68.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_jwia1")
+theme_override_font_sizes/font_size = 24
+text = "PLAY"
+
+[editable path="main_menu_track"]
+[editable path="grease_man"]

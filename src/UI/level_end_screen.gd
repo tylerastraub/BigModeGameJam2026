@@ -28,6 +28,8 @@ const TIME_DRAIN_RATE : float = 60.0
 const DRUM_DRAIN_RATE : float = 15.0
 
 var _stream_score_blip : String = "res://res/audio/score_blip.wav"
+var _stream_s_rank : String = "res://res/audio/s_rank.wav"
+var _stream_crowd_cheer : String = "res://res/audio/crowd_cheer.wav"
 var _blip_id : int = -1
 
 func _ready() -> void:
@@ -94,6 +96,7 @@ func _increment_screen_stage() -> void:
         $Score.text = "SCORE: " + str(_score)
         $Score.visible = true
         _display_timer.start(0.5)
+        Audio.play(_stream_crowd_cheer, 0.3)
     elif _screen_stage == ScreenStage.SCORE:
         _screen_stage = ScreenStage.TIME
         $Time.text = "TIME: " + _seconds_to_time(_time)
@@ -112,7 +115,7 @@ func _increment_screen_stage() -> void:
         _screen_stage = ScreenStage.RANK_LETTER
         $RankLetter.text = _rank
         $RankLetter.visible = true
-        # todo: change color based on rank
+        if _rank == "S": Audio.play(_stream_s_rank, 0.7)
         _display_timer.start(1.0)
     elif _screen_stage == ScreenStage.RANK_LETTER:
         _screen_stage = ScreenStage.CONTINUE_BUTTON

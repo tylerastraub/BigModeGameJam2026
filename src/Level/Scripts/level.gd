@@ -64,7 +64,6 @@ func _on_countdown_timer() -> void:
             if child is GreaseDrum:
                 _total_drums += 1
         Global.levelStarted.emit(self, _timer, _total_drums)
-        print (_total_drums)
     elif _countdown_text.text == "GO":
         remove_child(_countdown)
         _countdown_timer.stop()
