@@ -51,6 +51,7 @@ data = PackedVector3Array(-3, 0.5, 8, 3, 0.5, 8, -3, -0.5, 8, 3, 0.5, 8, 3, -0.5
 [node name="Level" type="Node3D" unique_id=1195139326]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_o0kov")
+_level_number = 1
 
 [node name="floor_base_100m" parent="." unique_id=1159389297 instance=ExtResource("2_atm1x")]
 

@@ -3,6 +3,8 @@ extends Node3D
 class_name Level
 
 @export var _timer : float = 180.0
+@warning_ignore("unused_private_class_variable")
+@export var _level_number : int = 0
 
 var _total_drums : int = 0
 var _rank_reqs : Dictionary[String, int] = {
@@ -43,6 +45,12 @@ func calculate_rank(score: int, all_coins_collected: bool) -> String:
     
     return "F"
 
+func get_all_children(node: Node, children: Array[Node] = []) -> Array[Node]:
+    children.push_back(node)
+    for child in node.get_children():
+        children = get_all_children(child, children)
+    return children
+
 func _on_countdown_timer() -> void:
     if _countdown_text.text == "":
         _countdown_text.text = "3"
@@ -52,10 +60,11 @@ func _on_countdown_timer() -> void:
         _countdown_text.text = "1"
     elif _countdown_text.text == "1":
         _countdown_text.text = "GO"
-        for child in get_children():
+        for child in get_all_children(self):
             if child is GreaseDrum:
                 _total_drums += 1
         Global.levelStarted.emit(self, _timer, _total_drums)
+        print (_total_drums)
     elif _countdown_text.text == "GO":
         remove_child(_countdown)
         _countdown_timer.stop()

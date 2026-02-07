@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://u0ykld0sg1lp"]
 
 [ext_resource type="Theme" uid="uid://cqhr5fh3a87eo" path="res://res/resources/hud_theme.tres" id="1_2kpu1"]
+[ext_resource type="Script" uid="uid://cavtdcnk2jb8" path="res://src/Menus/level_select.gd" id="2_6e0g1"]
 [ext_resource type="Script" uid="uid://btc4i2bnjkuyn" path="res://src/Menus/level_select_button.gd" id="2_p5jvn"]
 [ext_resource type="FontFile" uid="uid://dy5nck5nktf0g" path="res://res/fonts/visitor1.ttf" id="3_x7dxc"]
 [ext_resource type="Script" uid="uid://cxhgh63tywuv6" path="res://src/Menus/level_benchmarks.gd" id="4_b2n31"]
@@ -13,6 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_2kpu1")
+script = ExtResource("2_6e0g1")
 
 [node name="Background" type="ColorRect" parent="." unique_id=2131301535]
 layout_mode = 1
@@ -23,18 +25,17 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.14, 0.077, 0, 1)
 
-[node name="Levels" type="MarginContainer" parent="." unique_id=1107878750]
+[node name="Levels" type="HBoxContainer" parent="." unique_id=38533459]
 layout_mode = 0
-offset_top = 64.0
-offset_right = 192.0
-offset_bottom = 256.0
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
+offset_left = 64.0
+offset_top = 96.0
+offset_right = 1088.0
+offset_bottom = 224.0
+theme_override_constants/separation = 32
 
 [node name="button_1_1" type="Button" parent="Levels" unique_id=1579813770]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
 text = "1-1"
 script = ExtResource("2_p5jvn")
@@ -45,6 +46,21 @@ rank_reqs = Dictionary[String, int]({
 "C": 9000,
 "D": 5000,
 "S": 21000
+})
+
+[node name="button_1_2" type="Button" parent="Levels" unique_id=1831180964]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = "1-2"
+script = ExtResource("2_p5jvn")
+level_path = "res://res/levels/level_1-2.tscn"
+rank_reqs = Dictionary[String, int]({
+"A": 16000,
+"B": 12000,
+"C": 8000,
+"D": 4000,
+"S": 20000
 })
 
 [node name="controls" type="Label" parent="." unique_id=726262299]
@@ -138,6 +154,7 @@ D: 2000"
 scroll_active = false
 
 [node name="PersonalBest" type="RichTextLabel" parent="LevelBenchmarks" unique_id=704876205]
+visible = false
 layout_mode = 0
 offset_left = 16.0
 offset_top = 298.0

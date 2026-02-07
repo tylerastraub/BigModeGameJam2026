@@ -90,6 +90,7 @@ text = "restart"
 
 [node name="QuickRestartToggle" type="CheckButton" parent="VBoxContainer" unique_id=1207712262]
 layout_mode = 2
+theme_override_constants/line_spacing = 5
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hmit8")
 theme_override_styles/hover = SubResource("StyleBoxFlat_c5l87")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_c5l87")

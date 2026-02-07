@@ -8,8 +8,10 @@ var skybox_scene : PackedScene = load("res://src/Level/Scenes/skybox.tscn")
 var loading_screen_scene : PackedScene = load("res://src/Menus/loading_screen.tscn")
 
 var _player : Player = null
+var _level_select : LevelSelect = null
 var _level_path : String = ""
-var _rank_reqs: Dictionary[String, int] = {}
+var _rank_reqs : Dictionary[String, int] = {}
+var _level_scores : ScoreDatabase = null
 
 var _load_level_tick_counter : int = 2
 
@@ -18,6 +20,10 @@ func _ready() -> void:
     Global.levelStarted.connect(_on_level_started)
     Global.returnToMainMenu.connect(_on_return_to_main_menu)
     Global.restartLevel.connect(_restart_level)
+    #Global.checkForPlayerHighScore.connect(_on_check_for_player_high_score)
+    _level_select = $menus/LevelSelect
+    #_level_scores = ScoreLoader.load_scores()
+    #_level_select.set_level_scores(_level_scores)
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("pause") and _player != null:
@@ -53,6 +59,7 @@ func _load_level(level_path: String, rank_reqs: Dictionary[String, int]) -> void
     for child in $menus.get_children():
         $menus.remove_child(child)
         child.queue_free()
+    _level_select = null
     _player = player_scene.instantiate()
     $game.add_child(_player)
     $game.add_child(skybox_scene.instantiate())
@@ -80,5 +87,15 @@ func _on_return_to_main_menu(goto_level_select: bool) -> void:
         for child in $game.get_children():
             $game.remove_child(child)
             child.queue_free()
-        $menus.add_child(level_select_scene.instantiate())
+        _level_select = level_select_scene.instantiate()
+        $menus.add_child(_level_select)
         _player = null
+        #_level_scores = ScoreLoader.load_scores()
+        #_level_select.set_level_scores(_level_scores)
+
+func _on_check_for_player_high_score(level: int, score: int, rank: String) -> void:
+    if _level_scores.scores.has(level):
+        if _level_scores.scores[level].score < score:
+            ScoreLoader.save_score(level, score, rank)
+    else:
+        ScoreLoader.save_score(level, score, rank)

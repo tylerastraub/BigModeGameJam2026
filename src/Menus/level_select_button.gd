@@ -10,6 +10,8 @@ extends Button
     "C" : 3000,
     "D" : 1000,
 }
+var high_score : int = 0
+var high_rank : String = "F"
 
 var _hovered : bool = false
 
@@ -19,7 +21,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
     if is_hovered() != _hovered:
         _hovered = is_hovered()
-        Global.levelSelectButtonHovered.emit(is_hovered(), rank_reqs)
+        Global.levelSelectButtonHovered.emit(is_hovered(), rank_reqs, high_score, high_rank)
 
 func _on_button_pressed() -> void:
     Global.levelSelected.emit(level_path, rank_reqs)

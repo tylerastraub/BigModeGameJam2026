@@ -217,7 +217,7 @@ func _handle_states() -> void:
                     _boost_time = 0.25
                 else:
                     _boost_time += 0.25
-                _rb.apply_central_impulse(_visuals.basis.z * _boost_power * -1.0)
+                _rb.apply_central_impulse(_rb.linear_velocity.normalized() * _boost_power)
     elif _state != Global.PlayerState.HALF_PIPE and _state != Global.PlayerState.GRINDING:
         set_state(Global.PlayerState.AERIAL)
 
@@ -382,6 +382,8 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
     if mask[mask.length() - 3] == "1":
         # half pipe zone
         _rb._half_pipe_direction = 1.0 if _rb.global_position.x < 0 else -1.0
+        if _current_trick:
+            Global.trickScored.emit(_current_trick)
         set_state(Global.PlayerState.HALF_PIPE)
     elif mask[mask.length() - 4] == "1":
         # grind rail
@@ -410,7 +412,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         area.set_deferred("monitorable", false)
         area.set_deferred("monitoring", false)
         var pos_diff : float = 1.0 if area.global_position.x < _rb.global_position.x else -1.0
-        _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.5))
+        _rb.apply_central_impulse(Vector3(pos_diff * 4.0, 0.0, _rb.linear_velocity.length() * 1.2))
         Audio.stop(_grind_sound_id)
         Audio.play(_stream_shock)
     elif mask[mask.length() - 10] == "1":
@@ -420,6 +422,7 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
         var final_score : int = _score + ceili(_level_timer.time_left) * Global.TIME_SCORE_VALUE + _drums_collected * Global.DRUM_SCORE_VALUE
         Global.levelFinished.emit(_score, _level_timer.time_left, _drums_collected, _total_drums, _get_level_grade(final_score))
         _score = final_score
+        Global.checkForPlayerHighScore.emit(_level._level_number, _score, _get_level_grade(final_score))
     elif mask[mask.length() - 11] == "1":
         # boost pad
         _boost_timer = 0.0
